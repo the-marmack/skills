@@ -1,0 +1,41 @@
+# Copyright 2026 Bitwise Media Group
+# SPDX-License-Identifier: MIT
+#
+# skills — the Claude skill/plugin marketplace and its evaluation suite.
+# The toolchain library (the .mise/ submodule) supplies pinned developer
+# tools, [settings], and the universal license/prose/container/shell lint
+# tasks (markdown-lib's surface); tasks.toml adds this repo's own
+# fmt/lint/test/ci/pr gates plus the evolve eval tiers (triggers/evals/all/
+# report), reading .evolve.json at the root.
+#
+# evolve is pinned directly below rather than task-scoped: it's a first-party
+# CLI, but this repo is its only consumer, so there's no reuse-across-repos
+# case for keeping it out of [tools] the way the toolchain library's
+# task-scoped tools (e.g. dotty) are. See tasks.toml for the bump process.
+#
+# lockfile = true is already inherited from .mise/config.toml, but this repo
+# now has its own [tools] entry to lock, so it's set explicitly here too:
+# mise writes per-platform checksums for evolve into this repo's own
+# mise.lock (`mise lock` regenerates it), independent of the toolchain
+# library's own mise.lock for its shared [tools].
+[settings]
+lockfile = true
+
+[task_config]
+includes = ["tasks.toml"]
+
+[tools]
+"github:bitwise-media-group/evolve" = "v0.8.1"
+# claude-code uses the `github:` backend, not `aqua:`: mise <= 2026.8.5 has a
+# bug merging the aqua registry's per-OS `overrides` for this package (the
+# Linux entries only set `variants`, not `format`, and mise fails to inherit
+# the parent `format: tar.gz` -- it installs the raw, unextracted tar.gz
+# renamed to `claude` instead of the binary inside it, so `claude` -- and
+# `mise run plugin-validate` -- fails with "Syntax error" on Linux only,
+# since it's actually being shell-interpreted). The `github:` backend
+# resolves the OS/arch asset directly against the release without going
+# through that override-merge path, and adds attestation/provenance
+# verification on top of the checksum. Fixed upstream by jdx/mise#11925 and
+# jdx/mise#11931 (in mise 2026.8.6), but the CI reusable workflow currently
+# pins an older mise -- switch back to `aqua:` once it's bumped past 2026.8.6.
+"github:anthropics/claude-code" = "v2.1.288"

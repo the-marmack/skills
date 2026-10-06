@@ -1,0 +1,10 @@
+{
+  "name": "terraform",
+  "version": "0.2.0",
+  "description": "Terraform style conventions, module scaffolding, and fmt/validate/tflint workflows for authoring reusable modules.",
+  "author": {
+    "name": "the-marmack"
+  },
+  "license": "MIT",
+  "keywords": ["terraform", "hcl", "iac", "modules", "tflint"]
+}

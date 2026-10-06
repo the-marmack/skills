@@ -1,0 +1,22 @@
+# evolve owns the generated evaluation reports and results files — their
+# output is deterministic, so reformatting would fight the tool.
+EVALUATION.md
+EVALUATION.json
+**/EVALUATION.md
+**/results.json
+
+# Prettier folds long frontmatter scalars onto multiple lines, but the skill
+# `description` must stay single-line: it is the only activation signal and
+# some harnesses parse frontmatter line-by-line. markdownlint still lints
+# skill bodies (make lint).
+**/SKILL.md
+
+# Local agent state (plans, settings) — not part of the published repo.
+.claude/
+
+CHANGELOG.md
+**/CHANGELOG.md
+
+# Shared Makefile library submodule (linted in its own repo) and on-demand tool bin
+make/
+.bin/

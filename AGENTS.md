@@ -1,0 +1,97 @@
+# the-marmack skills — repository conventions
+
+This repo is the **the-marmack** skills/plugin marketplace: agent skills packaged as plugins, consumable by Claude Code,
+OpenAI Codex CLI, Google Antigravity, and OpenCode. The global `~/.claude/CLAUDE.md` (Conventional Commits, `commit.sh`
+signing handoff) applies on top of this file.
+
+> `CLAUDE.md` is a symlink to this file — always edit `AGENTS.md`, never `CLAUDE.md`.
+
+## Layout
+
+- One plugin per directory under `plugins/<plugin>/`. Skills are the canonical source of truth at
+  `plugins/<plugin>/skills/<skill-name>/SKILL.md` — they exist exactly once; every distribution channel (Claude/Codex
+  marketplaces, `install.sh` symlinks) points at this tree.
+- Evals live at `plugins/<plugin>/evals/<skill-name>/` (`triggers.json`, `evals.json`, fixtures, and the committed
+  `results.json` the sweeps write), **not** inside the skill directory, so installed skills stay lean.
+- Skill directory name must equal the frontmatter `name`.
+- Skill names are globally namespaced by prefix (e.g. `terraform-style`, not `style`) because Codex/Antigravity/OpenCode
+  install skills into flat shared directories.
+
+## Dual manifests (Claude + Codex)
+
+Every plugin carries two manifests; the repo carries two marketplace manifests:
+
+| Consumer    | Marketplace (repo root)            | Plugin manifest                          |
+| ----------- | ---------------------------------- | ---------------------------------------- |
+| Claude Code | `.claude-plugin/marketplace.json`  | `plugins/<n>/.claude-plugin/plugin.json` |
+| Codex CLI   | `.agents/plugins/marketplace.json` | `plugins/<n>/.codex-plugin/plugin.json`  |
+
+Rules:
+
+- **Versions stay in sync** between the two plugin manifests (enforced by `evolve run checks`). Codex requires strict
+  semver.
+- Marketplace `source` paths are explicit and `./`-prefixed (`"./plugins/terraform"`). Do not use Claude's
+  `metadata.pluginRoot` — Codex fallback-reads Claude's manifest and resolves sources against the repo root.
+- **Never add a `hooks/` directory to a plugin.** Codex default-discovers `hooks/hooks.json` with an incompatible
+  schema.
+
+## Skill frontmatter policy
+
+Portable fields only — these skills must work on all four tools, and only `name`/`description` are read everywhere:
+
+- `name`: `^[a-z0-9]+(-[a-z0-9]+)*$`, ≤ 64 chars, equals the directory name.
+- `description`: third person, ≤ 1024 chars, with explicit trigger phrases ("Use when …"). The description is the only
+  signal harnesses use to decide activation — write it for recall.
+- `license`: `MIT`.
+
+No Claude-specific fields (`allowed-tools`, `model`, `context`, `hooks`, …) unless a skill genuinely needs them, and
+then only with a comment in the PR explaining the cross-tool impact.
+
+## Progressive disclosure
+
+Keep `SKILL.md` compact (well under 500 lines; Codex truncates bodies around 8 KB). Put depth — rationale, extended
+examples, edge cases — in companion files (`reference.md`, `templates/`) linked from the body by relative path.
+Cross-reference sibling skills by **name** ("see the `terraform-style` skill"), never by path: installed layouts differ
+per tool.
+
+## Evals
+
+Evals run through the [evolve](https://github.com/bitwise-media-group/evolve) CLI (`.evolve.json` holds the repo config;
+the toolchain's agent-plugins archetype provisions evolve into each task's environment):
+
+- Every new skill ships with `evals/<skill>/triggers.json` (10–20 `{query, should_trigger}` entries inside the
+  `{"skill_name", "triggers"}` envelope; negatives must be near-misses) and `evals.json` (2–5 behavioral evals with
+  assertions, `{"skill_name", "evals"}` envelope). Schemas live in evolve's `schemas/` directory.
+- Eval `files` are fixture paths, never inline content. A path under `files/` stages into the workspace at its path
+  relative to `files/`; anything else stages by basename (e.g. `fixtures/<name>/go.mod` for per-eval `go.mod` files that
+  would collide under `files/`).
+- Changing a skill `description` ⇒ rerun Tier 1: `make triggers`.
+- Prefer deterministic assertions (`terraform validate`, `tflint`, file/regex checks) over LLM-judged ones.
+- Results and token cost are committed: `evals/<skill>/results.json` (raw, rewritten per-model by the sweeps),
+  `EVALUATION.md` + `EVALUATION.json` (root rollup), and `plugins/<plugin>/EVALUATION.md` (per-eval detail).
+  `evolve report` (`make report`) regenerates the reports from the stored results — never edit them by hand. Token usage
+  comes from each provider's token-counting API; `evolve models` prints the model/pricing matrix.
+
+## Validation
+
+Run before committing:
+
+```sh
+make fmt                          # prettier + addlicense SPDX headers (SKILL.md is prettier-ignored)
+make lint                         # markdownlint + evolve Tier 0 checks + eval JSON + license + plugin validate
+```
+
+Every task is a mise task from the toolchain library (the `.mise/` submodule, agent-plugins archetype plus the
+repo-local `tasks.toml`); the Makefile only forwards, so `make <task>` and `mise run <task>` are interchangeable.
+Developer CLIs (`prettier`, `markdownlint-cli2`, `addlicense`, …) are mise pins from the library; `evolve` is
+task-scoped by the archetype (installed into the task environment, never on the activated PATH) and the claude CLI is
+task-scoped the same way in `tasks.toml` (`aqua:anthropics/claude-code`, an exact pin — no npm, no package.json, no
+globals). The behavioral tiers run through `evolve` too: `make triggers` (Tier 1), `make evals` (Tier 2), `make all`
+(all tiers plus reports), and `make report` to regenerate the EVALUATION files. Filter or tune a run with evolve's own
+flags, e.g. `evolve run triggers --skill <name> --models <ids> --runs <n> --jobs <n>` (a locally installed evolve, or
+`mise install github:bitwise-media-group/evolve@latest` to get one).
+
+## Markdown style
+
+Lint-clean per `.markdownlint-cli2.yaml`: blank lines around headings/lists/fences, a language on every code fence, ≤
+120-col lines (tables exempt).

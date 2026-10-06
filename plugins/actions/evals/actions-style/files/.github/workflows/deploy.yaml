@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_tests:
+        description: Run the test suite before deploying.
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Test
+        if: ${{ inputs.run_tests }}
+        run: make test
+
+      - name: Deploy
+        run: make deploy

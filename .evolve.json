@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/refs/heads/main/docs/config/config.schema.json",
+  "layout": "marketplace",
+  "harnesses": ["claude", "codex", "grok"],
+  "models": ["anthropic", "openai", "xai"],
+  "checks": {
+    "license": "MIT"
+  },
+  "sandbox": {
+    "protected_roots": ["~/Repos"]
+  },
+  "report": {
+    "thresholds": {
+      "triggers_min_pass_rate": 0.55,
+      "evals_min_pass_rate": 0.75
+    }
+  }
+}

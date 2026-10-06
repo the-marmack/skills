@@ -1,0 +1,20 @@
+# claude
+.claude/plans/
+
+# tooling
+.venv/
+.bin/
+
+# terraform provider/module caches (eval `command` assertions run terraform)
+.terraform/
+.terraform.lock.hcl
+
+# OS noise
+.DS_Store
+*.log
+
+# python build artifacts
+__pycache__/
+
+# eval/test reports (evolve report --check writes junit/cobertura here)
+coverage/

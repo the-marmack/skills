@@ -1,0 +1,107 @@
+# Copyright 2026 Bitwise Media Group
+# SPDX-License-Identifier: MIT
+#
+# Repo-local tasks layered on the toolchain library's universal license/
+# prose/container/shell lint tasks (the .mise/ submodule). This file supplies
+# everything specific to a plugin/marketplace repo: the evolve eval suite
+# (reading .evolve.json at the root) and the plugin/marketplace checks
+# ported from the old Makefile — `claude plugin validate` runs the claude
+# CLI as a pinned mise tool (a native release binary resolved via mise's
+# `github:` backend directly against the GitHub release, checksum- and
+# attestation-verified — no npm, no node_modules; see mise.toml for why it's
+# `github:anthropics/claude-code` rather than `aqua:`), the eval fixtures
+# must be valid JSON (checked with the pinned node — no jq dependency), and
+# the installer must parse.
+#
+# The eval tiers keep their old Makefile names (triggers/evals/all/report)
+# and default to --new --modified: full runs are LLM-priced, so the sweep is
+# opt-in via `evolve` directly rather than a task default.
+#
+# evolve and claude-code are both pinned in the root mise.toml [tools] (see
+# that file's header), so every task below can just call them directly and
+# both pins are covered by mise.lock and `mise upgrade --bump`.
+
+[evolve-checks]
+hide = true
+dir = "{{config_root}}"
+run = "evolve run checks --strict"
+
+[plugin-validate]
+hide = true
+dir = "{{config_root}}"
+run = "claude plugin validate ."
+
+[fixture-json]
+hide = true
+dir = "{{config_root}}"
+run = """
+set -eu
+for f in plugins/*/evals/*/*.json; do
+  [ -e "$f" ] || continue
+  node -e 'JSON.parse(require("fs").readFileSync(process.argv[1]))' "$f" \
+    || { echo "invalid JSON: $f"; exit 1; }
+done
+"""
+
+[installer-syntax]
+hide = true
+dir = "{{config_root}}"
+run = "sh -n install.sh"
+
+[fmt]
+description = "format prose, inject license headers"
+run = [{ task = "fmt-prose" }, { task = "license" }]
+
+[lint]
+description = "prose lint + license check + evolve checks + plugin validate + fixture/installer checks"
+run = [
+  { task = "license-check" },
+  { task = "lint-containers" },
+  { task = "lint-shell" },
+  { task = "lint-prose" },
+  { task = "evolve-checks" },
+  { task = "plugin-validate" },
+  { task = "fixture-json" },
+  { task = "installer-syntax" }
+]
+
+[test]
+description = "validate the plugins and that eval results meet the minimum thresholds"
+dir = "{{config_root}}"
+run = [
+  "evolve run checks",
+  "evolve report --check --junit=coverage/junit.xml --cobertura=coverage/cobertura-coverage.xml"
+]
+
+[triggers]
+description = "tier 1 — trigger accuracy + token usage (new/modified)"
+dir = "{{config_root}}"
+run = "evolve run triggers --new --modified"
+
+[evals]
+description = "tier 2 — behavioral evals + token usage (new/modified)"
+dir = "{{config_root}}"
+run = "evolve run evals --new --modified"
+
+[all]
+description = "all eval tiers, then regenerate reports"
+dir = "{{config_root}}"
+run = "evolve run all --new --modified"
+
+[report]
+description = "regenerate the EVALUATION files from stored results"
+dir = "{{config_root}}"
+run = "evolve report"
+
+[ci]
+description = "the gates the reusable CI workflow runs"
+run = [{ task = "lint" }, { task = "test" }]
+
+[pr]
+description = "full local gate before a pull request"
+run = [
+  { task = "fmt" },
+  { task = "lint" },
+  { task = "test" },
+  { task = "commit" }
+]
