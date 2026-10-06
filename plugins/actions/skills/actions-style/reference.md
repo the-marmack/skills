@@ -41,8 +41,8 @@ Two consequences shape the rules:
   `type: boolean`) are strings. The string `'false'` is non-empty, so `if: ${{ vars.DEPLOY }}` is **true even when the
   value is "false"** — a classic foot-gun. Compare explicitly: `if: ${{ vars.DEPLOY == 'true' }}`.
 
-The reusable workflows in `the-marmack/github-workflows` gate their opt-in jobs with `if: ${{ inputs.e2e }}`
-precisely because `e2e` is declared `type: boolean`.
+The reusable workflows in `the-marmack/github-workflows` gate their opt-in jobs with `if: ${{ inputs.e2e }}` precisely
+because `e2e` is declared `type: boolean`.
 
 See GitHub's
 [Evaluate expressions in workflows and actions](https://docs.github.com/en/actions/reference/workflows-and-actions/expressions)

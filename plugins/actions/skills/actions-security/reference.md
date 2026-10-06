@@ -1,8 +1,8 @@
 # Security posture — rationale and attack anatomy
 
 Background for the rules in [SKILL.md](SKILL.md). Section numbers mirror the skill. This is the threat model the
-`the-marmack/github-workflows` library is written against — a reusable workflow author cannot see or constrain
-how a consumer wires the caller's trigger, so every workflow must be safe regardless of calling context.
+`the-marmack/github-workflows` library is written against — a reusable workflow author cannot see or constrain how a
+consumer wires the caller's trigger, so every workflow must be safe regardless of calling context.
 
 ## 1. Why default-deny, granted per job
 
