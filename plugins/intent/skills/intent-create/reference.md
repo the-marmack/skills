@@ -60,6 +60,16 @@ can't be settled now is parked.
   continue.
 - Plain language. The PM doesn't know git, and never needs to.
 
+## Git identity
+
+Set it only inside `.repo/`, never with `--global`. Use the PM's GitHub noreply address:
+
+```sh
+R=~/Documents/intents/.repo
+git -C "$R" config user.name "$(gh api user -q '.name // .login')"
+git -C "$R" config user.email "$(gh api user -q .id)+$(gh api user -q .login)@users.noreply.github.com"
+```
+
 ## GitHub project recipes
 
 ```sh

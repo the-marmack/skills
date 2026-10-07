@@ -24,6 +24,7 @@ others. Steps 1 and 2 run for both actions. After that, run only that action's o
 
 1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Run `git -C ~/Documents/intents/.repo pull --rebase
    --quiet`.
+   If `.repo/` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
 2. If no short name was given, list the intents (folders with a `.intent.json`) together with their lock state, and
    ask which one.
 3. Read `~/Documents/intents/<short>/.intent.json`.

@@ -22,6 +22,7 @@ others.
 2. Read `~/Documents/intents/.config.json`. If it is missing, tell the PM to run `/intent-create` first and stop.
 3. Run `git -C ~/Documents/intents/.repo pull --rebase --quiet`. If `.repo/` is missing, clone it with
    `gh repo clone <owner>/<pmRepo>`.
+4. If `.repo/` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
 
 ## Step 2 — Select
 

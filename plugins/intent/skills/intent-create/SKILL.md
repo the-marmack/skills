@@ -22,6 +22,8 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
 2. Load `~/Documents/intents/.config.json`. If it doesn't exist, create it as described in reference.md.
 3. If `.repo/` is missing, run `gh repo clone <owner>/<pmRepo> ~/Documents/intents/.repo`. Otherwise run
    `git -C ~/Documents/intents/.repo pull --rebase --quiet`.
+4. If `git -C ~/Documents/intents/.repo config user.email` is empty, set a repo-local identity using "Git identity" in
+   reference.md. Most PMs have never configured git, and committing fails without an identity.
 
 ## Step 2 — Name
 
