@@ -1,0 +1,70 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-create",
+  "triggers": [
+    {
+      "query": "/intent-create we need a way for customers to export their invoices as CSV",
+      "should_trigger": true
+    },
+    {
+      "query": "I have a new idea for the product, can you help me write it up as an intent?",
+      "should_trigger": true
+    },
+    {
+      "query": "Start a new intent: drivers keep missing pickup windows because the app doesn't notify them",
+      "should_trigger": true
+    },
+    {
+      "query": "Help me draft an intent for self-service password reset",
+      "should_trigger": true
+    },
+    {
+      "query": "Capture this feature request as an intent and put it on the board",
+      "should_trigger": true
+    },
+    {
+      "query": "I'm a PM and don't know git — how do I submit a new product idea for the team?",
+      "should_trigger": true
+    },
+    {
+      "query": "Create an intent doc in Word for our onboarding redesign",
+      "should_trigger": true
+    },
+    {
+      "query": "Write up a new intent for reducing checkout abandonment",
+      "should_trigger": true
+    },
+    {
+      "query": "Push my edits to the onboarding intent to GitHub",
+      "should_trigger": false
+    },
+    {
+      "query": "/intent-sync",
+      "should_trigger": false
+    },
+    {
+      "query": "Promote the invoice-export intent to Ready",
+      "should_trigger": false
+    },
+    {
+      "query": "Revoke the password-reset intent so I can keep editing it",
+      "should_trigger": false
+    },
+    {
+      "query": "Break this approved intent down into engineering tasks and a plan",
+      "should_trigger": false
+    },
+    {
+      "query": "Create a GitHub issue for the login bug in the web app repo",
+      "should_trigger": false
+    },
+    {
+      "query": "Convert this Word document to markdown",
+      "should_trigger": false
+    },
+    {
+      "query": "What is the intent of this function in utils.py?",
+      "should_trigger": false
+    }
+  ]
+}

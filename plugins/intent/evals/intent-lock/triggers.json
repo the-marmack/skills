@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-lock",
+  "triggers": [
+    {
+      "query": "/intent-promote invoice-export",
+      "should_trigger": true
+    },
+    {
+      "query": "/intent-revoke password-reset",
+      "should_trigger": true
+    },
+    {
+      "query": "The onboarding intent is done — mark it ready and lock it",
+      "should_trigger": true
+    },
+    {
+      "query": "Move my intent to Ready on the board",
+      "should_trigger": true
+    },
+    {
+      "query": "I need to change a promoted intent, send it back to Create",
+      "should_trigger": true
+    },
+    {
+      "query": "Unlock the checkout-abandonment intent so I can edit it",
+      "should_trigger": true
+    },
+    {
+      "query": "Finalize the dark-mode intent",
+      "should_trigger": true
+    },
+    {
+      "query": "Approve and lock my intent",
+      "should_trigger": true
+    },
+    {
+      "query": "Create a new intent about mobile notifications",
+      "should_trigger": false
+    },
+    {
+      "query": "Publish my Word edits to the intent repo",
+      "should_trigger": false
+    },
+    {
+      "query": "Move issue #42 to In Progress on the engineering board",
+      "should_trigger": false
+    },
+    {
+      "query": "Add a lock file to package-lock.json",
+      "should_trigger": false
+    },
+    {
+      "query": "Revoke my GitHub personal access token",
+      "should_trigger": false
+    },
+    {
+      "query": "Promote the staging deployment to production",
+      "should_trigger": false
+    },
+    {
+      "query": "Lock the main branch so nobody can push to it",
+      "should_trigger": false
+    }
+  ]
+}

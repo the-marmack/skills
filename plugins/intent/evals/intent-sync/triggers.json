@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-sync",
+  "triggers": [
+    {
+      "query": "/intent-sync",
+      "should_trigger": true
+    },
+    {
+      "query": "I edited my intent in Word, publish the changes",
+      "should_trigger": true
+    },
+    {
+      "query": "Sync all my intents to GitHub",
+      "should_trigger": true
+    },
+    {
+      "query": "Save my changes to the invoice-export intent to the repo",
+      "should_trigger": true
+    },
+    {
+      "query": "Upload the updated intent.docx for password-reset",
+      "should_trigger": true
+    },
+    {
+      "query": "Why don't my Word edits show up on GitHub? Please push them",
+      "should_trigger": true
+    },
+    {
+      "query": "/intent-sync onboarding-redesign",
+      "should_trigger": true
+    },
+    {
+      "query": "Publish my latest intent edits",
+      "should_trigger": true
+    },
+    {
+      "query": "Start a new intent for dark mode",
+      "should_trigger": false
+    },
+    {
+      "query": "Promote the onboarding intent and lock it",
+      "should_trigger": false
+    },
+    {
+      "query": "Unlock the invoice-export intent",
+      "should_trigger": false
+    },
+    {
+      "query": "git push my feature branch in the api repo",
+      "should_trigger": false
+    },
+    {
+      "query": "Sync my fork with upstream main",
+      "should_trigger": false
+    },
+    {
+      "query": "Convert README.md to a Word document",
+      "should_trigger": false
+    },
+    {
+      "query": "Rebase this PR onto main and force-push",
+      "should_trigger": false
+    }
+  ]
+}

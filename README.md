@@ -45,6 +45,21 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 | `python-docs`    | Google-style docstrings enforced via ruff `D` rules, and LLM-ready CLI reference generation for Typer/Click tools.                                  |
 | `python-release` | `uv build` + `uv publish` via PyPI Trusted Publishing, SHA-pinned CI (`ruff`/`ty`/`pytest`), tag-driven releases, and Renovate coverage.            |
 
+### intent
+
+Intent authoring for product managers who don't use git. Intents live in each PM's private
+`the-marmack/intent-<github-username>` repo. Each PM edits a Word file under `~/Documents/intents/<short-name>/`, and
+the plugin handles pandoc conversion, git, the issue and the project board. Requires `gh` and `pandoc`.
+
+| Skill           | What it does                                                                                                                                                                                         |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `intent-create` | Opens a tracking issue on the board (status Create) and interviews the PM until the required sections are covered. Then writes `intent.docx` and publishes `intents/<issue>-<short-name>/intent.md`. |
+| `intent-sync`   | Converts each edited `intent.docx` to markdown and pushes it straight to `main`. Skips intents that have an `intent.lock`.                                                                           |
+| `intent-lock`   | Promote moves the issue to **Ready** and commits an `intent.lock`. Revoke moves it back to **Create** and deletes the lock.                                                                          |
+
+The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-promote` and `/intent-revoke`
+as thin entry points to these skills.
+
 ### workflow
 
 Developer-workflow commands and skills, layered on the global Conventional-Commits and `commit.sh` conventions.
