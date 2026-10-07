@@ -5,12 +5,12 @@
     {
       "id": "locked-intent-skipped",
       "name": "Refuse to sync a promoted (locked) intent",
-      "prompt": "Use the intent-sync skill to sync the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents), Word conversion tools and git remotes are unavailable, so skip preflight and do not push. Apply the select and lock-check steps exactly, and write your one-line-per-intent result report to sync-report.md.",
+      "prompt": "Use the intent-sync skill to sync the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo, Word conversion tools and git remotes are unavailable, so skip preflight and do not push. Apply the select and lock-check steps exactly, and write your one-line-per-intent result report to sync-report.md.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
-        "files/intents-root/label-reprint/.intent.json",
-        "files/intents-root/.repo/intents/7-label-reprint/intent.md",
-        "files/intents-root/.repo/intents/7-label-reprint/intent.lock"
+        "files/intents-root/7-label-reprint/.intent.json",
+        "files/intents-root/repo/intents/7-label-reprint/intent.md",
+        "files/intents-root/repo/intents/7-label-reprint/intent.lock"
       ],
       "expectations": [
         "The report tells the PM the intent is locked and that /intent-revoke is needed before editing."
@@ -32,11 +32,11 @@
         },
         {
           "type": "file_exists",
-          "path": "intents-root/.repo/intents/7-label-reprint/intent.lock"
+          "path": "intents-root/repo/intents/7-label-reprint/intent.lock"
         },
         {
           "type": "regex",
-          "path": "intents-root/.repo/intents/7-label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "ORIGINAL-PUBLISHED-TEXT"
         }
       ]

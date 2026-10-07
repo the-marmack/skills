@@ -5,22 +5,22 @@
     {
       "id": "revoke-removes-lock",
       "name": "Revoke deletes the lock file",
-      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents); GitHub and git are unavailable, so skip steps 1-2, R2 and R4 and do the unlock step as a plain file delete instead of git rm. Write a one-paragraph summary of what you did to revoke-report.md.",
+      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo; GitHub and git are unavailable, so skip steps 1-2, R2 and R4 and do the unlock step as a plain file delete instead of git rm. Write a one-paragraph summary of what you did to revoke-report.md.",
       "allowed_tools": "Read Write Edit Glob Grep Skill Bash(rm *)",
       "files": [
-        "files/intents-root/label-reprint/.intent.json",
-        "files/intents-root/.repo/intents/7-label-reprint/intent.md",
-        "files/intents-root/.repo/intents/7-label-reprint/intent.lock"
+        "files/intents-root/7-label-reprint/.intent.json",
+        "files/intents-root/repo/intents/7-label-reprint/intent.md",
+        "files/intents-root/repo/intents/7-label-reprint/intent.lock"
       ],
       "expectations": ["The summary says the intent moves back to Create and can be edited again with /intent-sync."],
       "assertions": [
         {
           "type": "command",
-          "run": "test ! -e intents-root/.repo/intents/7-label-reprint/intent.lock"
+          "run": "test ! -e intents-root/repo/intents/7-label-reprint/intent.lock"
         },
         {
           "type": "file_exists",
-          "path": "intents-root/.repo/intents/7-label-reprint/intent.md"
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md"
         },
         {
           "type": "regex",

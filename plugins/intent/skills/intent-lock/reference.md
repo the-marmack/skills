@@ -36,7 +36,7 @@ Use `$CREATE` for revoke. A `project` scope error means the PM must run `gh auth
 {
     "promotedBy": "<gh api user -q .login>",
     "promotedAt": "<UTC ISO-8601 timestamp>",
-    "commit": "<git -C .repo rev-parse HEAD before the lock commit>",
+    "commit": "<git -C <repoDir> rev-parse HEAD before the lock commit>",
     "issue": "<issue url>"
 }
 ```

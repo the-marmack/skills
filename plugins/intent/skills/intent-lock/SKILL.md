@@ -20,14 +20,15 @@ others. Steps 1 and 2 run for both actions. After that, run only that action's o
 ## Step 1 — Preflight
 
 - **In:** the action (`promote` or `revoke`) and a short name.
-- **Out:** `.config.json`, an up-to-date `.repo/` and the intent's `.intent.json`.
+- **Out:** `.config.json`, an up-to-date clone at `repoDir` and the intent's `.intent.json`.
 
-1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Run `git -C ~/Documents/intents/.repo pull --rebase
-   --quiet`.
-   If `.repo/` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
-2. If no short name was given, list the intents (folders with a `.intent.json`) together with their lock state, and
-   ask which one.
-3. Read `~/Documents/intents/<short>/.intent.json`.
+1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Resolve `repoDir` and clone or pull it, following
+   "Repo location" in the intent-create skill's reference.
+   If `<repoDir>` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
+2. If no short name was given, list the intents (`<issue>-<short>` folders with a `.intent.json`) together with their
+   lock state, and ask which one.
+3. Read `.intent.json` from the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also
+   works).
 
 ## Step 2 — Resolve board item
 
@@ -39,7 +40,7 @@ Follow "Resolve IDs" in reference.md. If the issue isn't on the board, add it an
 
 ## Promote — Step P1: Guard
 
-If `.repo/<repoPath>/intent.lock` already exists, tell the PM the intent is already promoted and stop.
+If `<repoDir>/<repoPath>/intent.lock` already exists, tell the PM the intent is already promoted and stop.
 
 ## Promote — Step P2: Final sync
 
@@ -52,10 +53,10 @@ Set the item's Status to `statuses.ready` using "Set status" in reference.md.
 
 ## Promote — Step P4: Lock
 
-Write `.repo/<repoPath>/intent.lock` using "Lock file" in reference.md, then:
+Write `<repoDir>/<repoPath>/intent.lock` using "Lock file" in reference.md, then:
 
 ```sh
-R=~/Documents/intents/.repo
+R=<repoDir>
 git -C "$R" add "<repoPath>/intent.lock"
 git -C "$R" commit -m "intent(<issue>): promote <short>"
 git -C "$R" push origin HEAD:main
@@ -70,7 +71,7 @@ locked and that `/intent-revoke <short>` unlocks it.
 
 ## Revoke — Step R1: Guard
 
-If `.repo/<repoPath>/intent.lock` doesn't exist, tell the PM the intent isn't promoted. Still make sure the Status is
+If `<repoDir>/<repoPath>/intent.lock` doesn't exist, tell the PM the intent isn't promoted. Still make sure the Status is
 `statuses.create`, then stop.
 
 ## Revoke — Step R2: Move to Create
@@ -80,7 +81,7 @@ Set the item's Status to `statuses.create`.
 ## Revoke — Step R3: Unlock
 
 ```sh
-R=~/Documents/intents/.repo
+R=<repoDir>
 git -C "$R" rm -q "<repoPath>/intent.lock"
 git -C "$R" commit -m "intent(<issue>): revoke <short>"
 git -C "$R" push origin HEAD:main

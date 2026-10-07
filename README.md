@@ -48,8 +48,10 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 ### intent
 
 Intent authoring for product managers who don't use git. Intents live in each PM's private
-`the-marmack/intent-<github-username>` repo. Each PM edits a Word file under `~/Documents/intents/<short-name>/`, and
-the plugin handles Word conversion (built-in OS tools only), git, the issue and the project board. Requires only `gh`.
+`the-marmack/intent-<github-username>` repo. Each PM edits a Word file under
+`~/Documents/intents/<issue>-<short-name>/`, and the plugin handles Word conversion (built-in OS tools only), git, the
+issue and the project board. Requires only `gh`. The local clone defaults to `~/Documents/intents/repo`; set `repoDir`
+in `~/Documents/intents/.config.json` to use another checkout.
 
 | Skill           | What it does                                                                                                                                                                                         |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

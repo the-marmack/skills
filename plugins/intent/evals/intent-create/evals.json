@@ -5,7 +5,7 @@
     {
       "id": "draft-offline-noninteractive",
       "name": "Draft intent.md from a rough idea without GitHub",
-      "prompt": "Use the intent-create skill, but GitHub and Word conversion tools are unavailable in this environment and nobody can answer questions. Skip steps 1, 3 and 6 and treat the issue number as 7 with URL https://github.com/the-marmack/intent-themarmack/issues/7. Use intents-root/ in the current directory in place of ~/Documents/intents. Author is Pat PM, date 2026-10-07. The PM's rough idea: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one click from the order screen.' Write only intents-root/label-reprint/intent.md and intents-root/label-reprint/.intent.json. Park anything you would have asked as Open questions.",
+      "prompt": "Use the intent-create skill, but GitHub and Word conversion tools are unavailable in this environment and nobody can answer questions. Skip steps 1, 3 and 6 and treat the issue number as 7 with URL https://github.com/the-marmack/intent-themarmack/issues/7. Use intents-root/ in the current directory in place of ~/Documents/intents, with repoDir set to intents-root/repo. Author is Pat PM, date 2026-10-07. The PM's rough idea: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one click from the order screen.' Write only intents-root/repo/intents/7-label-reprint/intent.md and intents-root/7-label-reprint/.intent.json. Park anything you would have asked as Open questions.",
       "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *)",
       "expectations": [
         "Proposed outcome has at least one success criterion that is observable and testable, not a vague aspiration.",
@@ -14,60 +14,64 @@
       "assertions": [
         {
           "type": "file_exists",
-          "path": "intents-root/label-reprint/intent.md"
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md"
         },
         {
           "type": "file_exists",
-          "path": "intents-root/label-reprint/.intent.json"
+          "path": "intents-root/7-label-reprint/.intent.json"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e intents-root/7-label-reprint/intent.md"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Request$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Problem$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Proposed outcome$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Affected users and systems$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Constraints$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Out of scope$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Open questions$"
         },
         {
           "type": "regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "issues/7"
         },
         {
           "type": "not_regex",
-          "path": "intents-root/label-reprint/intent.md",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "\\{\\{"
         },
         {
           "type": "command",
-          "run": "python3 -c \"import json; d=json.load(open('intents-root/label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"",
+          "run": "python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"",
           "requires": "python3"
         }
       ]
