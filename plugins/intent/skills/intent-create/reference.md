@@ -66,10 +66,57 @@ can't be settled now is parked.
 P=<project number>; O=<project owner>
 PID=$(gh project view "$P" --owner "$O" --format json -q .id)
 ITEM=$(gh project item-add "$P" --owner "$O" --url "$ISSUE_URL" --format json -q .id)
-FIELD=$(gh project field-list "$P" --owner "$O" --format json -q '.fields[]|select(.name=="Status")')
-FID=$(echo "$FIELD" | jq -r .id)
-OID=$(echo "$FIELD" | jq -r '.options[]|select(.name=="Create").id')
+FID=$(gh project field-list "$P" --owner "$O" --format json -q '.fields[]|select(.name=="Status").id')
+OID=$(gh project field-list "$P" --owner "$O" --format json \
+  -q '.fields[]|select(.name=="Status").options[]|select(.name=="Create").id')
 gh project item-edit --id "$ITEM" --project-id "$PID" --field-id "$FID" --single-select-option-id "$OID"
 ```
 
 If `gh` reports a missing `project` scope, tell the PM to run `gh auth refresh -s project` and then retry.
+
+Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by default.
+
+## Word conversion
+
+The conversion uses only what ships with the OS: `textutil` on macOS, and Word (via PowerShell) plus `tar` on Windows.
+The output doesn't need to be byte-identical between runs. What matters is the intent's content.
+
+### Markdown to Word (create)
+
+Write the filled template as simple HTML in `<short>/intent.html`. Use only `h1`, `h2`, `p`, `ul`/`li`, `strong`, `em`
+and `a`. Then convert it and delete the HTML file:
+
+```sh
+# macOS
+textutil -convert docx intent.html -output intent.docx && rm intent.html
+```
+
+```powershell
+# Windows (16 = wdFormatDocumentDefault)
+$w = New-Object -ComObject Word.Application; $w.Visible = $false
+$d = $w.Documents.Open((Resolve-Path intent.html).Path)
+$d.SaveAs2((Join-Path $PWD 'intent.docx'), 16); $d.Close(); $w.Quit(); Remove-Item intent.html
+```
+
+### Word to markdown (sync)
+
+Extract the text with its structure, then write `intent.md` yourself:
+
+```sh
+# macOS: Word -> HTML on stdout
+textutil -convert html -stdout intent.docx
+```
+
+```powershell
+# Windows: a .docx is a zip; read the document body XML (tar ships with Windows 10+)
+$t = New-Item -ItemType Directory (Join-Path $env:TEMP ([guid]::NewGuid()))
+tar -xf intent.docx -C $t word/document.xml; Get-Content (Join-Path $t 'word/document.xml') -Raw
+```
+
+Map the structure onto the template's shape:
+
+- The title becomes `# Intent: …` and each section becomes a level-2 (`##`) heading. Lists become `-` bullets.
+- macOS `textutil` HTML has no heading tags. Headings come back as short bold paragraphs and bullets as `•`, so match
+  them against the template's section names.
+- In Windows XML, the `w:pStyle` values `Heading1` and `Heading2` mark headings, and `w:numPr` marks list items.
+- Keep the PM's words. Don't summarize, reorder or "improve" them.

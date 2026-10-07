@@ -19,10 +19,8 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
 - **Out:** a loaded `.config.json` and an up-to-date `.repo/`.
 
 1. Run `gh auth status`. If it fails, ask the PM to run `gh auth login` and stop.
-2. Run `pandoc --version`. If pandoc is missing, ask the PM to install it (`brew install pandoc` on macOS,
-   `winget install JohnMacFarlane.Pandoc` on Windows) and stop.
-3. Load `~/Documents/intents/.config.json`. If it doesn't exist, create it as described in reference.md.
-4. If `.repo/` is missing, run `gh repo clone <owner>/<pmRepo> ~/Documents/intents/.repo`. Otherwise run
+2. Load `~/Documents/intents/.config.json`. If it doesn't exist, create it as described in reference.md.
+3. If `.repo/` is missing, run `gh repo clone <owner>/<pmRepo> ~/Documents/intents/.repo`. Otherwise run
    `git -C ~/Documents/intents/.repo pull --rebase --quiet`.
 
 ## Step 2 — Name
@@ -63,14 +61,8 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
 
 1. Fill in [templates/intent.md](templates/intent.md). Replace every `{{…}}`: `author` is the `gh api user` name (or
    its login if no name is set), and `date` is today's date. Write the result to `<short>/intent.md`.
-2. Generate the Word file, then regenerate the markdown from it, so the published `intent.md` is exactly what later
-   syncs will produce:
-
-   ```sh
-   cd ~/Documents/intents/<short>
-   pandoc intent.md -o intent.docx
-   pandoc -f docx -t gfm --wrap=none intent.docx -o intent.md
-   ```
+2. Generate `intent.docx` from it using "Word conversion → markdown to Word" in reference.md. This uses only
+   built-in tools, so nothing needs installing.
 
 3. Write `.intent.json` with `{"issue", "url", "title", "itemId", "repoPath": "intents/<issue>-<short>"}`.
 

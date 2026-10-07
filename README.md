@@ -49,7 +49,7 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 
 Intent authoring for product managers who don't use git. Intents live in each PM's private
 `the-marmack/intent-<github-username>` repo. Each PM edits a Word file under `~/Documents/intents/<short-name>/`, and
-the plugin handles pandoc conversion, git, the issue and the project board. Requires `gh` and `pandoc`.
+the plugin handles Word conversion (built-in OS tools only), git, the issue and the project board. Requires only `gh`.
 
 | Skill           | What it does                                                                                                                                                                                         |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

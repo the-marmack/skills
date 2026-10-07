@@ -5,17 +5,17 @@
 ```sh
 P=<project.number>; O=<project.owner>
 PID=$(gh project view "$P" --owner "$O" --format json -q .id)
-FIELD=$(gh project field-list "$P" --owner "$O" --format json -q '.fields[]|select(.name=="Status")')
-FID=$(echo "$FIELD" | jq -r .id)
-CREATE=$(echo "$FIELD" | jq -r --arg n "<statuses.create>" '.options[]|select(.name==$n).id')
-READY=$(echo "$FIELD" | jq -r --arg n "<statuses.ready>" '.options[]|select(.name==$n).id')
+Q='.fields[]|select(.name=="Status")'
+FID=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.id")
+CREATE=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.create>\").id")
+READY=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.ready>\").id")
 ```
 
 The item ID is `itemId` in `.intent.json`. If that is missing or stale, look it up by the issue URL:
 
 ```sh
 ITEM=$(gh project item-list "$P" --owner "$O" --limit 1000 --format json \
-  | jq -r --arg u "$URL" '.items[]|select(.content.url==$u).id')
+  -q ".items[]|select(.content.url==\"$URL\").id")
 ```
 
 If the item is still missing, add it with `gh project item-add "$P" --owner "$O" --url "$URL" --format json -q .id`.

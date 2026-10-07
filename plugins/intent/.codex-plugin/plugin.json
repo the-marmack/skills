@@ -6,7 +6,7 @@
     "name": "the-marmack"
   },
   "license": "MIT",
-  "keywords": ["intent", "product-management", "github-projects", "pandoc", "docx"],
+  "keywords": ["intent", "product-management", "github-projects", "docx"],
   "interface": {
     "displayName": "Intent",
     "shortDescription": "Write, sync and promote PM intents in GitHub."

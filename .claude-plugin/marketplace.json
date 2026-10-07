@@ -49,7 +49,7 @@
       "name": "intent",
       "source": "./plugins/intent",
       "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits, /intent-promote and /intent-revoke move the intent between Create and Ready on the project board and lock or unlock it.",
-      "keywords": ["intent", "product-management", "github-projects", "pandoc", "docx"]
+      "keywords": ["intent", "product-management", "github-projects", "docx"]
     }
   ]
 }
