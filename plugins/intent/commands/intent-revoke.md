@@ -1,7 +1,7 @@
 ---
 description:
-    Revoke a promoted intent — move its issue back to Create on the project board and remove the lock so it can be
-    edited again.
+    Revoke a promoted intent — move its issue back to Create on the project board, and unlock it if planning had
+    started, so it can be edited again.
 argument-hint: <short-name>
 ---
 

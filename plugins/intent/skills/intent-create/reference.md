@@ -25,7 +25,7 @@ The local intent folder holds only the Word file and `.intent.json`. The markdow
     "pmRepo": "intent-<github-login>",
     "repoDir": "/Users/<me>/Documents/intents/repo",
     "project": { "owner": "the-marmack", "number": 2, "title": "Intents (test)" },
-    "statuses": { "create": "Create", "ready": "Ready" }
+    "statuses": { "create": "Create", "ready": "Ready", "plan": "Plan" }
 }
 ```
 
