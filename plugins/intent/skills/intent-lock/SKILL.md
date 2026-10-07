@@ -1,6 +1,6 @@
 ---
 name: intent-lock
-description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits, moves the intent's issue from Create to Ready and commits an intent.lock file into intents/<issue>-<short-name>/ so intent-sync can no longer change it; revoke moves the issue from Ready back to Create and deletes the lock so editing can resume. Use when a PM wants to promote, approve, finalize, lock, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), or moving non-intent issues around a board.
+description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits and moves the intent's issue from Create to Ready so engineering can plan it; revoke moves it from Ready or Plan back to Create and, if planning had started, runs the repo's intent-lock workflow to remove intents/<issue>-<short-name>/intent.lock so editing can resume. The lock itself is set by that workflow when the issue reaches Plan, never by this skill. Use when a PM wants to promote, approve, finalize, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the intents repo's /plan), or moving non-intent issues around a board.
 license: MIT
 ---
 
@@ -9,10 +9,13 @@ license: MIT
 The user is a product manager who doesn't know git, so speak in plain language. The local layout and `.config.json`
 follow the intent-create skill's reference. Commands and IDs are in [reference.md](reference.md).
 
-| Action      | Board status       | Lock file             |
-| ----------- | ------------------ | --------------------- |
-| **promote** | Create → **Ready** | `intent.lock` added   |
-| **revoke**  | Ready → **Create** | `intent.lock` removed |
+The board decides whether an intent is locked, and `intent.lock` in the repo records it. The PM repo's `intent-lock`
+workflow is the only thing that writes or removes the lock. It locks the intent while its Status is `statuses.plan`.
+
+| Action      | Board status               | Lock file                             |
+| ----------- | -------------------------- | ------------------------------------- |
+| **promote** | Create → **Ready**         | none; `/plan` locks it later via Plan |
+| **revoke**  | Ready or Plan → **Create** | removed by the workflow if present    |
 
 Each step below has its own inputs and outputs, so steps can be reordered, swapped or removed without touching the
 others. Steps 1 and 2 run for both actions. After that, run only that action's own steps.
@@ -26,53 +29,48 @@ others. Steps 1 and 2 run for both actions. After that, run only that action's o
    "Repo location" in the intent-create skill's reference.
    If `<repoDir>` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
 2. If no short name was given, list the intents (`<issue>-<short>` folders with a `.intent.json`) together with their
-   lock state, and ask which one.
+   board status, and ask which one.
 3. Read `.intent.json` from the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also
    works).
 
 ## Step 2 — Resolve board item
 
 - **In:** `url` and `itemId` from `.intent.json`.
-- **Out:** `PID`, `ITEM`, `FID` and the option IDs for `statuses.create` and `statuses.ready`.
+- **Out:** `PID`, `ITEM`, `FID`, the item's current `STATUS`, and the option IDs for `statuses.create`,
+  `statuses.ready` and `statuses.plan`.
 
 Follow "Resolve IDs" in reference.md. If the issue isn't on the board, add it and save the new `itemId` to
 `.intent.json`.
 
 ## Promote — Step P1: Guard
 
-If `<repoDir>/<repoPath>/intent.lock` already exists, tell the PM the intent is already promoted and stop.
+If `STATUS` is already `statuses.ready` or `statuses.plan`, or `<repoDir>/<repoPath>/intent.lock` exists, tell the PM
+the intent is already promoted and stop.
 
 ## Promote — Step P2: Final sync
 
-Run the intent-sync skill for this one intent, so the latest Word edits are published before the lock goes on. If the
-sync fails, stop.
+Run the intent-sync skill for this one intent, so the latest Word edits are published before engineering picks it up.
+If the sync fails, stop.
 
 ## Promote — Step P3: Move to Ready
 
 Set the item's Status to `statuses.ready` using "Set status" in reference.md.
 
-## Promote — Step P4: Lock
+## Promote — Step P4: Record
 
-Write `<repoDir>/<repoPath>/intent.lock` using "Lock file" in reference.md, then:
+Run `gh issue comment <url> --body "Promoted to **Ready** for planning."`. Tell the PM:
 
-```sh
-R=<repoDir>
-git -C "$R" add "<repoPath>/intent.lock"
-git -C "$R" commit -m "intent(<issue>): promote <short>"
-git -C "$R" push origin HEAD:main
-```
-
-If the push fails, set Status back to `statuses.create`, remove the local lock, and report the error.
-
-## Promote — Step P5: Record
-
-Run `gh issue comment <url> --body "Promoted to **Ready** and locked at <commit sha>."`. Tell the PM the intent is
-locked and that `/intent-revoke <short>` unlocks it.
+- the intent is ready for engineering, and they can still edit and sync it until planning starts;
+- once it moves to **Plan**, it's locked;
+- `/intent-revoke <short>` takes it back.
 
 ## Revoke — Step R1: Guard
 
-If `<repoDir>/<repoPath>/intent.lock` doesn't exist, tell the PM the intent isn't promoted. Still make sure the Status is
-`statuses.create`, then stop.
+If `STATUS` is `statuses.create` and there's no `<repoDir>/<repoPath>/intent.lock`, tell the PM the intent isn't
+promoted and stop.
+
+If `STATUS` is `statuses.plan` or the lock exists, engineering has started planning. Tell the PM, and ask them to
+confirm that they want to pull it back before you continue.
 
 ## Revoke — Step R2: Move to Create
 
@@ -80,14 +78,11 @@ Set the item's Status to `statuses.create`.
 
 ## Revoke — Step R3: Unlock
 
-```sh
-R=<repoDir>
-git -C "$R" rm -q "<repoPath>/intent.lock"
-git -C "$R" commit -m "intent(<issue>): revoke <short>"
-git -C "$R" push origin HEAD:main
-```
+Skip this step when there's no `intent.lock`. Otherwise run "Sync the lock" in reference.md for this issue, then pull
+`<repoDir>` and check that `intent.lock` is gone. If the run fails, tell the PM that the board says Create but the
+intent is still locked, and show them the run's link.
 
 ## Revoke — Step R4: Record
 
-Run `gh issue comment <url> --body "Revoked: moved back to **Create** and unlocked."`. Tell the PM they can edit
-`intent.docx` again and publish their changes with `/intent-sync`.
+Run `gh issue comment <url> --body "Revoked: moved back to **Create**."`. Tell the PM they can edit `intent.docx` again
+and publish their changes with `/intent-sync`.

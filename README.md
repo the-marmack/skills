@@ -57,7 +57,7 @@ in `~/Documents/intents/.config.json` to use another checkout.
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `intent-create` | Opens a tracking issue on the board (status Create) and interviews the PM until the required sections are covered. Then writes `intent.docx` and publishes `intents/<issue>-<short-name>/intent.md`. |
 | `intent-sync`   | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`. With no name, lists the unlocked intents to pick from. Refuses intents that have an `intent.lock`.                 |
-| `intent-lock`   | Promote moves the issue to **Ready** and commits an `intent.lock`. Revoke moves it back to **Create** and deletes the lock.                                                                          |
+| `intent-lock`   | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if it was in **Plan**, runs the `intent-lock` workflow to remove the lock. Only that workflow writes `intent.lock`.    |
 
 The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-promote` and `/intent-revoke`
 as thin entry points to these skills.

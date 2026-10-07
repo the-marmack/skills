@@ -3,24 +3,32 @@
   "skill_name": "intent-lock",
   "evals": [
     {
-      "id": "revoke-removes-lock",
-      "name": "Revoke deletes the lock file",
-      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo; GitHub and git are unavailable, so skip steps 1-2, R2 and R4 and do the unlock step as a plain file delete instead of git rm. Write a one-paragraph summary of what you did to revoke-report.md.",
-      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(rm *)",
+      "id": "revoke-uses-workflow",
+      "name": "Revoke unlocks through the workflow, never by hand",
+      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. The board says its Status is Plan and the PM has already confirmed they want it back. GitHub and git are unavailable, so skip steps 1-2, R2 and R4, and instead of running anything in R3 write the exact commands you would run, plus a one-paragraph summary of the revoke, to revoke-report.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",
         "files/intents-root/repo/intents/7-label-reprint/intent.md",
         "files/intents-root/repo/intents/7-label-reprint/intent.lock"
       ],
-      "expectations": ["The summary says the intent moves back to Create and can be edited again with /intent-sync."],
+      "expectations": [
+        "The report dispatches the intent-lock workflow for issue 7 and waits for it instead of deleting intent.lock itself.",
+        "The summary says the intent moves back to Create and can be edited again with /intent-sync."
+      ],
       "assertions": [
         {
-          "type": "command",
-          "run": "test ! -e intents-root/repo/intents/7-label-reprint/intent.lock"
+          "type": "file_exists",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.lock"
         },
         {
           "type": "file_exists",
           "path": "intents-root/repo/intents/7-label-reprint/intent.md"
+        },
+        {
+          "type": "regex",
+          "path": "revoke-report.md",
+          "pattern": "gh workflow run intent-lock\\.yaml"
         },
         {
           "type": "regex",

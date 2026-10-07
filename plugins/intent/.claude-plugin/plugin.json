@@ -1,7 +1,7 @@
 {
   "name": "intent",
   "version": "0.1.0",
-  "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits, /intent-promote and /intent-revoke move the intent between Create and Ready on the project board and lock or unlock it.",
+  "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits, /intent-promote moves the intent to Ready for planning and /intent-revoke takes it back to Create; the repo's intent-lock workflow locks it while it's in Plan.",
   "author": {
     "name": "the-marmack"
   },
