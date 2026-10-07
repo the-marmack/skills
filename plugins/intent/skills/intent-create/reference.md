@@ -113,11 +113,13 @@ The output doesn't need to be byte-identical between runs. What matters is the i
 ### Markdown to Word (create)
 
 Write the filled template as simple HTML in `<issue>-<short>/intent.html`, inside the local intent folder. Use only
-`h1`, `h2`, `p`, `ul`/`li`, `strong`, `em` and `a`. Then convert it and delete the HTML file:
+`h1`, `h2`, `p`, `ul`/`li`, `strong`, `em` and `a`, and start the file with `<html><head><meta charset="utf-8"></head>`.
+Without the charset, dashes, accents and curly quotes turn into garbage such as `â€”` in Word. Then convert it and
+delete the HTML file:
 
 ```sh
 # macOS
-textutil -convert docx intent.html -output intent.docx && rm intent.html
+textutil -convert docx -inputencoding UTF-8 intent.html -output intent.docx && rm intent.html
 ```
 
 ```powershell
