@@ -11,7 +11,7 @@
       "should_trigger": true
     },
     {
-      "query": "Sync all my intents to GitHub",
+      "query": "Sync my intent to GitHub",
       "should_trigger": true
     },
     {

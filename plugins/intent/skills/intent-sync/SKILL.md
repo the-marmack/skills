@@ -1,6 +1,6 @@
 ---
 name: intent-sync
-description: Publish a PM's edits to their intents — convert each ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and push it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo, a thin layer over git for people who have never used it. Refuses to touch an intent whose folder holds an intent.lock (it has been promoted). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
+description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and push it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo, a thin layer over git for people who have never used it. With no intent named, lists the unlocked intents and asks which one. Refuses to touch an intent that has an intent.lock (it has been promoted and picked up). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
 license: MIT
 ---
 
@@ -25,21 +25,27 @@ others.
 
 ## Step 2 — Select
 
-- **In:** an optional short-name argument (`all`, or no argument, means every intent).
-- **Out:** a list of intent folders.
+- **In:** an optional short-name argument.
+- **Out:** exactly one intent folder.
 
-If a short name was given, pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
-also works). Otherwise pick every child folder that has a
-`.intent.json`. A folder with an `intent.docx` but no `.intent.json` was never created through `/intent-create`, so
-mention it and skip it.
+Sync publishes one intent at a time. An intent is **locked** when `<repoDir>/<repoPath>/intent.lock` exists: it has
+been promoted and picked up, so it can't change here.
+
+- **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
+  also works).
+- **No argument:** list every child folder that has a `.intent.json` and isn't locked, showing each intent's title and
+  `<issue>-<short>`, and ask the PM to pick one (use the interactive question UI when it exists). Leave locked intents
+  out of the list. If none are unlocked, say so and stop.
+
+A folder with an `intent.docx` but no `.intent.json` was never created through `/intent-create`, so never offer it.
 
 ## Step 3 — Lock check
 
-- **In:** each intent's `repoPath` from `.intent.json`.
-- **Out:** the subset of intents that aren't locked.
+- **In:** the chosen intent's `repoPath` from `.intent.json`.
+- **Out:** the intent, confirmed unlocked.
 
-If `<repoDir>/<repoPath>/intent.lock` exists, skip that intent and tell the PM: "*(intent title)* is promoted (Ready) and
-locked. Run `/intent-revoke <short>` first if it needs changes." Never edit, delete or bypass a lock here.
+If `<repoDir>/<repoPath>/intent.lock` exists, stop and tell the PM: "*(intent title)* is promoted (Ready) and locked.
+Run `/intent-revoke <short>` first if it needs changes." Never edit, delete or bypass a lock here.
 
 ## Step 4 — Convert
 
@@ -57,8 +63,8 @@ still sync, because the PM owns the content.
 
 ## Step 5 — Push
 
-- **In:** each converted `intent.md`.
-- **Out:** commits on `main` and a short report.
+- **In:** the converted `intent.md`.
+- **Out:** a commit on `main` and a one-line report.
 
 ```sh
 R=<repoDir>
@@ -73,8 +79,7 @@ differences are formatting (whitespace, bullet characters, blank lines, emphasis
 git -C "$R" commit -m "intent(<issue>): sync <short>"
 ```
 
-After every selected intent is staged, run `git -C "$R" push origin HEAD:main`. If the push is rejected, run
+Then run `git -C "$R" push origin HEAD:main`. If the push is rejected, run
 `git -C "$R" pull --rebase` and push once more. If it fails again, stop and show the error.
 
-Report one line per intent: **synced**, **no changes**, **locked (skipped)** or **failed**. For each synced intent,
-include a link to the file on GitHub.
+Report one line: **synced** (with a link to the file on GitHub), **no changes** or **failed**.
