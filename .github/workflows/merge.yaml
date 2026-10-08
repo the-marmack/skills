@@ -45,10 +45,12 @@ jobs:
     # The reusable workflow gates on a /merge comment from a maintainer and
     # re-verifies write access authoritatively, so no per-repo gate is needed.
     uses: the-marmack/github-workflows/.github/workflows/merge.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
-    # with:
-    # merge-command: /merge     # default — the comment that merges now
-    # arm-command: /auto-merge  # default — the comment that arms auto-merge
-    # label: auto-merge         # default — the label that arms auto-merge
+    with:
+      # merge without an approving review: authors can't approve their own PRs, and this org has one maintainer
+      require-approval: false
+      # merge-command: /merge     # default — the comment that merges now
+      # arm-command: /auto-merge  # default — the comment that arms auto-merge
+      # label: auto-merge         # default — the label that arms auto-merge
     secrets:
       app-client-id: ${{ secrets.FF_MERGE_CLIENT_ID }}
       app-private-key: ${{ secrets.FF_MERGE_PRIVATE_KEY }}
