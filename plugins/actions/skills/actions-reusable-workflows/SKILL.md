@@ -32,7 +32,7 @@ permissions:
   contents: read
 jobs:
   ci:
-    uses: the-marmack/github-workflows/.github/workflows/ci.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
+    uses: the-marmack/github-workflows/.github/workflows/ci.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
 ```
 
 A caller may add product-specific jobs (an `integration` job, say) alongside the reusable-workflow
@@ -163,7 +163,7 @@ Every `uses:` line in this skill's templates pins the same full commit SHA, with
 a trailing comment:
 
 ```yaml
-uses: the-marmack/github-workflows/.github/workflows/ci.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
+uses: the-marmack/github-workflows/.github/workflows/ci.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
 ```
 
 A floating tag (`@v6`, `@v6.2`) is simpler to read but mutable — see the `actions-security` skill for
@@ -182,9 +182,9 @@ except for short-lived testing against a feature branch.
 `merge.yaml`, `merge-review-ack.yaml`, and `merge-notice.yaml` drive the
 `the-marmack/ff-merge` action via a short-lived GitHub App token (so commit signatures
 survive). The one-time, org-wide setup — the "FF Merge" App, its ruleset bypass, the
-`FF_MERGE_CLIENT_ID` variable, and the `FF_MERGE_PRIVATE_KEY` secret — is documented in
+`FF_MERGE_CLIENT_ID` and `FF_MERGE_PRIVATE_KEY` secrets — is documented in
 [`the-marmack/ff-merge`](https://github.com/the-marmack/ff-merge). The contract is
-input `app-client-id` (from `vars.FF_MERGE_CLIENT_ID`) + secret `app-private-key` (from
+secrets `app-client-id` (from `secrets.FF_MERGE_CLIENT_ID`) + `app-private-key` (from
 `secrets.FF_MERGE_PRIVATE_KEY`); align older callers using `client-id`/`app-key` to these names. The
 merge flows also require branch protection that requires PR review.
 
@@ -194,7 +194,7 @@ merge flows also require branch protection that requires PR review.
 flows act within a repo, while writing to an org-level Projects v2 board needs organization-scoped
 permissions no repo-level App grant covers. Create it with organization **projects** read/write plus
 repository **issues** + **pull requests** read, install it on every repository, and expose it as the
-`ADD_TO_PROJECT_CLIENT_ID` variable + `ADD_TO_PROJECT_PRIVATE_KEY` secret. In this org the caller
+`ADD_TO_PROJECT_CLIENT_ID` + `ADD_TO_PROJECT_PRIVATE_KEY` secrets. In this org the caller
 itself is fanned out to every repo automatically by `org-config.sh workflows-sync` in
 [`github-settings`](https://github.com/the-marmack/github-settings), so copying the
 [template](templates/add-to-project.yaml) by hand is only needed for a repo outside that sync.

@@ -45,17 +45,17 @@ permissions:
 
 jobs:
   release:
-    uses: the-marmack/github-workflows/.github/workflows/release.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
+    uses: the-marmack/github-workflows/.github/workflows/release.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
     with:
       # move the floating v1 / v1.1 tags -- set for Actions/reusable repos whose
       # consumers pin @v1; drop (defaults false) for Go binaries pinned to exact versions.
       vanity-tags: true
-      # optional -- author the release PR as the "FF Merge" App instead of GITHUB_TOKEN.
-      # Needed only if you auto-merge release PRs via merge.yaml: a GITHUB_TOKEN push
-      # emits no workflow_run event, so that auto-merge path never retriggers.
-      # app-client-id: ${{ vars.FF_MERGE_CLIENT_ID }}
     secrets:
       # optional -- only needed if .goreleaser.yaml pushes a Homebrew cask to another repo
       homebrew-tap-token: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
-      # optional -- required only when app-client-id is set above
+      # optional -- author the release PR as the "FF Merge" App instead of GITHUB_TOKEN.
+      # Needed only if you auto-merge release PRs via merge.yaml: a GITHUB_TOKEN push
+      # emits no workflow_run event, so that auto-merge path never retriggers.
+      # app-client-id: ${{ secrets.FF_MERGE_CLIENT_ID }}
+      # optional -- required only when app-client-id is set
       # app-private-key: ${{ secrets.FF_MERGE_PRIVATE_KEY }}

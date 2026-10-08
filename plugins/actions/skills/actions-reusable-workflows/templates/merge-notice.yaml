@@ -22,6 +22,6 @@ permissions:
 
 jobs:
   notice:
-    uses: the-marmack/github-workflows/.github/workflows/merge-notice.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
+    uses: the-marmack/github-workflows/.github/workflows/merge-notice.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
     with:
       pr-number: ${{ github.event.pull_request.number }}
