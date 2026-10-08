@@ -53,9 +53,8 @@ permissions:
 
 jobs:
   release:
-    uses: the-marmack/github-workflows/.github/workflows/release.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
-    with:
-      # author the release PR as the FF Merge App so `ci` + auto-merge fire on it
-      app-client-id: ${{ vars.FF_MERGE_CLIENT_ID }}
+    uses: the-marmack/github-workflows/.github/workflows/release.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
     secrets:
+      # author the release PR as the FF Merge App so `ci` + auto-merge fire on it
+      app-client-id: ${{ secrets.FF_MERGE_CLIENT_ID }}
       app-private-key: ${{ secrets.FF_MERGE_PRIVATE_KEY }}

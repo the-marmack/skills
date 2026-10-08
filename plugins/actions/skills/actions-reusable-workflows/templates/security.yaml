@@ -30,7 +30,7 @@ permissions:
 
 jobs:
   analyze:
-    uses: the-marmack/github-workflows/.github/workflows/security.yaml@c30dd535f3d8386a204c20d54f0cd52489a2b4f1 # v6.3.0
+    uses: the-marmack/github-workflows/.github/workflows/security.yaml@7350928cd5ff2fd5dde4908d9e8b17b2497109cc # main
     # with:
     #   go-version-file: go.mod                          # default
     #   config-file: ./.github/codeql/codeql-config.yaml # a repo with a bundled dist/ should exclude it
