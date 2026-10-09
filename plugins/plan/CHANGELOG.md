@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/the-marmack/skills/compare/plan--v0.2.0...plan--v0.3.0) (2026-10-09)
+
+
+### Features
+
+* **intent:** keep intents locked from Plan through Done ([c6ae8dc](https://github.com/the-marmack/skills/commit/c6ae8dcd829b56462e697722da68cfa128880660))
+
 ## [0.2.0](https://github.com/the-marmack/skills/compare/plan--v0.1.0...plan--v0.2.0) (2026-10-09)
 
 

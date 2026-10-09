@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/the-marmack/skills/compare/intent--v0.2.0...intent--v0.3.0) (2026-10-09)
+
+
+### Features
+
+* **intent:** keep intents locked from Plan through Done ([c6ae8dc](https://github.com/the-marmack/skills/commit/c6ae8dcd829b56462e697722da68cfa128880660))
+
+
+### Bug Fixes
+
+* **intent:** check the lock on GitHub's main, never the local clone ([9e0f119](https://github.com/the-marmack/skills/commit/9e0f1194fea516f59a9e1cd83d5822809742aab9))
+
 ## [0.2.0](https://github.com/the-marmack/skills/compare/intent--v0.1.0...intent--v0.2.0) (2026-10-09)
 
 

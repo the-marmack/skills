@@ -1,6 +1,6 @@
 {
   "name": "plan",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Turn a promoted PM intent into a technical plan for AI agents — /plan-create moves the intent to Plan so its repo's intent-lock workflow locks it, picks the the-marmack repo where the work belongs, and breaks the intent into small ordered tasks with acceptance criteria traced to the intent, written to plans/ in the-marmack/intents.",
   "author": {
     "name": "the-marmack"
