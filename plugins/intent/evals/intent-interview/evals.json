@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/evals.schema.json",
+  "skill_name": "intent-interview",
+  "evals": [
+    {
+      "id": "door-offline-noninteractive",
+      "name": "Fill every required section from a rough idea when nobody can answer",
+      "prompt": "Use the intent-interview skill as the door for intent-create. Nobody can answer questions in this environment, so park anything you would have asked under Open questions. The PM's request: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one click from the order screen.' The author is Pat PM. Write the sections you would hand back to sections.md, each under its own level-2 heading named as in the intent template.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "expectations": [
+        "Proposed outcome has at least one observable, testable success criterion.",
+        "The Request section keeps the PM's own words."
+      ],
+      "assertions": [
+        { "type": "file_exists", "path": "sections.md" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Problem$" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Proposed outcome$" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Affected users and systems$" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Constraints$" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Out of scope$" },
+        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Open questions$" },
+        { "type": "regex", "path": "sections.md", "pattern": "one click from the order screen" }
+      ]
+    },
+    {
+      "id": "locked-intent-refused",
+      "name": "Refuse to interview on a locked intent",
+      "prompt": "Use the intent-interview skill on its own to fill in the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub, git and Word conversion tools are unavailable, so don't pull or convert anything. Write what you tell the PM to interview-report.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/7-label-reprint/.intent.json",
+        "files/intents-root/repo/intents/7-label-reprint/intent.md",
+        "files/intents-root/repo/intents/7-label-reprint/intent.lock"
+      ],
+      "expectations": ["The report says the intent is locked for planning and that /intent-revoke is needed first."],
+      "assertions": [
+        { "type": "file_exists", "path": "interview-report.md" },
+        { "type": "regex", "path": "interview-report.md", "pattern": "(?i)lock" },
+        { "type": "regex", "path": "interview-report.md", "pattern": "intent-revoke" },
+        { "type": "command", "run": "test ! -e intents-root/7-label-reprint/intent.docx" },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+          "pattern": "ORIGINAL-PUBLISHED-TEXT"
+        }
+      ]
+    }
+  ]
+}

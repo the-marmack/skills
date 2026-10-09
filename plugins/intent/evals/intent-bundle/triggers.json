@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-bundle",
+  "triggers": [
+    { "query": "What sections does an intent need?", "should_trigger": true },
+    { "query": "Is my label-reprint intent complete enough to promote?", "should_trigger": true },
+    { "query": "Check the invoice-export intent for missing or weak sections", "should_trigger": true },
+    { "query": "Where does the intent plugin keep my intent files?", "should_trigger": true },
+    { "query": "How does the intent lock work and who writes intent.lock?", "should_trigger": true },
+    { "query": "What goes in ~/Documents/intents/.config.json?", "should_trigger": true },
+    { "query": "Does intent 7 have a testable success criterion yet?", "should_trigger": true },
+    { "query": "What do the Create, Ready and Plan columns mean for an intent?", "should_trigger": true },
+    { "query": "Start a new intent for dark mode", "should_trigger": false },
+    { "query": "Ask me questions to fill in the gaps in my intent", "should_trigger": false },
+    { "query": "Publish my Word edits to the intent repo", "should_trigger": false },
+    { "query": "Promote the onboarding intent to Ready", "should_trigger": false },
+    { "query": "Plan the label-reprint intent for the AI agents", "should_trigger": false },
+    { "query": "Check whether package-lock.json is up to date", "should_trigger": false },
+    { "query": "Validate this JSON file against its schema", "should_trigger": false }
+  ]
+}

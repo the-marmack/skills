@@ -1,4 +1,4 @@
-# intent-create reference
+# intent-bundle reference
 
 ## Local layout
 
@@ -68,16 +68,8 @@ These sections must have real content. Interview the PM about any that are missi
 The **Request** is the PM's raw words, so never interview the PM about it. **Open questions** is where anything that
 can't be settled now is parked.
 
-## Interview rules (lighter than aidd-intent's capture-intent grill)
-
-- Ask in **rounds**. Put every open question that doesn't depend on another answer into one batch. Use the interactive
-  question UI when it exists; otherwise use a numbered list.
-- Every question gets a **recommended answer** drawn from what the PM has already said. The PM can reply "yes" to accept
-  it.
-- Don't ask the PM what you can look up yourself, such as the repo contents or earlier intents in `<repoDir>/intents/`.
-- Use at most **three rounds**. After that, move whatever is still open into Open questions as `(owner: <author>)` and
-  continue.
-- Plain language. The PM doesn't know git, and never needs to.
+An intent is **complete** when every required section is good enough. The published `intent.md` must also keep these
+headings: `## Problem`, `## Proposed outcome`, `## Affected users and systems`, `## Constraints`, `## Out of scope`.
 
 ## Git identity
 
@@ -89,21 +81,89 @@ git -C "$R" config user.name "$(gh api user -q '.name // .login')"
 git -C "$R" config user.email "$(gh api user -q .id)+$(gh api user -q .login)@users.noreply.github.com"
 ```
 
-## GitHub project recipes
+## Board
+
+The board is `project` in `.config.json`. Its Status options are `statuses.create`, `statuses.ready` and
+`statuses.plan`. If `.config.json` has no `statuses.plan`, use `Plan`. Use `gh`'s built-in `-q` for JSON queries rather
+than `jq`, which isn't installed by default.
+
+### Resolve IDs
 
 ```sh
-P=<project number>; O=<project owner>
+P=<project.number>; O=<project.owner>
 PID=$(gh project view "$P" --owner "$O" --format json -q .id)
-ITEM=$(gh project item-add "$P" --owner "$O" --url "$ISSUE_URL" --format json -q .id)
-FID=$(gh project field-list "$P" --owner "$O" --format json -q '.fields[]|select(.name=="Status").id')
-OID=$(gh project field-list "$P" --owner "$O" --format json \
-  -q '.fields[]|select(.name=="Status").options[]|select(.name=="Create").id')
-gh project item-edit --id "$ITEM" --project-id "$PID" --field-id "$FID" --single-select-option-id "$OID"
+Q='.fields[]|select(.name=="Status")'
+FID=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.id")
+CREATE=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.create>\").id")
+READY=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.ready>\").id")
+PLAN=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.plan>\").id")
 ```
 
-If `gh` reports a missing `project` scope, tell the PM to run `gh auth refresh -s project` and then retry.
+### Add the issue
 
-Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by default.
+```sh
+ITEM=$(gh project item-add "$P" --owner "$O" --url "$URL" --format json -q .id)
+```
+
+### Find the item
+
+The item ID is `itemId` in `.intent.json`. If that is missing or stale, look it up by the issue URL:
+
+```sh
+ITEM=$(gh project item-list "$P" --owner "$O" --limit 1000 --format json \
+  -q ".items[]|select(.content.url==\"$URL\").id")
+```
+
+If the item is still missing, add it as in "Add the issue".
+
+The current Status:
+
+```sh
+STATUS=$(gh project item-list "$P" --owner "$O" --limit 1000 --format json \
+  -q ".items[]|select(.id==\"$ITEM\").status")
+```
+
+### Set status
+
+```sh
+gh project item-edit --id "$ITEM" --project-id "$PID" --field-id "$FID" --single-select-option-id "$CREATE"
+```
+
+Use `$READY` or `$PLAN` for the other statuses. If `gh` reports a missing `project` scope, tell the PM to run
+`gh auth refresh -s project` and then retry.
+
+## Sync the lock
+
+The PM repo's `.github/workflows/intent-lock.yaml` reads the issue's Status from the board and adds or removes
+`intents/<issue>-<short>/intent.lock` to match. Only that workflow writes the lock. Dispatch it and wait for it:
+
+```sh
+REPO=<owner>/<pmRepo>; N=<issue>
+gh workflow run intent-lock.yaml -R "$REPO" -f issue="$N"
+sleep 5
+RUN=$(gh run list -R "$REPO" --workflow intent-lock.yaml --event workflow_dispatch --limit 1 --json databaseId -q '.[0].databaseId')
+gh run watch "$RUN" -R "$REPO" --exit-status
+```
+
+If the workflow is missing from the repo, ask an admin to add it. Never write or delete `intent.lock` by hand.
+
+## Lock file
+
+`intents/<issue>-<short>/intent.lock` is JSON written by the workflow:
+
+```json
+{
+    "status": "Plan",
+    "lockedBy": "<who dispatched the run>",
+    "lockedAt": "<UTC ISO-8601 timestamp>",
+    "commit": "<last commit that changed intent.md>",
+    "issue": "<issue url>",
+    "run": "<workflow run url>"
+}
+```
+
+The lock only means anything to the intent skills, which refuse to change a locked intent. Nothing stops a plain
+`git push`. Stronger enforcement is tracked in the-marmack/intents#1.
 
 ## Word conversion
 
