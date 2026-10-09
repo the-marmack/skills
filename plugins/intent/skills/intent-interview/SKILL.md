@@ -27,8 +27,9 @@ in the `intent-bundle` skill. The interview rules and the step map are in
   `intent-bundle` skill. Run "Lock check" in the `intent-bundle` skill, which reads `main` on GitHub, not the local
   clone. If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. Run
   `/intent-revoke <short>` first if it needs changes." If it's unknown, stop and say the lock couldn't be confirmed.
-  Otherwise read `intent.docx` into sections, following "Word conversion → Word to markdown" in the `intent-bundle`
-  skill.
+  Then run "Changed on GitHub": if `main` moved since `syncedSha`, run "Refresh the Word file" first, so the interview
+  starts from the current version. Then read `intent.docx` into sections, following "Word conversion → Word to
+  markdown" in the `intent-bundle` skill.
 
 ## Step 2 — Draft
 

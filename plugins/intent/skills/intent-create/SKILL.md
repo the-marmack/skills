@@ -69,7 +69,8 @@ continue with Step 5.
    `<repoDir>/intents/<issue>-<short>/intent.md`, never into the local folder.
 2. Generate `~/Documents/intents/<issue>-<short>/intent.docx` from it using "Word conversion → Markdown to Word" in the
    `intent-bundle` skill. This uses only built-in tools, so nothing needs installing.
-3. Write `.intent.json` with `{"issue", "url", "title", "itemId", "repoPath": "intents/<issue>-<short>"}`.
+3. Write `.intent.json` with `{"issue", "url", "title", "itemId", "repoPath": "intents/<issue>-<short>", "syncedSha": null}`.
+   Step 6 fills in `syncedSha`.
 
 ## Step 6 — Publish
 
@@ -83,8 +84,8 @@ git -C "$R" commit -m "intent(<issue>): create <short>"
 git -C "$R" push origin HEAD:main
 ```
 
-If the push is rejected, run `git -C "$R" pull --rebase` and push one more time. Then add a comment to the issue that
-links to the file: `https://github.com/<owner>/<pmRepo>/blob/main/intents/<issue>-<short>/intent.md`.
+If the push is rejected, run `git -C "$R" pull --rebase` and push one more time. Set `syncedSha` in `.intent.json` to
+the pushed commit (`git -C "$R" rev-parse HEAD`). Then add a comment to the issue that links to the file: `https://github.com/<owner>/<pmRepo>/blob/main/intents/<issue>-<short>/intent.md`.
 
 ## Step 7 — Hand off
 

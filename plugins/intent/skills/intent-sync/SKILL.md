@@ -26,8 +26,8 @@ others.
 
 ## Step 2 — Select
 
-- **In:** an optional short-name argument.
-- **Out:** exactly one intent folder.
+- **In:** an optional short-name argument, which may also contain the word `refresh`.
+- **Out:** exactly one intent folder, and whether this is a refresh.
 
 Sync publishes one intent at a time. An intent is **locked** when planning has started: `the-marmack/intents` holds its
 `lock.yaml` (see the `intent-bundle` skill), so engineering is planning or building it and it can't change here. Find
@@ -42,6 +42,9 @@ unknown, say the lock couldn't be confirmed and stop.
 
 A folder with an `intent.docx` but no `.intent.json` was never created through `/intent-create`, so never offer it.
 
+**Refresh mode:** if the argument contains `refresh` (`/intent-sync refresh <short>`, or `/intent-refresh`), run
+"Refresh the Word file" in the `intent-bundle` skill for this intent after Step 3 and stop. Nothing is pushed.
+
 ## Step 3 — Lock check
 
 - **In:** the chosen intent's `repoPath` from `.intent.json`.
@@ -55,6 +58,22 @@ the local clone.
 - **unknown:** stop and tell the PM the lock couldn't be confirmed on GitHub, so nothing was synced.
 
 Never edit, delete or bypass a lock here.
+
+## Step 3b — Changed on GitHub?
+
+- **In:** `syncedSha` from `.intent.json`.
+- **Out:** the go-ahead to overwrite `intent.md`, or a refreshed Word file and a stop.
+
+`intent.md` on `main` is the truth, and the Word file is one way to change it. Run "Changed on GitHub" in the
+`intent-bundle` skill. If `main` moved since `syncedSha` (or `syncedSha` is missing), tell the PM: "*(intent title)*
+changed on GitHub since your last sync. Syncing your Word file would overwrite those changes." Then ask (use the
+interactive question UI when it exists):
+
+- **Refresh my Word file** (recommended): run "Refresh the Word file" and stop. The PM re-applies their Word edits to
+  the refreshed file and syncs again; their old file is kept as a backup.
+- **Overwrite anyway:** continue to Step 4.
+
+If nobody can answer, don't overwrite: report the question and stop.
 
 ## Step 4 — Convert
 
@@ -92,5 +111,8 @@ git -C "$R" commit -m "intent(<issue>): sync <short>"
 
 Then run `git -C "$R" push origin HEAD:main`. If the push is rejected, run
 `git -C "$R" pull --rebase` and push once more. If it fails again, stop and show the error.
+
+After a push, set `syncedSha` in `.intent.json` to the new commit (`git -C "$R" rev-parse HEAD`). After **no
+changes**, set it to the `HEAD` from Step 3b.
 
 Report one line: **synced** (with a link to the file on GitHub), **no changes** or **failed**.

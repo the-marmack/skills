@@ -3,5 +3,6 @@
   "url": "https://github.com/the-marmack/intent-themarmack/issues/8",
   "title": "Export invoices as CSV",
   "itemId": null,
-  "repoPath": "intents/8-invoice-export"
+  "repoPath": "intents/8-invoice-export",
+  "syncedSha": "ccc3333"
 }

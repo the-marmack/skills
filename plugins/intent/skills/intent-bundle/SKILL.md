@@ -11,8 +11,8 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 
 ## Bundle
 
-- **Local folder:** `~/Documents/intents/<issue>-<short>/` holds only `intent.docx`, the PM's source of truth, and
-  `.intent.json`.
+- **Local folder:** `~/Documents/intents/<issue>-<short>/` holds only `intent.docx` (the PM's Word door, plus
+  backups) and `.intent.json`. `intent.md` on `main` is the truth, not the Word file.
 - **Repo folder:** `intents/<issue>-<short>/` on `main` of `<owner>/<pmRepo>` holds `intent.md`, generated from the
   Word file. While the intent is planned or built, its lock is in `the-marmack/intents` (see "Locked"). Only
   `intent.md` is allowed there today; `sources.md` and `design/` are reserved for later.
@@ -43,6 +43,7 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Lock check                      | intent-sync, intent-interview, intent-lock   |
 | Remove the central lock         | intent-lock                                  |
 | Word conversion                 | intent-create, intent-interview, intent-sync |
+| Changed on GitHub, Refresh      | intent-sync, intent-interview                |
 
 ## Check an intent
 

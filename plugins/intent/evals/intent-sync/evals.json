@@ -44,7 +44,7 @@
     {
       "id": "frontmatter-kept-on-sync",
       "name": "Keep the published frontmatter when syncing from Word",
-      "prompt": "Use the intent-sync skill to sync the intent 'invoice-export'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. Git, GitHub and Word conversion tools are unavailable, so skip preflight and Step 5 (push). The text extracted from intents-root/8-invoice-export/intent.docx is already in word-text.md; use it as the converted Word content in Step 4 and write intents-root/repo/intents/8-invoice-export/intent.md. You are running in claude-code. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
+      "prompt": "Use the intent-sync skill to sync the intent 'invoice-export'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. Git, GitHub and Word conversion tools are unavailable, so skip preflight and Step 5 (push). The text extracted from intents-root/8-invoice-export/intent.docx is already in word-text.md; use it as the converted Word content in Step 4 and write intents-root/repo/intents/8-invoice-export/intent.md. You are running in claude-code. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. The last commit that changed intents/8-invoice-export/intent.md on main is ccc3333. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/8-invoice-export/.intent.json",
@@ -84,6 +84,90 @@
           "type": "regex",
           "path": "intents-root/repo/intents/8-invoice-export/intent.md",
           "pattern": "(?m)^## Proposed outcome$"
+        }
+      ]
+    },
+    {
+      "id": "main-changed-warns",
+      "name": "Warn instead of overwriting when intent.md changed on GitHub",
+      "prompt": "Use the intent-sync skill to sync the intent 'invoice-export'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. Git, GitHub and Word conversion tools are unavailable, so skip preflight and Step 5 (push). The text extracted from intents-root/8-invoice-export/intent.docx is already in word-text.md; use it as the converted Word content in Step 4 and write intents-root/repo/intents/8-invoice-export/intent.md. You are running in claude-code. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. The last commit that changed intents/8-invoice-export/intent.md on main is ddd4444. Don't call gh. Nobody can answer questions: if the skill would ask the PM something, write the question and its options to sync-report.md and stop. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/8-invoice-export/.intent.json",
+        "files/intents-root/repo/intents/8-invoice-export/intent.md",
+        "files/word-text.md"
+      ],
+      "expectations": [
+        "The report warns that the intent changed on GitHub since the last sync and offers to refresh the Word file instead of overwriting."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "sync-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "sync-report.md",
+          "pattern": "(?i)refresh"
+        },
+        {
+          "type": "not_regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "EDITED-IN-WORD"
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; assert json.load(open('intents-root/8-invoice-export/.intent.json'))['syncedSha']=='ccc3333'\"",
+          "requires": "python3"
+        }
+      ]
+    },
+    {
+      "id": "refresh-rebuilds-word",
+      "name": "Refresh rebuilds the Word file from GitHub and keeps a backup",
+      "prompt": "Use the intent-sync skill in refresh mode: /intent-sync refresh invoice-export. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. Git, GitHub and Word conversion tools are unavailable, so skip preflight. The last commit that changed intents/8-invoice-export/intent.md on main is ddd4444, and the file's content at that commit is the one in intents-root/repo/. Instead of converting HTML to Word, keep the HTML you would convert as intents-root/8-invoice-export/intent.html and write the new intent.docx as a copy of it. Use 20261009-1200 as the backup timestamp. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mv *) Bash(cp *)",
+      "files": [
+        "files/intents-root/8-invoice-export/.intent.json",
+        "files/intents-root/8-invoice-export/intent.docx",
+        "files/intents-root/repo/intents/8-invoice-export/intent.md"
+      ],
+      "expectations": [
+        "The old Word file is kept as a dated backup, the new one is built from intent.md on main without the frontmatter, and nothing is pushed."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "intents-root/8-invoice-export/intent.20261009-1200.docx"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/8-invoice-export/intent.20261009-1200.docx",
+          "pattern": "FAKE-DOCX"
+        },
+        {
+          "type": "file_exists",
+          "path": "intents-root/8-invoice-export/intent.html"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/8-invoice-export/intent.html",
+          "pattern": "Export invoices as CSV"
+        },
+        {
+          "type": "not_regex",
+          "path": "intents-root/8-invoice-export/intent.html",
+          "pattern": "(?m)^door:|supersedes:"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "(?m)^supersedes: "
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; assert json.load(open('intents-root/8-invoice-export/.intent.json'))['syncedSha']=='ddd4444'\"",
+          "requires": "python3"
         }
       ]
     }

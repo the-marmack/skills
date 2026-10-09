@@ -11,4 +11,4 @@ Apply the `intent-sync` skill.
 
 Which intent to sync (empty means list the unlocked intents and ask): $ARGUMENTS
 
-Follow the skill's steps in order: preflight, select, lock check, convert, push.
+Follow the skill's steps in order: preflight, select, lock check, changed on GitHub, convert, push.
