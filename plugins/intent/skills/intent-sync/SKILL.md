@@ -7,8 +7,9 @@ license: MIT
 # Sync intents to GitHub
 
 The user is a product manager who doesn't know git. Their Word file, `intent.docx`, is the source of truth. This skill
-converts it to markdown and pushes it to `main`, and the PM never sees git. The local layout and `.config.json` follow
-the intent-create skill's reference.
+converts it to markdown and pushes it to `main`, and the PM never sees git. The local layout, `.config.json` and Word
+conversion are in the `intent-bundle` skill. Which command and recipe each step uses is in
+[references/REFERENCE.md](references/REFERENCE.md).
 
 Each step below has its own inputs and outputs, so steps can be reordered, swapped or removed without touching the
 others.
@@ -20,8 +21,8 @@ others.
 
 1. Run `gh auth status`. If it fails, ask the PM to run `gh auth login` and stop.
 2. Read `~/Documents/intents/.config.json`. If it is missing, tell the PM to run `/intent-create` first and stop.
-3. Resolve `repoDir` and clone or pull it, following "Repo location" in the intent-create skill's reference.
-4. If `<repoDir>` has no `user.email`, set one following "Git identity" in the intent-create skill's reference.
+3. Resolve `repoDir` and clone or pull it, following "Repo location" in the `intent-bundle` skill.
+4. If `<repoDir>` has no `user.email`, set one following "Git identity" in the `intent-bundle` skill.
 
 ## Step 2 — Select
 
@@ -53,9 +54,8 @@ Run `/intent-revoke <short>` first if it needs changes." Never edit, delete or b
 - **Out:** a fresh `<repoDir>/<repoPath>/intent.md`.
 
 Extract the Word file's content and write `<repoDir>/<repoPath>/intent.md` from it. Never write an `intent.md` into the
-local intent folder. Follow "Word conversion → Word to markdown" in the
-intent-create skill's reference. Only built-in tools are used. Formatting may differ slightly from run to run, and
-that's fine: content is what matters.
+local intent folder. Follow "Word conversion → Word to markdown" in the `intent-bundle` skill. Only built-in tools
+are used. Formatting may differ slightly from run to run, and that's fine: content is what matters.
 
 Check that the converted file still contains these headings: `## Problem`, `## Proposed outcome`,
 `## Affected users and systems`, `## Constraints`, `## Out of scope`. If any are missing, warn the PM which ones, but

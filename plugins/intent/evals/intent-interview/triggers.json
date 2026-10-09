@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-interview",
+  "triggers": [
+    { "query": "Ask me questions to fill in my label-reprint intent", "should_trigger": true },
+    { "query": "Interview me so I can finish the invoice-export intent", "should_trigger": true },
+    { "query": "My intent's success criteria are vague, help me sharpen them by asking me questions", "should_trigger": true },
+    { "query": "Continue filling in my intent where we left off", "should_trigger": true },
+    { "query": "Help me flesh out the problem and out-of-scope sections of intent 7", "should_trigger": true },
+    { "query": "Walk me through the questions my intent still needs answered", "should_trigger": true },
+    { "query": "Complete the missing sections of my dark-mode intent with me", "should_trigger": true },
+    { "query": "Start a brand-new intent for mobile notifications", "should_trigger": false },
+    { "query": "Publish my Word edits to the intent repo", "should_trigger": false },
+    { "query": "Is my intent complete enough to promote? Just check it", "should_trigger": false },
+    { "query": "Promote the onboarding intent to Ready", "should_trigger": false },
+    { "query": "Plan the label-reprint intent for the AI agents", "should_trigger": false },
+    { "query": "Prepare an interview script for our customer research calls", "should_trigger": false },
+    { "query": "Give me mock interview questions for a product manager job", "should_trigger": false }
+  ]
+}
