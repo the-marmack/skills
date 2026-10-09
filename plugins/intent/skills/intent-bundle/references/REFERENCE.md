@@ -184,32 +184,55 @@ Use `$READY` or `$PLAN` for the other statuses. If `gh` reports a missing `proje
 
 ## Lock check
 
-Always ask GitHub whether an intent is locked. Never look in the local clone: it can be stale, and a lock can land on
-`main` after the last pull. One call reads the whole `main` tree and lists every lock in the PM repo:
+An intent is **locked** when `the-marmack/intents` has `intents/<login>-<issue>-<short>/lock.yaml` on `main`, written by
+`plan-create` (`<login>` is `pmRepo` without `intent-`). Until the lock workflow is retired, an `intent.lock` in the PM
+repo's `intents/<issue>-<short>/` also counts.
+
+Always ask GitHub. Never look in a local clone: it can be stale, and a lock can land after the last pull. Two calls read
+both `main` trees:
 
 ```sh
-O=<owner>; R=<pmRepo>
-if LOCKS=$(gh api "repos/$O/$R/git/trees/main?recursive=1" \
-  -q 'if .truncated then error("tree truncated") else (.tree[].path|select(endswith("/intent.lock"))) end' 2>&1)
+O=<owner>; R=<pmRepo>; L=${R#intent-}; I=<issue>; P=<repoPath>
+Q='if .truncated then error("tree truncated") else .tree[].path end'
+if C=$(gh api "repos/$O/intents/git/trees/main?recursive=1" -q "$Q" 2>&1) &&
+  M=$(gh api "repos/$O/$R/git/trees/main?recursive=1" -q "$Q" 2>&1)
 then
-  # $LOCKS holds one "<repoPath>/intent.lock" line per locked intent; empty means none are locked
-  printf '%s\n' "$LOCKS" | grep -qx "<repoPath>/intent.lock" && STATE=locked || STATE=unlocked
+  if printf '%s\n' "$C" | grep -Eq "^intents/$L-$I-[^/]+/lock\.yaml$" ||
+    printf '%s\n' "$M" | grep -qx "$P/intent.lock"
+  then STATE=locked; else STATE=unlocked; fi
 else
-  STATE=unknown   # no network, no access, missing repo or branch: $LOCKS holds the error
+  STATE=unknown   # no network, no access, missing repo or branch: $C or $M holds the error
 fi
 ```
 
-- **locked:** `intent.lock` exists on `main`. Block: don't change, sync or interview the intent.
-- **unlocked:** `main` was read and has no `intent.lock` for it.
+To list every locked intent at once (for example to offer only unlocked ones), keep the `$C` and `$M` lists and match
+each intent against them.
+
+- **locked:** a lock exists. Block: don't change, sync or interview the intent.
+- **unlocked:** both trees were read and neither has a lock for it.
 - **unknown:** GitHub couldn't be read. Block as well, and tell the PM the lock couldn't be confirmed and to try again
-  once `gh auth status` works. Never treat an error as unlocked.
+  once `gh auth status` works. Never treat an error as unlocked. A PM needs read access to `the-marmack/intents`;
+  without it every check is unknown, so ask an admin for it.
 
-On Windows, run the same `gh api` call in PowerShell. A non-zero exit means unknown.
+On Windows, run the same `gh api` calls in PowerShell. A non-zero exit means unknown.
 
-## Sync the lock
+## Remove the central lock
 
-The PM repo's `.github/workflows/intent-lock.yaml` reads the issue's Status from the board and adds or removes
-`intents/<issue>-<short>/intent.lock` to match. Only that workflow writes the lock. Dispatch it and wait for it:
+Revoking deletes the central `lock.yaml`. That needs push access to `the-marmack/intents`; on 403 or 404, stop and tell
+the PM to ask a planner to revoke it:
+
+```sh
+F=intents/<folder>/lock.yaml
+BLOB=$(gh api "repos/the-marmack/intents/contents/$F" -q .sha)
+gh api -X DELETE "repos/the-marmack/intents/contents/$F" -f message="unlock(<login>#<issue>): <short>" \
+  -f sha="$BLOB" -f branch=main
+```
+
+## Sync the lock (transition)
+
+Until it's retired, the PM repo's `.github/workflows/intent-lock.yaml` reads the issue's Status from the board and adds
+or removes `intents/<issue>-<short>/intent.lock` to match. Only that workflow writes the lock. Dispatch it and wait for
+it:
 
 ```sh
 REPO=<owner>/<pmRepo>; N=<issue>

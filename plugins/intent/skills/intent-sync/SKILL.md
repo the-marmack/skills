@@ -1,6 +1,6 @@
 ---
 name: intent-sync
-description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and push it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo, a thin layer over git for people who have never used it. With no intent named, lists the unlocked intents and asks which one. Refuses to touch an intent that has an intent.lock (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
+description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and push it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo, a thin layer over git for people who have never used it. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
 license: MIT
 ---
 
@@ -29,10 +29,10 @@ others.
 - **In:** an optional short-name argument.
 - **Out:** exactly one intent folder.
 
-Sync publishes one intent at a time. An intent is **locked** when `<repoPath>/intent.lock` exists on `main` on GitHub:
-it has moved to Plan (or a later column) on the board and engineering is planning or building it, so it can't change
-here. Find out with "Lock check" in the `intent-bundle` skill, which reads GitHub, never the local clone. If the check
-comes back unknown, say the lock couldn't be confirmed and stop.
+Sync publishes one intent at a time. An intent is **locked** when planning has started: `the-marmack/intents` holds its
+`lock.yaml` (see the `intent-bundle` skill), so engineering is planning or building it and it can't change here. Find
+out with "Lock check" in the `intent-bundle` skill, which reads GitHub, never the local clone. If the check comes back
+unknown, say the lock couldn't be confirmed and stop.
 
 - **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
   also works).

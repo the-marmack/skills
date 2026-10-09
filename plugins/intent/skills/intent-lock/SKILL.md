@@ -1,6 +1,6 @@
 ---
 name: intent-lock
-description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits and moves the intent's issue from Create to Ready so engineering can plan it; revoke moves it from Ready or any later column back to Create and, if planning had started, runs the repo's intent-lock workflow to remove intents/<issue>-<short-name>/intent.lock so editing can resume. The lock itself is set by that workflow when the issue reaches Plan and kept through Done, never by this skill. Use when a PM wants to promote, approve, finalize, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the plan plugin's plan-create), or moving non-intent issues around a board.
+description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits and moves the intent's issue from Create to Ready so engineering can plan it; revoke moves it from Ready or any later column back to Create and, if planning had started, deletes the intent's lock.yaml in the-marmack/intents (and closes its draft plan PR) so editing can resume. The lock itself is written by plan-create when planning starts, never by this skill. Use when a PM wants to promote, approve, finalize, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the plan plugin's plan-create), or moving non-intent issues around a board.
 license: MIT
 ---
 
@@ -10,14 +10,13 @@ The user is a product manager who doesn't know git, so speak in plain language. 
 board recipes and the lock are in the `intent-bundle` skill. Which command and recipe each step uses is in
 [references/REFERENCE.md](references/REFERENCE.md).
 
-The board decides whether an intent is locked, and `intent.lock` in the repo records it. The PM repo's `intent-lock`
-workflow is the only thing that writes or removes the lock. It locks the intent while its Status is a
-locked status: `statuses.plan` or any later status (In progress, Test, Done).
+An intent is locked when `the-marmack/intents` holds its `lock.yaml` ("Locked" in the `intent-bundle` skill).
+`plan-create` writes it when planning starts, and revoke removes it. This skill never writes a lock.
 
-| Action      | Board status                | Lock file                                    |
-| ----------- | --------------------------- | -------------------------------------------- |
-| **promote** | Create → **Ready**          | none; `/plan-create` locks it later via Plan |
-| **revoke**  | Ready or later → **Create** | removed by the workflow if present           |
+| Action      | Board status                | Lock                                               |
+| ----------- | --------------------------- | -------------------------------------------------- |
+| **promote** | Create → **Ready**          | none; `/plan-create` locks it when planning starts |
+| **revoke**  | Ready or later → **Create** | central `lock.yaml` deleted, if there is one       |
 
 Each step below has its own inputs and outputs, so steps can be reordered, swapped or removed without touching the
 others. Steps 1 and 2 run for both actions. After that, run only that action's own steps.
@@ -46,8 +45,8 @@ board, add it and save the new `itemId` to `.intent.json`.
 
 ## Promote — Step P1: Guard
 
-If `STATUS` is already `statuses.ready` or a locked status, or "Lock check" in the `intent-bundle` skill finds
-`intent.lock` on GitHub's `main`, tell the PM the intent is already promoted and stop. If the lock check is unknown,
+If `STATUS` is already `statuses.ready` or a locked status, or "Lock check" in the `intent-bundle` skill says
+locked, tell the PM the intent is already promoted and stop. If the lock check is unknown,
 stop and say the lock couldn't be confirmed.
 
 ## Promote — Step P2: Final sync
@@ -81,9 +80,15 @@ Set the item's Status to `statuses.create`.
 
 ## Revoke — Step R3: Unlock
 
-Skip this step when "Lock check" says unlocked. Otherwise run "Sync the lock" in the `intent-bundle` skill for this
-issue, then run "Lock check" again and confirm `intent.lock` is gone from GitHub's `main`. If the run fails, tell
-the PM that the board says Create but the intent is still locked, and show them the run's link.
+Skip this step when "Lock check" says unlocked. Otherwise:
+
+1. Delete the central lock with "Remove the central lock" in the `intent-bundle` skill. On 403 or 404, stop and tell
+   the PM a planner has to revoke it.
+2. Close an open draft plan PR for the intent, if there is one
+   (`gh pr list -R the-marmack/intents --head plan/<login>-<issue>-<short>`), with a comment.
+3. If the PM repo still has the `intent-lock` workflow, run "Sync the lock" to remove the old `intent.lock` too.
+4. Run "Lock check" again and confirm it says unlocked. If it doesn't, tell the PM the board says Create but the
+   intent is still locked.
 
 ## Revoke — Step R4: Record
 

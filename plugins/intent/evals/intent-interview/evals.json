@@ -12,32 +12,77 @@
         "The Request section keeps the PM's own words."
       ],
       "assertions": [
-        { "type": "file_exists", "path": "sections.md" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Problem$" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Proposed outcome$" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Affected users and systems$" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Constraints$" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Out of scope$" },
-        { "type": "regex", "path": "sections.md", "pattern": "(?m)^## Open questions$" },
-        { "type": "regex", "path": "sections.md", "pattern": "one click from the order screen" }
+        {
+          "type": "file_exists",
+          "path": "sections.md"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Problem$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Proposed outcome$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Affected users and systems$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Constraints$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Out of scope$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "(?m)^## Open questions$"
+        },
+        {
+          "type": "regex",
+          "path": "sections.md",
+          "pattern": "one click from the order screen"
+        }
       ]
     },
     {
       "id": "locked-intent-refused",
       "name": "Refuse to interview on a locked intent",
-      "prompt": "Use the intent-interview skill on its own to fill in the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub, git and Word conversion tools are unavailable, so don't pull or convert anything. Write what you tell the PM to interview-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the intent-interview skill on its own to fill in the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub, git and Word conversion tools are unavailable, so don't pull or convert anything. Write what you tell the PM to interview-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",
         "files/intents-root/repo/intents/7-label-reprint/intent.md",
-        "files/intents-root/repo/intents/7-label-reprint/intent.lock"
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml"
       ],
       "expectations": ["The report says the intent is locked for planning and that /intent-revoke is needed first."],
       "assertions": [
-        { "type": "file_exists", "path": "interview-report.md" },
-        { "type": "regex", "path": "interview-report.md", "pattern": "(?i)lock" },
-        { "type": "regex", "path": "interview-report.md", "pattern": "intent-revoke" },
-        { "type": "command", "run": "test ! -e intents-root/7-label-reprint/intent.docx" },
+        {
+          "type": "file_exists",
+          "path": "interview-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "interview-report.md",
+          "pattern": "(?i)lock"
+        },
+        {
+          "type": "regex",
+          "path": "interview-report.md",
+          "pattern": "intent-revoke"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e intents-root/7-label-reprint/intent.docx"
+        },
         {
           "type": "regex",
           "path": "intents-root/repo/intents/7-label-reprint/intent.md",
