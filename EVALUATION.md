@@ -104,6 +104,31 @@ Only the configured `models` appear below; these are excluded from this report:
 | xAI | Grok 4.5 (`grok-4.5`) | 14/14 | +8% | +14% | 51.0s | — | — | 256,546/41,044 | 1,652,480/— | $0.9278 |
 | xAI | Grok 4.6 (`grok-4.6`) | 11/11 (2 errored) | +0% | +0% | 102.0s | — | — | 226,876/43,480 | 1,154,048/— | $0.2196 |
 
+## intent
+
+### Triggers
+
+| Provider | Model | Passed | Pass rate | Δ rate | Avg run | Input tokens | Est. input cost |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Anthropic | Claude Opus 5 (`claude-opus-5`) | 28/29 | 97% | — | 10.9s | — | — |
+| Anthropic | Claude Sonnet 5 (`claude-sonnet-5`) | 28/29 | 97% | — | 7.8s | — | — |
+
+### Evals
+
+| Provider | Model | Passed | Δ rate | Lift vs base | Avg run | Input tokens | Est. input cost | Measured in/out | Cache rd/wr | Measured cost |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Anthropic | Claude Opus 5 (`claude-opus-5`) | 5/5 | — | — | 64.4s | — | — | 66/20,352 | 781,836/111,565 | $2.0157 |
+| Anthropic | Claude Sonnet 5 (`claude-sonnet-5`) | 3/3 | — | — | 43.8s | — | — | 46/9,928 | 777,519/65,492 | $0.5168 |
+
+## plan
+
+### Triggers
+
+| Provider | Model | Passed | Pass rate | Δ rate | Avg run | Input tokens | Est. input cost |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Anthropic | Claude Opus 5 (`claude-opus-5`) | 15/16 | 94% | — | 10.5s | — | — |
+| Anthropic | Claude Sonnet 5 (`claude-sonnet-5`) | 14/16 | 88% | — | 9.6s | — | — |
+
 ## python
 
 ### Triggers

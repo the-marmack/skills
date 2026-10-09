@@ -1,0 +1,543 @@
+{
+  "schema": 5,
+  "plugin": "intent",
+  "skill": "intent-interview",
+  "models": {
+    "anthropic/claude-opus-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:34:47Z",
+        "executed": true,
+        "content_hash": "6def9ab011c8995c45e0c15d9fe328879322c194f50d8b7843ed36cde124abf7",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "query": "Ask me questions to fill in my label-reprint intent",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 3.9,
+            "spec_hash": "26e6bfb5d82d2b511d2b126122ad12e546e511f406f1fa7709a3efeead7bc246"
+          },
+          {
+            "query": "Interview me so I can finish the invoice-export intent",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.9,
+            "spec_hash": "88883c0510dadb21eefe726ae0e11ba2295f42fcce58fda37efd751a90a9cd7f"
+          },
+          {
+            "query": "My intent's success criteria are vague, help me sharpen them by asking me questions",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.8,
+            "spec_hash": "1d035cdc7c02affff48ef6e7500b91563cacca8023ece808611fe78c8048b682"
+          },
+          {
+            "query": "Continue filling in my intent where we left off",
+            "should_trigger": true,
+            "hits": 2,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 9.3,
+            "spec_hash": "b16d36d2dbda230a76e1dfcf8271d2de880f0ec49902fc9f5fa51560d2df07f8"
+          },
+          {
+            "query": "Help me flesh out the problem and out-of-scope sections of intent 7",
+            "should_trigger": true,
+            "hits": 1,
+            "runs": 3,
+            "passed": false,
+            "avg_run_seconds": 7.3,
+            "spec_hash": "67cf12e4b5b4756c4b860d5dd2933e47eab6b4c4f7a1e533eadff8b0767fcb21"
+          },
+          {
+            "query": "Walk me through the questions my intent still needs answered",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 14.1,
+            "spec_hash": "472c0e5ee8b0783b1a5a0ee807a1273099e4a9bd283bb77bb857c51e144c9f0b"
+          },
+          {
+            "query": "Complete the missing sections of my dark-mode intent with me",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.9,
+            "spec_hash": "1c8b321fbfe76b9897cd8f645dbf254348132fe72e151e111b7d85c2446e7e0e"
+          },
+          {
+            "query": "Start a brand-new intent for mobile notifications",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 11.5,
+            "spec_hash": "19919524aee885270d9432c2932ac994682e81d711e8b0282c4955d75fdc3f71"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 9.9,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Is my intent complete enough to promote? Just check it",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.9,
+            "spec_hash": "72db2154dcc86969e5c07aa6ffa240fabb1b84bc8499552630dc283280817732"
+          },
+          {
+            "query": "Promote the onboarding intent to Ready",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 9.2,
+            "spec_hash": "505fd9348bdbe0467fa6c33bc1e7475f14bee41971623c9bdd89e2fc56e2d5fa"
+          },
+          {
+            "query": "Plan the label-reprint intent for the AI agents",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 14.3,
+            "spec_hash": "106ede21773b20837bd3344fd41f5820c4575a4a6c160511ee226b4740cd75d1"
+          },
+          {
+            "query": "Prepare an interview script for our customer research calls",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 44.2,
+            "spec_hash": "0201e7f643ebe9adf721048ba45ac53a5407a6009f67e86fae89495699fa5a10"
+          },
+          {
+            "query": "Give me mock interview questions for a product manager job",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 28.9,
+            "spec_hash": "3ca6256f62933a842f23a1229102d236799d261026142dd74ff80bf6d1937f29"
+          }
+        ],
+        "summary": {
+          "passed": 13,
+          "failed": 1,
+          "total": 14,
+          "pass_rate": 0.928571,
+          "avg_run_seconds": 12.7
+        }
+      },
+      "evals": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:47:31Z",
+        "executed": true,
+        "content_hash": "de302c2c74eeeb477242e8395b18593125a41fa36a892fbef72044382bfb9653",
+        "timeout_seconds": 600,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "id": "door-offline-noninteractive",
+            "name": "Fill every required section from a rough idea when nobody can answer",
+            "passed": true,
+            "measured": {
+              "input_tokens": 18,
+              "cache_read_input_tokens": 226772,
+              "cache_creation_input_tokens": 29545,
+              "output_tokens": 6586,
+              "cost_usd": 0.573576
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Proposed outcome has at least one observable, testable success criterion.",
+                "passed": true,
+                "evidence": "Proposed outcome section lists 5 bullet 'Success criteria' including measurable items like 'Measured time spent on label reprints per staff member per shift drops from the ~20 minute baseline to under",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The Request section keeps the PM's own words.",
+                "passed": true,
+                "evidence": "Request section reads verbatim in first person: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one click from t",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "sections.md",
+                "text": "file sections.md exists",
+                "passed": true,
+                "evidence": "sections.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Problem$",
+                "text": "sections.md matches /(?m)^## Problem$/",
+                "passed": true,
+                "evidence": "## Problem",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Proposed outcome$",
+                "text": "sections.md matches /(?m)^## Proposed outcome$/",
+                "passed": true,
+                "evidence": "## Proposed outcome",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Affected users and systems$",
+                "text": "sections.md matches /(?m)^## Affected users and systems$/",
+                "passed": true,
+                "evidence": "## Affected users and systems",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Constraints$",
+                "text": "sections.md matches /(?m)^## Constraints$/",
+                "passed": true,
+                "evidence": "## Constraints",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Out of scope$",
+                "text": "sections.md matches /(?m)^## Out of scope$/",
+                "passed": true,
+                "evidence": "## Out of scope",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "(?m)^## Open questions$",
+                "text": "sections.md matches /(?m)^## Open questions$/",
+                "passed": true,
+                "evidence": "## Open questions",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "sections.md",
+                "pattern": "one click from the order screen",
+                "text": "sections.md matches /one click from the order screen/",
+                "passed": true,
+                "evidence": "one click from the order screen",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 10,
+              "failed": 0,
+              "total": 10,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 7,
+                "Skill": 1
+              },
+              "total_tool_calls": 8
+            },
+            "timing": {
+              "total_tokens": 262921,
+              "executor_duration_seconds": 106.8
+            },
+            "spec_hash": "53f22e97e0aa004aa78eb1e14228394f29feda04029bf5fa3ad2e18b694ded18"
+          },
+          {
+            "id": "locked-intent-refused",
+            "name": "Refuse to interview on a locked intent",
+            "passed": true,
+            "measured": {
+              "input_tokens": 14,
+              "cache_read_input_tokens": 157388,
+              "cache_creation_input_tokens": 17212,
+              "output_tokens": 2625,
+              "cost_usd": 0.316509
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "The report says the intent is locked for planning and that /intent-revoke is needed first.",
+                "passed": true,
+                "evidence": "Report states outcome 'Stopped at Step 1 (Read). The intent is locked' and quotes the exact PM message 'is being planned and is locked. Run /intent-revoke label-reprint first if it needs changes.'",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "interview-report.md",
+                "text": "file interview-report.md exists",
+                "passed": true,
+                "evidence": "interview-report.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "interview-report.md",
+                "pattern": "(?i)lock",
+                "text": "interview-report.md matches /(?i)lock/",
+                "passed": true,
+                "evidence": "lock",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "interview-report.md",
+                "pattern": "intent-revoke",
+                "text": "interview-report.md matches /intent-revoke/",
+                "passed": true,
+                "evidence": "intent-revoke",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "test ! -e intents-root/7-label-reprint/intent.docx",
+                "text": "command `test ! -e intents-root/7-label-reprint/intent.docx` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "ORIGINAL-PUBLISHED-TEXT",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /ORIGINAL-PUBLISHED-TEXT/",
+                "passed": true,
+                "evidence": "ORIGINAL-PUBLISHED-TEXT",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 6,
+              "failed": 0,
+              "total": 6,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 5,
+                "Skill": 1
+              },
+              "total_tool_calls": 6
+            },
+            "timing": {
+              "total_tokens": 177239,
+              "executor_duration_seconds": 43
+            },
+            "spec_hash": "ee245fa4797999be24589ebbd7260a6e3d1a72b110e89c86745a320c5f5de0a2"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1,
+          "avg_run_seconds": 74.9,
+          "measured": {
+            "input_tokens": 32,
+            "cache_read_input_tokens": 384160,
+            "cache_creation_input_tokens": 46757,
+            "output_tokens": 9211,
+            "cost_usd": 0.890085
+          }
+        }
+      }
+    },
+    "anthropic/claude-sonnet-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "display": "Claude Sonnet 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:36:22Z",
+        "executed": true,
+        "content_hash": "6def9ab011c8995c45e0c15d9fe328879322c194f50d8b7843ed36cde124abf7",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 3,
+          "output_per_mtok": 15
+        },
+        "results": [
+          {
+            "query": "Ask me questions to fill in my label-reprint intent",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.2,
+            "spec_hash": "26e6bfb5d82d2b511d2b126122ad12e546e511f406f1fa7709a3efeead7bc246"
+          },
+          {
+            "query": "Interview me so I can finish the invoice-export intent",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5,
+            "spec_hash": "88883c0510dadb21eefe726ae0e11ba2295f42fcce58fda37efd751a90a9cd7f"
+          },
+          {
+            "query": "My intent's success criteria are vague, help me sharpen them by asking me questions",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.7,
+            "spec_hash": "1d035cdc7c02affff48ef6e7500b91563cacca8023ece808611fe78c8048b682"
+          },
+          {
+            "query": "Continue filling in my intent where we left off",
+            "should_trigger": true,
+            "hits": 0,
+            "runs": 3,
+            "passed": false,
+            "avg_run_seconds": 11.7,
+            "spec_hash": "b16d36d2dbda230a76e1dfcf8271d2de880f0ec49902fc9f5fa51560d2df07f8"
+          },
+          {
+            "query": "Help me flesh out the problem and out-of-scope sections of intent 7",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.8,
+            "spec_hash": "67cf12e4b5b4756c4b860d5dd2933e47eab6b4c4f7a1e533eadff8b0767fcb21"
+          },
+          {
+            "query": "Walk me through the questions my intent still needs answered",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.5,
+            "spec_hash": "472c0e5ee8b0783b1a5a0ee807a1273099e4a9bd283bb77bb857c51e144c9f0b"
+          },
+          {
+            "query": "Complete the missing sections of my dark-mode intent with me",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.3,
+            "spec_hash": "1c8b321fbfe76b9897cd8f645dbf254348132fe72e151e111b7d85c2446e7e0e"
+          },
+          {
+            "query": "Start a brand-new intent for mobile notifications",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.8,
+            "spec_hash": "19919524aee885270d9432c2932ac994682e81d711e8b0282c4955d75fdc3f71"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 10.7,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Is my intent complete enough to promote? Just check it",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.2,
+            "spec_hash": "72db2154dcc86969e5c07aa6ffa240fabb1b84bc8499552630dc283280817732"
+          },
+          {
+            "query": "Promote the onboarding intent to Ready",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7,
+            "spec_hash": "505fd9348bdbe0467fa6c33bc1e7475f14bee41971623c9bdd89e2fc56e2d5fa"
+          },
+          {
+            "query": "Plan the label-reprint intent for the AI agents",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 17.8,
+            "spec_hash": "106ede21773b20837bd3344fd41f5820c4575a4a6c160511ee226b4740cd75d1"
+          },
+          {
+            "query": "Prepare an interview script for our customer research calls",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 11.5,
+            "spec_hash": "0201e7f643ebe9adf721048ba45ac53a5407a6009f67e86fae89495699fa5a10"
+          },
+          {
+            "query": "Give me mock interview questions for a product manager job",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 12.6,
+            "spec_hash": "3ca6256f62933a842f23a1229102d236799d261026142dd74ff80bf6d1937f29"
+          }
+        ],
+        "summary": {
+          "passed": 13,
+          "failed": 1,
+          "total": 14,
+          "pass_rate": 0.928571,
+          "avg_run_seconds": 8.8
+        }
+      }
+    }
+  }
+}

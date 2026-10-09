@@ -1,0 +1,767 @@
+{
+  "schema": 5,
+  "plugin": "intent",
+  "skill": "intent-bundle",
+  "models": {
+    "anthropic/claude-opus-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:31:06Z",
+        "executed": true,
+        "content_hash": "f62788d11c4f0b60b030ae21db635ac0129a33d6322117aaf1af61ebc8e85565",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "query": "What sections does an intent need?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.6,
+            "spec_hash": "2f5d10bc56380fa30b66ee554f2f4d958e9d3141f3e75ed01de129780e6fd022"
+          },
+          {
+            "query": "Is my label-reprint intent complete enough to promote?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.4,
+            "spec_hash": "455298a5cdd7398c63d04b62bd88400653450c12de1e2c4b2f11a722d10d8561"
+          },
+          {
+            "query": "Check the invoice-export intent for missing or weak sections",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.5,
+            "spec_hash": "3b15a4f538de46b4afb17c6aa0f3868b6805dbd19488d65abe9a5797fa127e17"
+          },
+          {
+            "query": "Where does the intent plugin keep my intent files?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.5,
+            "spec_hash": "435443ebb182967c3893b84462e0863d47c3a570f39b5d48e3798ac5a6419d26"
+          },
+          {
+            "query": "How does the intent lock work and who writes intent.lock?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8,
+            "spec_hash": "c99871015a0ab22df51a4177ff1219c8ef992447553a1ea28e6345eabab07cac"
+          },
+          {
+            "query": "What goes in ~/Documents/intents/.config.json?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.4,
+            "spec_hash": "f25a7066227ceec9438f6c119c1cb6bc984c9c6bf2c35b687b3b437ad514c133"
+          },
+          {
+            "query": "Does intent 7 have a testable success criterion yet?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.9,
+            "spec_hash": "d97a9cca864436734d731df526a0b088b546533bc6dea713bd9369be3416adba"
+          },
+          {
+            "query": "What do the Create, Ready and Plan columns mean for an intent?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5,
+            "spec_hash": "bc9a225f815e2836b29bdf057ceaea58d4c718297578907d4b1d43d0afe49da2"
+          },
+          {
+            "query": "Start a new intent for dark mode",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.6,
+            "spec_hash": "3aab30ed28e1ec0ac05d3225d3ed49ce5c04aa6499e93f81c1a1c790bcc9518e"
+          },
+          {
+            "query": "Ask me questions to fill in the gaps in my intent",
+            "should_trigger": false,
+            "hits": 1,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 12.1,
+            "spec_hash": "c86615c2032d1ce63a343390564dab1c4fcff7fd4bd3a6992962d4f96dc0fcb2"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.5,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Promote the onboarding intent to Ready",
+            "should_trigger": false,
+            "hits": 1,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 10.5,
+            "spec_hash": "505fd9348bdbe0467fa6c33bc1e7475f14bee41971623c9bdd89e2fc56e2d5fa"
+          },
+          {
+            "query": "Plan the label-reprint intent for the AI agents",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 16,
+            "spec_hash": "106ede21773b20837bd3344fd41f5820c4575a4a6c160511ee226b4740cd75d1"
+          },
+          {
+            "query": "Check whether package-lock.json is up to date",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 12.7,
+            "spec_hash": "a7a0b64279e87e5161c8e3630f1b2a3b44702d5b07870ba52b9b8aad68589f79"
+          },
+          {
+            "query": "Validate this JSON file against its schema",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 15.6,
+            "spec_hash": "9e355c398113ad293ac23f9dd9f4419e2149a3ee3fbcab698dfcdfb502166c96"
+          }
+        ],
+        "summary": {
+          "passed": 15,
+          "failed": 0,
+          "total": 15,
+          "pass_rate": 1,
+          "avg_run_seconds": 9.3
+        }
+      },
+      "evals": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:41:34Z",
+        "executed": true,
+        "content_hash": "29ab9b0c458d97d784e4d49922f737a2e8dbdfe19af9952ad28f846afc94baa2",
+        "timeout_seconds": 600,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "id": "check-weak-locked",
+            "name": "Report weak and missing sections of a locked intent without changing it",
+            "passed": true,
+            "measured": {
+              "input_tokens": 12,
+              "cache_read_input_tokens": 144853,
+              "cache_creation_input_tokens": 22899,
+              "output_tokens": 3537,
+              "cost_usd": 0.389902
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Proposed outcome is rated weak because it has no testable success criterion.",
+                "passed": true,
+                "evidence": "check-report.md: '**Proposed outcome** — weak: \"Reprinting is easier.\" states no concrete result and has no testable success criterion'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "Out of scope is rated missing.",
+                "passed": true,
+                "evidence": "check-report.md: '**Out of scope** — missing: there is no `## Out of scope` section at all'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The report says the intent is locked.",
+                "passed": true,
+                "evidence": "check-report.md: '**Locked** — `intents/7-label-reprint/intent.lock` is present on main (status `Plan`...), so the intent is in a locked status'",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "check-report.md",
+                "text": "file check-report.md exists",
+                "passed": true,
+                "evidence": "check-report.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)proposed outcome",
+                "text": "check-report.md matches /(?i)proposed outcome/",
+                "passed": true,
+                "evidence": "Proposed outcome",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)out of scope",
+                "text": "check-report.md matches /(?i)out of scope/",
+                "passed": true,
+                "evidence": "Out of scope",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)lock",
+                "text": "check-report.md matches /(?i)lock/",
+                "passed": true,
+                "evidence": "Lock",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^Reprinting is easier\\.$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^Reprinting is easier\\.$/",
+                "passed": true,
+                "evidence": "Reprinting is easier.",
+                "source": "assertion"
+              },
+              {
+                "type": "not_regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Out of scope$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md does not match /(?m)^## Out of scope$/",
+                "passed": true,
+                "evidence": "no match",
+                "source": "assertion"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.lock",
+                "text": "file intents-root/repo/intents/7-label-reprint/intent.lock exists",
+                "passed": true,
+                "evidence": "intents-root/repo/intents/7-label-reprint/intent.lock exists",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 10,
+              "failed": 0,
+              "total": 10,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 5,
+                "Skill": 1
+              },
+              "total_tool_calls": 6
+            },
+            "timing": {
+              "total_tokens": 171301,
+              "executor_duration_seconds": 52.7
+            },
+            "spec_hash": "876580e0463521348b43a63d17047e2df8e84c1ae4cce347f5c45d1e6c37962c"
+          },
+          {
+            "id": "check-complete",
+            "name": "Report a complete, unlocked intent as complete",
+            "passed": true,
+            "measured": {
+              "input_tokens": 12,
+              "cache_read_input_tokens": 143656,
+              "cache_creation_input_tokens": 21493,
+              "output_tokens": 2488,
+              "cost_usd": 0.349018
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Every required section is rated good enough.",
+                "passed": true,
+                "evidence": "check-report.md lists all five required sections (Problem, Proposed outcome, Affected users and systems, Constraints, Out of scope) each marked 'good enough'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The report says the intent isn't locked.",
+                "passed": true,
+                "evidence": "check-report.md: 'Unlocked — ... so the intent is not at status Plan or later and is not blocked from changes'",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "check-report.md",
+                "text": "file check-report.md exists",
+                "passed": true,
+                "evidence": "check-report.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)good enough",
+                "text": "check-report.md matches /(?i)good enough/",
+                "passed": true,
+                "evidence": "good enough",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "test ! -e intents-root/repo/intents/8-invoice-export/intent.lock",
+                "text": "command `test ! -e intents-root/repo/intents/8-invoice-export/intent.lock` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 5,
+              "failed": 0,
+              "total": 5,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 5,
+                "Skill": 1
+              },
+              "total_tool_calls": 6
+            },
+            "timing": {
+              "total_tokens": 167649,
+              "executor_duration_seconds": 36.6
+            },
+            "spec_hash": "0e83f1c2271fd82e3337fd300dae04d74e0589d2b019afe50148267f50a6b963"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1,
+          "avg_run_seconds": 44.7,
+          "measured": {
+            "input_tokens": 24,
+            "cache_read_input_tokens": 288509,
+            "cache_creation_input_tokens": 44392,
+            "output_tokens": 6025,
+            "cost_usd": 0.73892
+          }
+        }
+      }
+    },
+    "anthropic/claude-sonnet-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "display": "Claude Sonnet 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:32:26Z",
+        "executed": true,
+        "content_hash": "f62788d11c4f0b60b030ae21db635ac0129a33d6322117aaf1af61ebc8e85565",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 3,
+          "output_per_mtok": 15
+        },
+        "results": [
+          {
+            "query": "What sections does an intent need?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 3.9,
+            "spec_hash": "2f5d10bc56380fa30b66ee554f2f4d958e9d3141f3e75ed01de129780e6fd022"
+          },
+          {
+            "query": "Is my label-reprint intent complete enough to promote?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.1,
+            "spec_hash": "455298a5cdd7398c63d04b62bd88400653450c12de1e2c4b2f11a722d10d8561"
+          },
+          {
+            "query": "Check the invoice-export intent for missing or weak sections",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.2,
+            "spec_hash": "3b15a4f538de46b4afb17c6aa0f3868b6805dbd19488d65abe9a5797fa127e17"
+          },
+          {
+            "query": "Where does the intent plugin keep my intent files?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.9,
+            "spec_hash": "435443ebb182967c3893b84462e0863d47c3a570f39b5d48e3798ac5a6419d26"
+          },
+          {
+            "query": "How does the intent lock work and who writes intent.lock?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.2,
+            "spec_hash": "c99871015a0ab22df51a4177ff1219c8ef992447553a1ea28e6345eabab07cac"
+          },
+          {
+            "query": "What goes in ~/Documents/intents/.config.json?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.2,
+            "spec_hash": "f25a7066227ceec9438f6c119c1cb6bc984c9c6bf2c35b687b3b437ad514c133"
+          },
+          {
+            "query": "Does intent 7 have a testable success criterion yet?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.6,
+            "spec_hash": "d97a9cca864436734d731df526a0b088b546533bc6dea713bd9369be3416adba"
+          },
+          {
+            "query": "What do the Create, Ready and Plan columns mean for an intent?",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4,
+            "spec_hash": "bc9a225f815e2836b29bdf057ceaea58d4c718297578907d4b1d43d0afe49da2"
+          },
+          {
+            "query": "Start a new intent for dark mode",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 8.2,
+            "spec_hash": "3aab30ed28e1ec0ac05d3225d3ed49ce5c04aa6499e93f81c1a1c790bcc9518e"
+          },
+          {
+            "query": "Ask me questions to fill in the gaps in my intent",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.4,
+            "spec_hash": "c86615c2032d1ce63a343390564dab1c4fcff7fd4bd3a6992962d4f96dc0fcb2"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 1,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.1,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Promote the onboarding intent to Ready",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.4,
+            "spec_hash": "505fd9348bdbe0467fa6c33bc1e7475f14bee41971623c9bdd89e2fc56e2d5fa"
+          },
+          {
+            "query": "Plan the label-reprint intent for the AI agents",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 17.8,
+            "spec_hash": "106ede21773b20837bd3344fd41f5820c4575a4a6c160511ee226b4740cd75d1"
+          },
+          {
+            "query": "Check whether package-lock.json is up to date",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 13.4,
+            "spec_hash": "a7a0b64279e87e5161c8e3630f1b2a3b44702d5b07870ba52b9b8aad68589f79"
+          },
+          {
+            "query": "Validate this JSON file against its schema",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.8,
+            "spec_hash": "9e355c398113ad293ac23f9dd9f4419e2149a3ee3fbcab698dfcdfb502166c96"
+          }
+        ],
+        "summary": {
+          "passed": 15,
+          "failed": 0,
+          "total": 15,
+          "pass_rate": 1,
+          "avg_run_seconds": 6.9
+        }
+      },
+      "evals": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "display": "Claude Sonnet 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:42:26Z",
+        "executed": true,
+        "content_hash": "29ab9b0c458d97d784e4d49922f737a2e8dbdfe19af9952ad28f846afc94baa2",
+        "timeout_seconds": 600,
+        "pricing": {
+          "input_per_mtok": 3,
+          "output_per_mtok": 15
+        },
+        "results": [
+          {
+            "id": "check-weak-locked",
+            "name": "Report weak and missing sections of a locked intent without changing it",
+            "passed": true,
+            "measured": {
+              "input_tokens": 12,
+              "cache_read_input_tokens": 191108,
+              "cache_creation_input_tokens": 21589,
+              "output_tokens": 3273,
+              "cost_usd": 0.157332
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Proposed outcome is rated weak because it has no testable success criterion.",
+                "passed": true,
+                "evidence": "check-report.md line 4: 'Proposed outcome: weak — states a result (\"reprinting is easier\") but gives no testable success criterion.'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "Out of scope is rated missing.",
+                "passed": true,
+                "evidence": "check-report.md line 7: 'Out of scope: missing — no `## Out of scope` heading or content appears in intent.md at all.'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The report says the intent is locked.",
+                "passed": true,
+                "evidence": "check-report.md line 8: 'Lock: locked — `intents/7-label-reprint/intent.lock` exists ... recording status \"Plan\"'",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "check-report.md",
+                "text": "file check-report.md exists",
+                "passed": true,
+                "evidence": "check-report.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)proposed outcome",
+                "text": "check-report.md matches /(?i)proposed outcome/",
+                "passed": true,
+                "evidence": "Proposed outcome",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)out of scope",
+                "text": "check-report.md matches /(?i)out of scope/",
+                "passed": true,
+                "evidence": "Out of scope",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)lock",
+                "text": "check-report.md matches /(?i)lock/",
+                "passed": true,
+                "evidence": "Lock",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^Reprinting is easier\\.$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^Reprinting is easier\\.$/",
+                "passed": true,
+                "evidence": "Reprinting is easier.",
+                "source": "assertion"
+              },
+              {
+                "type": "not_regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Out of scope$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md does not match /(?m)^## Out of scope$/",
+                "passed": true,
+                "evidence": "no match",
+                "source": "assertion"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.lock",
+                "text": "file intents-root/repo/intents/7-label-reprint/intent.lock exists",
+                "passed": true,
+                "evidence": "intents-root/repo/intents/7-label-reprint/intent.lock exists",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 10,
+              "failed": 0,
+              "total": 10,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 2,
+                "Read": 1,
+                "Skill": 1,
+                "Write": 1
+              },
+              "total_tool_calls": 5
+            },
+            "timing": {
+              "total_tokens": 215982,
+              "executor_duration_seconds": 44.6
+            },
+            "spec_hash": "876580e0463521348b43a63d17047e2df8e84c1ae4cce347f5c45d1e6c37962c"
+          },
+          {
+            "id": "check-complete",
+            "name": "Report a complete, unlocked intent as complete",
+            "passed": true,
+            "measured": {
+              "input_tokens": 14,
+              "cache_read_input_tokens": 228498,
+              "cache_creation_input_tokens": 20174,
+              "output_tokens": 1714,
+              "cost_usd": 0.143564
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Every required section is rated good enough.",
+                "passed": true,
+                "evidence": "check-report.md rates Problem, Proposed outcome, Affected users and systems, Constraints, and Out of scope all as 'good enough'",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The report says the intent isn't locked.",
+                "passed": true,
+                "evidence": "check-report.md: 'Lock: unlocked — intents-root/repo ... has no `intents/8-invoice-export/intent.lock` file.'",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "check-report.md",
+                "text": "file check-report.md exists",
+                "passed": true,
+                "evidence": "check-report.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "check-report.md",
+                "pattern": "(?i)good enough",
+                "text": "check-report.md matches /(?i)good enough/",
+                "passed": true,
+                "evidence": "good enough",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "test ! -e intents-root/repo/intents/8-invoice-export/intent.lock",
+                "text": "command `test ! -e intents-root/repo/intents/8-invoice-export/intent.lock` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 5,
+              "failed": 0,
+              "total": 5,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 2,
+                "Read": 3,
+                "Skill": 1,
+                "Write": 1
+              },
+              "total_tool_calls": 7
+            },
+            "timing": {
+              "total_tokens": 250400,
+              "executor_duration_seconds": 29.7
+            },
+            "spec_hash": "0e83f1c2271fd82e3337fd300dae04d74e0589d2b019afe50148267f50a6b963"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1,
+          "avg_run_seconds": 37.2,
+          "measured": {
+            "input_tokens": 26,
+            "cache_read_input_tokens": 419606,
+            "cache_creation_input_tokens": 41763,
+            "output_tokens": 4987,
+            "cost_usd": 0.300896
+          }
+        }
+      }
+    }
+  }
+}

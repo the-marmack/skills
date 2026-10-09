@@ -1,0 +1,349 @@
+{
+  "schema": 5,
+  "plugin": "plan",
+  "skill": "plan-create",
+  "models": {
+    "anthropic/claude-opus-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:38:32Z",
+        "executed": true,
+        "content_hash": "804fe1eb45b7a705c22e6b44ba4de1b187a9bb69b81799560d1a903888faf582",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "query": "/plan-create intent-themarmack#7",
+            "should_trigger": true,
+            "hits": 0,
+            "runs": 3,
+            "passed": false,
+            "avg_run_seconds": 10,
+            "spec_hash": "a657a38c75f6233f15bca3627e9603807381a0ce7f8a1c627bda5ac29be547b9"
+          },
+          {
+            "query": "Plan the label-reprint intent so AI agents can build it",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 3.8,
+            "spec_hash": "aebac2ca50c72ae4863860de10d33f273eebdb8fdf67d7eea4282f087c3e45ae"
+          },
+          {
+            "query": "Break this Ready intent down into tasks for the agents",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.2,
+            "spec_hash": "a0678a09122bc6ba1ed54f3d2d8232b89be12eed52c5f8cab7726f8a6d47d2b4"
+          },
+          {
+            "query": "Turn https://github.com/the-marmack/intent-jdoe/issues/12 into a technical plan",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.2,
+            "spec_hash": "b25d0c0a3b6e54d8cd209dabb41b5cc10aee13f1505e9fb83a5e9db03fc851ad"
+          },
+          {
+            "query": "Which the-marmack repo should the invoice-export intent be built in? Plan it",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.1,
+            "spec_hash": "ece76255a0d566479ddcb330cb4bf43472abcfb871828cc01b930809613db12f"
+          },
+          {
+            "query": "Lock the onboarding intent and write its plan",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.3,
+            "spec_hash": "35a47dbd066531ef90bdce09a3ba96cf5578180bb0e3d9795cd90951d6f56b5a"
+          },
+          {
+            "query": "Resume planning the dark-mode intent that's already in Plan",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.5,
+            "spec_hash": "d6c735877f4cf6a2a174c18abd0a29270b34399c58ebc8cf2818f0abe1c5b67c"
+          },
+          {
+            "query": "Hand the password-reset intent off to AI as an ordered task list",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.4,
+            "spec_hash": "2df3dce277fd0ed7fdc06980ce43753b34e91b7acff23f26f3b169960af5ae90"
+          },
+          {
+            "query": "Start a new intent for dark mode",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 17,
+            "spec_hash": "3aab30ed28e1ec0ac05d3225d3ed49ce5c04aa6499e93f81c1a1c790bcc9518e"
+          },
+          {
+            "query": "Promote my intent to Ready",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 12.8,
+            "spec_hash": "c420be3502e23933ab9fe0f0115bbb550d1df0109b774fa9ac2c45eb7be7c3c7"
+          },
+          {
+            "query": "Revoke the intent so the PM can edit it again",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 17.1,
+            "spec_hash": "b083c59c0dad53c3fa82f06ae05a76e08d5ccc7e1ac507f37297c4ff3c4ddef9"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 14.2,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Plan my sprint for next week",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 20.6,
+            "spec_hash": "cafbb585192b79f232b35a2eecce4f15a8b25fe299bda2f65306c148886bf289"
+          },
+          {
+            "query": "Make a plan for refactoring this module",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 12.1,
+            "spec_hash": "9c5007b7a4baf1595a3623f2b860a8b548f7966a73685decb19c3bd3344d16b1"
+          },
+          {
+            "query": "Break this Jira epic into user stories",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 18,
+            "spec_hash": "c8e1a3c5d82c431914654f0de70370864c3cabc4dd4fe9e1667f927dd2ae8241"
+          },
+          {
+            "query": "Run terraform plan for the staging workspace",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 11.2,
+            "spec_hash": "35e5878f865838912d28c5f7f6b320b5ed31d71500a1745db00bb9e9cc07575c"
+          }
+        ],
+        "summary": {
+          "passed": 15,
+          "failed": 1,
+          "total": 16,
+          "pass_rate": 0.9375,
+          "avg_run_seconds": 10.5
+        }
+      }
+    },
+    "anthropic/claude-sonnet-5": {
+      "triggers": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "display": "Claude Sonnet 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:40:30Z",
+        "executed": true,
+        "content_hash": "804fe1eb45b7a705c22e6b44ba4de1b187a9bb69b81799560d1a903888faf582",
+        "runs_per_query": 3,
+        "timeout_seconds": 120,
+        "pricing": {
+          "input_per_mtok": 3,
+          "output_per_mtok": 15
+        },
+        "results": [
+          {
+            "query": "/plan-create intent-themarmack#7",
+            "should_trigger": true,
+            "hits": 0,
+            "runs": 3,
+            "passed": false,
+            "avg_run_seconds": 12.9,
+            "spec_hash": "a657a38c75f6233f15bca3627e9603807381a0ce7f8a1c627bda5ac29be547b9"
+          },
+          {
+            "query": "Plan the label-reprint intent so AI agents can build it",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.7,
+            "spec_hash": "aebac2ca50c72ae4863860de10d33f273eebdb8fdf67d7eea4282f087c3e45ae"
+          },
+          {
+            "query": "Break this Ready intent down into tasks for the agents",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.3,
+            "spec_hash": "a0678a09122bc6ba1ed54f3d2d8232b89be12eed52c5f8cab7726f8a6d47d2b4"
+          },
+          {
+            "query": "Turn https://github.com/the-marmack/intent-jdoe/issues/12 into a technical plan",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.3,
+            "spec_hash": "b25d0c0a3b6e54d8cd209dabb41b5cc10aee13f1505e9fb83a5e9db03fc851ad"
+          },
+          {
+            "query": "Which the-marmack repo should the invoice-export intent be built in? Plan it",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5,
+            "spec_hash": "ece76255a0d566479ddcb330cb4bf43472abcfb871828cc01b930809613db12f"
+          },
+          {
+            "query": "Lock the onboarding intent and write its plan",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.2,
+            "spec_hash": "35a47dbd066531ef90bdce09a3ba96cf5578180bb0e3d9795cd90951d6f56b5a"
+          },
+          {
+            "query": "Resume planning the dark-mode intent that's already in Plan",
+            "should_trigger": true,
+            "hits": 1,
+            "runs": 3,
+            "passed": false,
+            "avg_run_seconds": 15.4,
+            "spec_hash": "d6c735877f4cf6a2a174c18abd0a29270b34399c58ebc8cf2818f0abe1c5b67c"
+          },
+          {
+            "query": "Hand the password-reset intent off to AI as an ordered task list",
+            "should_trigger": true,
+            "hits": 3,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 5.7,
+            "spec_hash": "2df3dce277fd0ed7fdc06980ce43753b34e91b7acff23f26f3b169960af5ae90"
+          },
+          {
+            "query": "Start a new intent for dark mode",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 14.1,
+            "spec_hash": "3aab30ed28e1ec0ac05d3225d3ed49ce5c04aa6499e93f81c1a1c790bcc9518e"
+          },
+          {
+            "query": "Promote my intent to Ready",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 16.9,
+            "spec_hash": "c420be3502e23933ab9fe0f0115bbb550d1df0109b774fa9ac2c45eb7be7c3c7"
+          },
+          {
+            "query": "Revoke the intent so the PM can edit it again",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 11,
+            "spec_hash": "b083c59c0dad53c3fa82f06ae05a76e08d5ccc7e1ac507f37297c4ff3c4ddef9"
+          },
+          {
+            "query": "Publish my Word edits to the intent repo",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 23.8,
+            "spec_hash": "a17c2b8604baa8c2de2a976c5c5189d05e03e2cd3d30d6bf38be7030e1eed242"
+          },
+          {
+            "query": "Plan my sprint for next week",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.9,
+            "spec_hash": "cafbb585192b79f232b35a2eecce4f15a8b25fe299bda2f65306c148886bf289"
+          },
+          {
+            "query": "Make a plan for refactoring this module",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 6.6,
+            "spec_hash": "9c5007b7a4baf1595a3623f2b860a8b548f7966a73685decb19c3bd3344d16b1"
+          },
+          {
+            "query": "Break this Jira epic into user stories",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 4.2,
+            "spec_hash": "c8e1a3c5d82c431914654f0de70370864c3cabc4dd4fe9e1667f927dd2ae8241"
+          },
+          {
+            "query": "Run terraform plan for the staging workspace",
+            "should_trigger": false,
+            "hits": 0,
+            "runs": 3,
+            "passed": true,
+            "avg_run_seconds": 7.1,
+            "spec_hash": "35e5878f865838912d28c5f7f6b320b5ed31d71500a1745db00bb9e9cc07575c"
+          }
+        ],
+        "summary": {
+          "passed": 14,
+          "failed": 2,
+          "total": 16,
+          "pass_rate": 0.875,
+          "avg_run_seconds": 9.6
+        }
+      }
+    }
+  }
+}

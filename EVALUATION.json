@@ -1,7 +1,7 @@
 {
   "schema": 3,
-  "tool_version": "0.7.0",
-  "latest_run": "2026-08-16T13:10:00Z",
+  "tool_version": "0.8.1",
+  "latest_run": "2026-10-09T18:47:31Z",
   "plugins": {
     "actions": {
       "triggers": {
@@ -9759,6 +9759,242 @@
                 "output_tokens": -3048,
                 "cost_usd": -0.05532
               }
+            }
+          }
+        }
+      }
+    },
+    "intent": {
+      "triggers": {
+        "anthropic/claude-opus-5": {
+          "provider": "anthropic",
+          "display": "Claude Opus 5",
+          "passed": 28,
+          "failed": 1,
+          "total": 29,
+          "pass_rate": 0.965517,
+          "avg_run_seconds": 10.9
+        },
+        "anthropic/claude-sonnet-5": {
+          "provider": "anthropic",
+          "display": "Claude Sonnet 5",
+          "passed": 28,
+          "failed": 1,
+          "total": 29,
+          "pass_rate": 0.965517,
+          "avg_run_seconds": 7.8
+        }
+      },
+      "evals": {
+        "anthropic/claude-opus-5": {
+          "provider": "anthropic",
+          "display": "Claude Opus 5",
+          "passed": 5,
+          "failed": 0,
+          "total": 5,
+          "pass_rate": 1,
+          "avg_run_seconds": 64.4,
+          "measured": {
+            "input_tokens": 66,
+            "cache_read_input_tokens": 781836,
+            "cache_creation_input_tokens": 111565,
+            "output_tokens": 20352,
+            "cost_usd": 2.015699
+          }
+        },
+        "anthropic/claude-sonnet-5": {
+          "provider": "anthropic",
+          "display": "Claude Sonnet 5",
+          "passed": 3,
+          "failed": 0,
+          "total": 3,
+          "pass_rate": 1,
+          "avg_run_seconds": 43.8,
+          "measured": {
+            "input_tokens": 46,
+            "cache_read_input_tokens": 777519,
+            "cache_creation_input_tokens": 65492,
+            "output_tokens": 9928,
+            "cost_usd": 0.516845
+          }
+        }
+      },
+      "skills": {
+        "intent-bundle": {
+          "triggers": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 15,
+              "failed": 0,
+              "total": 15,
+              "pass_rate": 1,
+              "avg_run_seconds": 9.3
+            },
+            "anthropic/claude-sonnet-5": {
+              "provider": "anthropic",
+              "display": "Claude Sonnet 5",
+              "passed": 15,
+              "failed": 0,
+              "total": 15,
+              "pass_rate": 1,
+              "avg_run_seconds": 6.9
+            }
+          },
+          "evals": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 2,
+              "failed": 0,
+              "total": 2,
+              "pass_rate": 1,
+              "avg_run_seconds": 44.7,
+              "measured": {
+                "input_tokens": 24,
+                "cache_read_input_tokens": 288509,
+                "cache_creation_input_tokens": 44392,
+                "output_tokens": 6025,
+                "cost_usd": 0.73892
+              }
+            },
+            "anthropic/claude-sonnet-5": {
+              "provider": "anthropic",
+              "display": "Claude Sonnet 5",
+              "passed": 2,
+              "failed": 0,
+              "total": 2,
+              "pass_rate": 1,
+              "avg_run_seconds": 37.2,
+              "measured": {
+                "input_tokens": 26,
+                "cache_read_input_tokens": 419606,
+                "cache_creation_input_tokens": 41763,
+                "output_tokens": 4987,
+                "cost_usd": 0.300896
+              }
+            }
+          }
+        },
+        "intent-create": {
+          "evals": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 1,
+              "failed": 0,
+              "total": 1,
+              "pass_rate": 1,
+              "avg_run_seconds": 82.6,
+              "measured": {
+                "input_tokens": 10,
+                "cache_read_input_tokens": 109167,
+                "cache_creation_input_tokens": 20416,
+                "output_tokens": 5116,
+                "cost_usd": 0.386694
+              }
+            },
+            "anthropic/claude-sonnet-5": {
+              "provider": "anthropic",
+              "display": "Claude Sonnet 5",
+              "passed": 1,
+              "failed": 0,
+              "total": 1,
+              "pass_rate": 1,
+              "avg_run_seconds": 57.1,
+              "measured": {
+                "input_tokens": 20,
+                "cache_read_input_tokens": 357913,
+                "cache_creation_input_tokens": 23729,
+                "output_tokens": 4941,
+                "cost_usd": 0.215949
+              }
+            }
+          }
+        },
+        "intent-interview": {
+          "triggers": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 13,
+              "failed": 1,
+              "total": 14,
+              "pass_rate": 0.928571,
+              "avg_run_seconds": 12.7
+            },
+            "anthropic/claude-sonnet-5": {
+              "provider": "anthropic",
+              "display": "Claude Sonnet 5",
+              "passed": 13,
+              "failed": 1,
+              "total": 14,
+              "pass_rate": 0.928571,
+              "avg_run_seconds": 8.8
+            }
+          },
+          "evals": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 2,
+              "failed": 0,
+              "total": 2,
+              "pass_rate": 1,
+              "avg_run_seconds": 74.9,
+              "measured": {
+                "input_tokens": 32,
+                "cache_read_input_tokens": 384160,
+                "cache_creation_input_tokens": 46757,
+                "output_tokens": 9211,
+                "cost_usd": 0.890085
+              }
+            }
+          }
+        }
+      }
+    },
+    "plan": {
+      "triggers": {
+        "anthropic/claude-opus-5": {
+          "provider": "anthropic",
+          "display": "Claude Opus 5",
+          "passed": 15,
+          "failed": 1,
+          "total": 16,
+          "pass_rate": 0.9375,
+          "avg_run_seconds": 10.5
+        },
+        "anthropic/claude-sonnet-5": {
+          "provider": "anthropic",
+          "display": "Claude Sonnet 5",
+          "passed": 14,
+          "failed": 2,
+          "total": 16,
+          "pass_rate": 0.875,
+          "avg_run_seconds": 9.6
+        }
+      },
+      "skills": {
+        "plan-create": {
+          "triggers": {
+            "anthropic/claude-opus-5": {
+              "provider": "anthropic",
+              "display": "Claude Opus 5",
+              "passed": 15,
+              "failed": 1,
+              "total": 16,
+              "pass_rate": 0.9375,
+              "avg_run_seconds": 10.5
+            },
+            "anthropic/claude-sonnet-5": {
+              "provider": "anthropic",
+              "display": "Claude Sonnet 5",
+              "passed": 14,
+              "failed": 2,
+              "total": 16,
+              "pass_rate": 0.875,
+              "avg_run_seconds": 9.6
             }
           }
         }

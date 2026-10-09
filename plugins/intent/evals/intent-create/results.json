@@ -1,0 +1,395 @@
+{
+  "schema": 5,
+  "plugin": "intent",
+  "skill": "intent-create",
+  "models": {
+    "anthropic/claude-opus-5": {
+      "evals": {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "display": "Claude Opus 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:44:22Z",
+        "executed": true,
+        "content_hash": "50a68daca4db22aa732db100e74a7226f52f222319ed24b1781d8bf940da46fa",
+        "timeout_seconds": 600,
+        "pricing": {
+          "input_per_mtok": 5,
+          "output_per_mtok": 25
+        },
+        "results": [
+          {
+            "id": "draft-offline-noninteractive",
+            "name": "Draft intent.md from a rough idea without GitHub",
+            "passed": true,
+            "measured": {
+              "input_tokens": 10,
+              "cache_read_input_tokens": 109167,
+              "cache_creation_input_tokens": 20416,
+              "output_tokens": 5116,
+              "cost_usd": 0.386694
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Proposed outcome has at least one success criterion that is observable and testable, not a vague aspiration.",
+                "passed": true,
+                "evidence": "intent.md includes concrete testable criteria, e.g. 'Measured over a representative week after launch, staff time spent on shipping label reprints is at most a quarter of the pre-launch baseline for t",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The Request section keeps the PM's own words rather than rewriting them.",
+                "passed": true,
+                "evidence": "Request section verbatim matches the PM's original words from the prompt: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want repri",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "text": "file intents-root/repo/intents/7-label-reprint/intent.md exists",
+                "passed": true,
+                "evidence": "intents-root/repo/intents/7-label-reprint/intent.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/7-label-reprint/.intent.json",
+                "text": "file intents-root/7-label-reprint/.intent.json exists",
+                "passed": true,
+                "evidence": "intents-root/7-label-reprint/.intent.json exists",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "test ! -e intents-root/7-label-reprint/intent.md",
+                "text": "command `test ! -e intents-root/7-label-reprint/intent.md` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Request$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Request$/",
+                "passed": true,
+                "evidence": "## Request",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Problem$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Problem$/",
+                "passed": true,
+                "evidence": "## Problem",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Proposed outcome$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Proposed outcome$/",
+                "passed": true,
+                "evidence": "## Proposed outcome",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Affected users and systems$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Affected users and systems$/",
+                "passed": true,
+                "evidence": "## Affected users and systems",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Constraints$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Constraints$/",
+                "passed": true,
+                "evidence": "## Constraints",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Out of scope$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Out of scope$/",
+                "passed": true,
+                "evidence": "## Out of scope",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Open questions$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Open questions$/",
+                "passed": true,
+                "evidence": "## Open questions",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "issues/7",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /issues/7/",
+                "passed": true,
+                "evidence": "issues/7",
+                "source": "assertion"
+              },
+              {
+                "type": "not_regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "\\{\\{",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md does not match /\\{\\{/",
+                "passed": true,
+                "evidence": "no match",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"",
+                "requires": "python3",
+                "text": "command `python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 15,
+              "failed": 0,
+              "total": 15,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 3,
+                "Skill": 1
+              },
+              "total_tool_calls": 4
+            },
+            "timing": {
+              "total_tokens": 134709,
+              "executor_duration_seconds": 82.6
+            },
+            "spec_hash": "0c9c10a6f6626c80c2d418c0e0981ebc871febaf829bb898bf3472f59d2e8c1d"
+          }
+        ],
+        "summary": {
+          "passed": 1,
+          "failed": 0,
+          "total": 1,
+          "pass_rate": 1,
+          "avg_run_seconds": 82.6,
+          "measured": {
+            "input_tokens": 10,
+            "cache_read_input_tokens": 109167,
+            "cache_creation_input_tokens": 20416,
+            "output_tokens": 5116,
+            "cost_usd": 0.386694
+          }
+        }
+      }
+    },
+    "anthropic/claude-sonnet-5": {
+      "evals": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "display": "Claude Sonnet 5",
+        "harness": "claude",
+        "tool_version": "0.8.1",
+        "ran_at": "2026-10-09T18:45:36Z",
+        "executed": true,
+        "content_hash": "50a68daca4db22aa732db100e74a7226f52f222319ed24b1781d8bf940da46fa",
+        "timeout_seconds": 600,
+        "pricing": {
+          "input_per_mtok": 3,
+          "output_per_mtok": 15
+        },
+        "results": [
+          {
+            "id": "draft-offline-noninteractive",
+            "name": "Draft intent.md from a rough idea without GitHub",
+            "passed": true,
+            "measured": {
+              "input_tokens": 20,
+              "cache_read_input_tokens": 357913,
+              "cache_creation_input_tokens": 23729,
+              "output_tokens": 4941,
+              "cost_usd": 0.215949
+            },
+            "expectations": [
+              {
+                "type": "llm",
+                "text": "Proposed outcome has at least one success criterion that is observable and testable, not a vague aspiration.",
+                "passed": true,
+                "evidence": "intent.md Success criteria include 'A reprint can be triggered from the order screen in one click, with no other screen, app, or system required' and 'Reprinting succeeds even when the original print ",
+                "source": "expectation"
+              },
+              {
+                "type": "llm",
+                "text": "The Request section keeps the PM's own words rather than rewriting them.",
+                "passed": true,
+                "evidence": "Request section reads verbatim in PM's first-person voice: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one c",
+                "source": "expectation"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "text": "file intents-root/repo/intents/7-label-reprint/intent.md exists",
+                "passed": true,
+                "evidence": "intents-root/repo/intents/7-label-reprint/intent.md exists",
+                "source": "assertion"
+              },
+              {
+                "type": "file_exists",
+                "path": "intents-root/7-label-reprint/.intent.json",
+                "text": "file intents-root/7-label-reprint/.intent.json exists",
+                "passed": true,
+                "evidence": "intents-root/7-label-reprint/.intent.json exists",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "test ! -e intents-root/7-label-reprint/intent.md",
+                "text": "command `test ! -e intents-root/7-label-reprint/intent.md` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Request$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Request$/",
+                "passed": true,
+                "evidence": "## Request",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Problem$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Problem$/",
+                "passed": true,
+                "evidence": "## Problem",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Proposed outcome$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Proposed outcome$/",
+                "passed": true,
+                "evidence": "## Proposed outcome",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Affected users and systems$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Affected users and systems$/",
+                "passed": true,
+                "evidence": "## Affected users and systems",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Constraints$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Constraints$/",
+                "passed": true,
+                "evidence": "## Constraints",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Out of scope$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Out of scope$/",
+                "passed": true,
+                "evidence": "## Out of scope",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "(?m)^## Open questions$",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /(?m)^## Open questions$/",
+                "passed": true,
+                "evidence": "## Open questions",
+                "source": "assertion"
+              },
+              {
+                "type": "regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "issues/7",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md matches /issues/7/",
+                "passed": true,
+                "evidence": "issues/7",
+                "source": "assertion"
+              },
+              {
+                "type": "not_regex",
+                "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+                "pattern": "\\{\\{",
+                "text": "intents-root/repo/intents/7-label-reprint/intent.md does not match /\\{\\{/",
+                "passed": true,
+                "evidence": "no match",
+                "source": "assertion"
+              },
+              {
+                "type": "command",
+                "run": "python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"",
+                "requires": "python3",
+                "text": "command `python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"` exits 0",
+                "passed": true,
+                "evidence": "exit 0: ",
+                "source": "assertion"
+              }
+            ],
+            "summary": {
+              "passed": 15,
+              "failed": 0,
+              "total": 15,
+              "pass_rate": 1
+            },
+            "execution_metrics": {
+              "tool_calls": {
+                "Bash": 5,
+                "Read": 2,
+                "Skill": 1,
+                "Write": 2
+              },
+              "total_tool_calls": 10
+            },
+            "timing": {
+              "total_tokens": 386603,
+              "executor_duration_seconds": 57.1
+            },
+            "spec_hash": "0c9c10a6f6626c80c2d418c0e0981ebc871febaf829bb898bf3472f59d2e8c1d"
+          }
+        ],
+        "summary": {
+          "passed": 1,
+          "failed": 0,
+          "total": 1,
+          "pass_rate": 1,
+          "avg_run_seconds": 57.1,
+          "measured": {
+            "input_tokens": 20,
+            "cache_read_input_tokens": 357913,
+            "cache_creation_input_tokens": 23729,
+            "output_tokens": 4941,
+            "cost_usd": 0.215949
+          }
+        }
+      }
+    }
+  }
+}
