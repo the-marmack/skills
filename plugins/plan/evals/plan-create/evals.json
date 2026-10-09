@@ -5,8 +5,8 @@
     {
       "id": "write-plan-new-repo",
       "name": "Reuse an existing lock and write a plan for a new repo",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock for it; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. In step 9, write plans/intent-themarmack/7-label-reprint/plan.md and plan.json, with Lee Lead as the author and 2026-10-08 as the date, and don't publish.",
-      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *)",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock for it; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. Use Lee Lead as the author and 2026-10-08 as the date. In step 9, don't call GitHub: the new branch starts as a copy of central/, so write its files under branch/ instead (branch/intents/...), and write the draft PR's title and body to pr.md and the issue comment to comment.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(cp *) Bash(python3 *)",
       "files": [
         "files/pm-main/intents/7-label-reprint/intent.md",
         "files/central/intents/themarmack-7-label-reprint/lock.yaml"
@@ -15,45 +15,46 @@
         "Task 1 creates and scaffolds the new repo.",
         "Every success criterion and the constraint map to at least one task in the Traceability table.",
         "No task replaces the printers or the printer queue.",
-        "The existing lock is reused, not rewritten, and the plan is built from the locked commit abc1234."
+        "The existing lock is reused, not rewritten, and the plan is built from the locked commit abc1234.",
+        "The plan is published as a draft pull request on a branch, never on main."
       ],
       "assertions": [
         {
           "type": "file_exists",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md"
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md"
         },
         {
           "type": "file_exists",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.json"
+          "path": "branch/intents/themarmack-7-label-reprint/plan.json"
         },
         {
           "type": "regex",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md",
           "pattern": "(?m)^### Task 1\\b"
         },
         {
           "type": "regex",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md",
           "pattern": "(?m)^## Traceability$"
         },
         {
           "type": "regex",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md",
           "pattern": "SC1"
         },
         {
           "type": "regex",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md",
           "pattern": "abc1234"
         },
         {
           "type": "not_regex",
-          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "path": "branch/intents/themarmack-7-label-reprint/plan.md",
           "pattern": "\\{\\{"
         },
         {
           "type": "command",
-          "run": "python3 -c \"import json; d=json.load(open('plans/intent-themarmack/7-label-reprint/plan.json')); assert d['targetRepo']=='the-marmack/label-reprint' and d['newRepo'] is True and d['intent']['lockCommit']=='abc1234' and d['intent']['issue'] in (7,'7') and len(d['tasks'])>=2\"",
+          "run": "python3 -c \"import json; d=json.load(open('branch/intents/themarmack-7-label-reprint/plan.json')); assert d['targetRepo']=='the-marmack/label-reprint' and d['newRepo'] is True and d['intent']['sha']=='abc1234' and d['intent']['lock'].endswith('themarmack-7-label-reprint/lock.yaml') and d['intent']['issue'] in (7,'7') and len(d['tasks'])>=2\"",
           "requires": "python3"
         },
         {
@@ -65,6 +66,62 @@
           "type": "not_regex",
           "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
           "pattern": "def5678"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e central/intents/themarmack-7-label-reprint/plan.md"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e plans"
+        },
+        {
+          "type": "file_exists",
+          "path": "pr.md"
+        },
+        {
+          "type": "regex",
+          "path": "pr.md",
+          "pattern": "(?i)draft"
+        }
+      ]
+    },
+    {
+      "id": "revision-adds-rev1",
+      "name": "A second plan for the same intent becomes plan_rev1",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock and a merged first plan for it (plan.md and plan.json); there is no open plan PR; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, the answer is the new repo the-marmack/label-reprint. This revision adds an audit-log task that the first plan missed. Treat step 8 as approved. Use Lee Lead as the author and 2026-10-08 as the date. In step 9, don't call GitHub: the new branch starts as a copy of central/, so write its files under branch/ instead (branch/intents/...), and write the draft PR's title and body to pr.md and the issue comment to comment.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(cp *) Bash(python3 *)",
+      "files": [
+        "files/pm-main/intents/7-label-reprint/intent.md",
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml",
+        "files/central/intents/themarmack-7-label-reprint/plan.md",
+        "files/central/intents/themarmack-7-label-reprint/plan.json"
+      ],
+      "expectations": [
+        "The new plan is written as plan_rev1.md and plan_rev1.json, and its summary says what changed from the first plan."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "branch/intents/themarmack-7-label-reprint/plan_rev1.md"
+        },
+        {
+          "type": "file_exists",
+          "path": "branch/intents/themarmack-7-label-reprint/plan_rev1.json"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/plan.md",
+          "pattern": "ORIGINAL-PLAN-TEXT"
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; d=json.load(open('branch/intents/themarmack-7-label-reprint/plan_rev1.json')); assert d['revision'] in (1,'1') and d['intent']['sha']=='abc1234'\"",
+          "requires": "python3"
+        },
+        {
+          "type": "file_exists",
+          "path": "pr.md"
         }
       ]
     },

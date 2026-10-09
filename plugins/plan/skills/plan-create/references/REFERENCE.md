@@ -14,7 +14,7 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 | 6 Survey repo   | Survey the target repo                                   |
 | 7 Break down    | Task rules, [../templates/plan.md](../templates/plan.md) |
 | 8 Review        | None                                                     |
-| 9 Write plan    | plan.json, Publish                                       |
+| 9 Publish       | plan.json, Publish                                       |
 
 ## Board
 
@@ -43,8 +43,8 @@ gh project item-list 2 --owner the-marmack --limit 1000 --format json \
 
 The last column is the item ID that "Move to Plan" needs.
 
-`content.repository` is `the-marmack/<pmRepo>`. An item already has a plan when `plans/<pmRepo>/<number>-*/plan.md`
-exists here.
+`content.repository` is `the-marmack/<pmRepo>`. An item already has a plan when `intents/<login>-<number>-*/plan.md`
+exists on `main` here, or an open PR's head branch starts with `plan/<login>-<number>-`.
 
 ## Move to Plan
 
@@ -135,7 +135,7 @@ Read `intent.md` at the lock's `sha`, never at the head of `main`:
 gh api "repos/the-marmack/<pmRepo>/contents/<intent path from lock.yaml>?ref=<sha>" -H "Accept: application/vnd.github.raw"
 ```
 
-The lock's `sha` is `lockCommit`, so the plan records exactly which version of the intent it was built from.
+`plan.json` records the lock's `sha`, so the plan says exactly which version of the intent it was built from.
 
 ## Find candidate repos
 
@@ -200,6 +200,8 @@ Each task is handed to an AI agent that has only the plan, the intent and the re
 
 ## plan.json
 
+`intents/<login>-<issue>-<short>/plan.json` (or `plan_rev<N>.json`), next to `plan.md`:
+
 ```json
 {
     "intent": {
@@ -207,8 +209,10 @@ Each task is handed to an AI agent that has only the plan, the intent and the re
         "issue": 1,
         "url": "<issue url>",
         "path": "intents/<issue>-<short>/intent.md",
-        "lockCommit": "<the sha in lock.yaml>"
+        "sha": "<the sha in lock.yaml>",
+        "lock": "intents/<login>-<issue>-<short>/lock.yaml"
     },
+    "revision": 0,
     "targetRepo": "the-marmack/<name>",
     "newRepo": false,
     "plannedBy": "<gh api user -q .login>",
@@ -217,14 +221,30 @@ Each task is handed to an AI agent that has only the plan, the intent and the re
 }
 ```
 
+`revision` is `0` for `plan.json` and `N` for `plan_rev<N>.json`.
+
 ## Publish
 
-Only after the user says yes:
+Through the API only: never clone, commit locally or push to `main`.
 
 ```sh
-git add "plans/<pmRepo>/<issue>-<short>"
-git commit -m "plan(<pmRepo>#<issue>): plan <short>"
-git push origin HEAD:main
-PLAN="https://github.com/the-marmack/intents/blob/main/plans/<pmRepo>/<issue>-<short>/plan.md"
-gh issue comment <intent url> --body "Plan ready: $PLAN (target repo: <targetRepo>)"
+O=the-marmack; F=intents/<login>-<issue>-<short>; B=plan/<login>-<issue>-<short>   # add -rev<N> for a revision
+
+# An open plan PR for this folder? Then add the files to its branch instead of creating one.
+gh pr list -R $O/intents --state open --json number,headRefName -q ".[]|select(.headRefName|startswith(\"$B\"))"
+
+# New branch from the head of main
+MAIN=$(gh api repos/$O/intents/git/ref/heads/main -q .object.sha)
+gh api repos/$O/intents/git/refs -f ref="refs/heads/$B" -f sha="$MAIN"
+
+# Add each file (plan.md and plan.json, or the revision's pair) to the branch
+gh api -X PUT "repos/$O/intents/contents/$F/plan.md" -f message="plan(<login>#<issue>): <short>" \
+  -f branch="$B" -f content="$(base64 < plan.md | tr -d '\n')"
+
+# Draft PR, then a comment on the intent
+gh pr create -R $O/intents --draft --base main --head "$B" --title "plan(<login>#<issue>): <short>" \
+  --body "Plan for <intent url>, locked at <sha> ($F/lock.yaml)."
+gh issue comment <intent url> --body "Draft plan: <PR url> (target repo: <targetRepo>)"
 ```
+
+When updating a file that already exists on the branch, pass its blob `sha` (`-f sha=…`) to the PUT.

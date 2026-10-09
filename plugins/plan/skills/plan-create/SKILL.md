@@ -1,6 +1,6 @@
 ---
 name: plan-create
-description: Turn a promoted (Ready) PM intent into a technical plan for AI agents — check the issue and its board card, run the ready gate, lock it by writing lock.yaml (pinned to the intent's commit) to the-marmack/intents and move the card to Plan, read the intent at that commit, find the existing repo in the the-marmack GitHub org where the work belongs (or ask which new repo to create), survey that repo, and break the intent into small ordered tasks with acceptance criteria traced to the intent's success criteria, written to plans/<pm-repo>/<issue>-<short-name>/plan.md in a clone of the central the-marmack/intents repo. Use when someone wants to plan, break down, scope, or hand off an intent to AI, or runs /plan-create. Not for writing or editing the intent itself (intent-create, intent-interview, intent-sync), promoting or revoking it (intent-lock), or doing the implementation work.
+description: Turn a promoted (Ready) PM intent into a technical plan for AI agents — check the issue and its board card, run the ready gate, lock it by writing lock.yaml (pinned to the intent's commit) to the-marmack/intents and move the card to Plan, read the intent at that commit, find the existing repo in the the-marmack GitHub org where the work belongs (or ask which new repo to create), survey that repo, and break the intent into small ordered tasks with acceptance criteria traced to the intent's success criteria, published as plan.md and plan.json in the intent's folder next to lock.yaml in the-marmack/intents, as a draft pull request (revisions add plan_rev1.md and so on). Use when someone wants to plan, break down, scope, or hand off an intent to AI, or runs /plan-create. Not for writing or editing the intent itself (intent-create, intent-interview, intent-sync), promoting or revoking it (intent-lock), or doing the implementation work.
 license: MIT
 ---
 
@@ -67,11 +67,12 @@ the reference; every step uses `gh` and nothing is cloned.
 ## Step 4 — Read intent
 
 - **In:** the lock.
-- **Out:** `short`, `intentPath`, the intent's markdown at the locked `sha`, and `lockCommit` (the lock's `sha`).
+- **Out:** `short`, `intentPath`, the intent's markdown at the locked `sha`, and that `sha`.
 
 1. Read `intent.md` at the lock's `sha` (see "Read the intent" in the reference), never the head of `main`. If `main`
    has moved on since, say that later edits aren't part of this plan.
-2. If `plans/<pmRepo>/<issue>-<short>/plan.md` already exists, ask whether to replace it or stop.
+2. If `plan.md` already exists in `intents/<login>-<issue>-<short>/` on `main`, or on an open plan PR's branch, this is
+   a revision: the next plan is `plan_rev<N>.md` (N = 1, 2, …). Never overwrite an earlier plan.
 
 ## Step 5 — Choose repo
 
@@ -119,15 +120,24 @@ the reference; every step uses `gh` and nothing is cloned.
 Show the task list (number, title, depends on) and the target repo, and ask one question: approve, or what to change.
 Apply the changes and ask again, at most three rounds. Don't ask what you can look up in the repo.
 
-## Step 9 — Write plan
+## Step 9 — Publish the plan as a draft PR
 
 - **In:** the approved plan.
-- **Out:** `plans/<pmRepo>/<issue>-<short>/plan.md` and `plan.json`, and a short report.
+- **Out:** `plan.md` and `plan.json` (or the next revision) in `intents/<login>-<issue>-<short>/` on a branch of
+  `the-marmack/intents`, a draft pull request, and a short report.
 
-1. Write `plan.md`, and `plan.json` as described in "plan.json" in the reference.
-2. Report the path, the target repo (and whether it still has to be created), the task count, and any blocking open
-   questions. Offer to commit the plan, push it, and comment on the intent's issue with a link (see "Publish" in the
-   reference). Do that only when the user says yes.
+Step 8's approval is the go-ahead. Never write a plan to `main`. Follow "Publish" in the reference; every call uses
+`gh`, and nothing is cloned or pushed with git.
+
+1. Write `plan.md` from the template and `plan.json` as described in "plan.json" in the reference. If this is a
+   revision (Step 4), name them `plan_rev<N>.md` and `plan_rev<N>.json`, and open the summary with what changed and
+   why.
+2. If an open plan PR exists for this folder, add the files to its branch. Otherwise create a branch from the head of
+   `main`, `plan/<login>-<issue>-<short>` (add `-rev<N>` for a revision), add the files, and open a draft PR titled
+   `plan(<login>#<issue>): <short>` whose body links the intent issue and `lock.yaml`.
+3. Comment on the intent's issue with the PR link.
+4. Report the PR link, the target repo (and whether it still has to be created), the task count, and any blocking open
+   questions.
 
 If planning is abandoned, an unlock is a revoke: the PM runs `/intent-revoke`, which removes the lock and moves the
 card back. Don't delete `lock.yaml` here.

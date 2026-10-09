@@ -1,6 +1,6 @@
 # Plan: {{title}}
 
-**Intent:** [{{pmRepo}}#{{issue}}]({{url}}) · `{{intentPath}}` at `{{lockCommit}}`
+**Intent:** [{{pmRepo}}#{{issue}}]({{url}}) · `{{intentPath}}` at `{{sha}}`
 
 **Target repo:** [{{targetRepo}}](https://github.com/{{targetRepo}})
 {{"— new, created by Task 1" when newRepo is true; otherwise leave out}}

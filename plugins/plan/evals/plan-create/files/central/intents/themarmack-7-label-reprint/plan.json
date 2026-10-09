@@ -1,0 +1,7 @@
+{
+  "intent": { "repo": "the-marmack/intent-themarmack", "issue": 7, "sha": "abc1234" },
+  "revision": 0,
+  "targetRepo": "the-marmack/label-reprint",
+  "newRepo": true,
+  "tasks": [{ "id": 1, "title": "Create and scaffold the-marmack/label-reprint", "dependsOn": [] }]
+}
