@@ -133,6 +133,30 @@ gh project item-edit --id "$ITEM" --project-id "$PID" --field-id "$FID" --single
 Use `$READY` or `$PLAN` for the other statuses. If `gh` reports a missing `project` scope, tell the PM to run
 `gh auth refresh -s project` and then retry.
 
+## Lock check
+
+Always ask GitHub whether an intent is locked. Never look in the local clone: it can be stale, and a lock can land on
+`main` after the last pull. One call reads the whole `main` tree and lists every lock in the PM repo:
+
+```sh
+O=<owner>; R=<pmRepo>
+if LOCKS=$(gh api "repos/$O/$R/git/trees/main?recursive=1" \
+  -q 'if .truncated then error("tree truncated") else (.tree[].path|select(endswith("/intent.lock"))) end' 2>&1)
+then
+  # $LOCKS holds one "<repoPath>/intent.lock" line per locked intent; empty means none are locked
+  printf '%s\n' "$LOCKS" | grep -qx "<repoPath>/intent.lock" && STATE=locked || STATE=unlocked
+else
+  STATE=unknown   # no network, no access, missing repo or branch: $LOCKS holds the error
+fi
+```
+
+- **locked:** `intent.lock` exists on `main`. Block: don't change, sync or interview the intent.
+- **unlocked:** `main` was read and has no `intent.lock` for it.
+- **unknown:** GitHub couldn't be read. Block as well, and tell the PM the lock couldn't be confirmed and to try again
+  once `gh auth status` works. Never treat an error as unlocked.
+
+On Windows, run the same `gh api` call in PowerShell. A non-zero exit means unknown.
+
 ## Sync the lock
 
 The PM repo's `.github/workflows/intent-lock.yaml` reads the issue's Status from the board and adds or removes

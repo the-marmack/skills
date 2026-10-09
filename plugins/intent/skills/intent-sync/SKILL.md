@@ -29,8 +29,10 @@ others.
 - **In:** an optional short-name argument.
 - **Out:** exactly one intent folder.
 
-Sync publishes one intent at a time. An intent is **locked** when `<repoDir>/<repoPath>/intent.lock` exists: it has
-moved to Plan (or a later column) on the board and engineering is planning or building it, so it can't change here.
+Sync publishes one intent at a time. An intent is **locked** when `<repoPath>/intent.lock` exists on `main` on GitHub:
+it has moved to Plan (or a later column) on the board and engineering is planning or building it, so it can't change
+here. Find out with "Lock check" in the `intent-bundle` skill, which reads GitHub, never the local clone. If the check
+comes back unknown, say the lock couldn't be confirmed and stop.
 
 - **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
   also works).
@@ -45,8 +47,14 @@ A folder with an `intent.docx` but no `.intent.json` was never created through `
 - **In:** the chosen intent's `repoPath` from `.intent.json`.
 - **Out:** the intent, confirmed unlocked.
 
-If `<repoDir>/<repoPath>/intent.lock` exists, stop and tell the PM: "*(intent title)* is being planned and is locked.
-Run `/intent-revoke <short>` first if it needs changes." Never edit, delete or bypass a lock here.
+Run "Lock check" in the `intent-bundle` skill for this intent, right before converting. It reads `main` on GitHub, not
+the local clone.
+
+- **locked:** stop and tell the PM: "*(intent title)* is being planned and is locked. Run `/intent-revoke <short>`
+  first if it needs changes."
+- **unknown:** stop and tell the PM the lock couldn't be confirmed on GitHub, so nothing was synced.
+
+Never edit, delete or bypass a lock here.
 
 ## Step 4 — Convert
 

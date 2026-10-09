@@ -25,7 +25,7 @@
     {
       "id": "locked-intent-refused",
       "name": "Refuse to interview on a locked intent",
-      "prompt": "Use the intent-interview skill on its own to fill in the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub, git and Word conversion tools are unavailable, so don't pull or convert anything. Write what you tell the PM to interview-report.md.",
+      "prompt": "Use the intent-interview skill on its own to fill in the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub, git and Word conversion tools are unavailable, so don't pull or convert anything. Write what you tell the PM to interview-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",

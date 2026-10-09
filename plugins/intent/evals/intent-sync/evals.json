@@ -5,7 +5,7 @@
     {
       "id": "locked-intent-skipped",
       "name": "Refuse to sync a promoted (locked) intent",
-      "prompt": "Use the intent-sync skill to sync the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo, Word conversion tools and git remotes are unavailable, so skip preflight and do not push. Apply the select and lock-check steps exactly, and write your one-line-per-intent result report to sync-report.md.",
+      "prompt": "Use the intent-sync skill to sync the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo, Word conversion tools and git remotes are unavailable, so skip preflight and do not push. Apply the select and lock-check steps exactly, and write your one-line-per-intent result report to sync-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",

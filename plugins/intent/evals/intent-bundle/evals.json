@@ -5,7 +5,7 @@
     {
       "id": "check-weak-locked",
       "name": "Report weak and missing sections of a locked intent without changing it",
-      "prompt": "Use the intent-bundle skill to check the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md.",
+      "prompt": "Use the intent-bundle skill to check the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",
@@ -38,7 +38,7 @@
     {
       "id": "check-complete",
       "name": "Report a complete, unlocked intent as complete",
-      "prompt": "Use the intent-bundle skill to check intent 8. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md.",
+      "prompt": "Use the intent-bundle skill to check intent 8. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/8-invoice-export/.intent.json",

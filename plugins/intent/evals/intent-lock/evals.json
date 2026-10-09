@@ -5,7 +5,7 @@
     {
       "id": "revoke-uses-workflow",
       "name": "Revoke unlocks through the workflow, never by hand",
-      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. The board says its Status is Plan and the PM has already confirmed they want it back. GitHub and git are unavailable, so skip steps 1-2, R2 and R4, and instead of running anything in R3 write the exact commands you would run, plus a one-paragraph summary of the revoke, to revoke-report.md.",
+      "prompt": "Use the intent-lock skill to revoke the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. The board says its Status is Plan and the PM has already confirmed they want it back. GitHub and git are unavailable, so skip steps 1-2 and R2, skip the gh issue comment in R4 but still include what R4 tells the PM, and instead of running anything in R3 write the exact commands you would run, plus a one-paragraph summary of the revoke, to revoke-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",

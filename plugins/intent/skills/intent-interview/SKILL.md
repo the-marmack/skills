@@ -24,9 +24,11 @@ in the `intent-bundle` skill. The interview rules and the step map are in
 
 - **From `intent-create`:** start from `request`. Nothing else exists yet.
 - **On its own:** read `.config.json` and the intent's `.intent.json`, and pull `repoDir`, as described in the
-  `intent-bundle` skill. If `<repoDir>/<repoPath>/intent.lock` exists, stop and tell the PM: "*(intent title)* is being
-  planned and is locked. Run `/intent-revoke <short>` first if it needs changes." Otherwise read `intent.docx` into
-  sections, following "Word conversion → Word to markdown" in the `intent-bundle` skill.
+  `intent-bundle` skill. Run "Lock check" in the `intent-bundle` skill, which reads `main` on GitHub, not the local
+  clone. If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. Run
+  `/intent-revoke <short>` first if it needs changes." If it's unknown, stop and say the lock couldn't be confirmed.
+  Otherwise read `intent.docx` into sections, following "Word conversion → Word to markdown" in the `intent-bundle`
+  skill.
 
 ## Step 2 — Draft
 

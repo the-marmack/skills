@@ -32,6 +32,7 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Required sections               | intent-create, intent-interview, intent-sync |
 | Git identity                    | intent-create, intent-sync, intent-lock      |
 | Board                           | intent-create, intent-lock                   |
+| Lock check                      | intent-sync, intent-interview, intent-lock   |
 | Sync the lock, Lock file        | intent-lock                                  |
 | Word conversion                 | intent-create, intent-interview, intent-sync |
 
@@ -45,5 +46,6 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 2. Read `<repoDir>/<repoPath>/intent.md`. It is the last synced version, so say that Word edits not yet synced aren't
    checked.
 3. Rate each required section as **good enough**, **weak** or **missing** against "Required sections", with a short
-   reason for anything that isn't good enough. Then say whether `intent.lock` exists.
+   reason for anything that isn't good enough. Then report the lock state from "Lock check": it asks GitHub's `main`,
+   never the local clone.
 4. Change nothing. For gaps, suggest the `intent-interview` skill, or editing `intent.docx` and running `/intent-sync`.

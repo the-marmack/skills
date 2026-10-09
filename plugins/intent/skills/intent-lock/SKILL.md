@@ -46,8 +46,9 @@ board, add it and save the new `itemId` to `.intent.json`.
 
 ## Promote — Step P1: Guard
 
-If `STATUS` is already `statuses.ready` or a locked status, or `<repoDir>/<repoPath>/intent.lock` exists, tell the PM
-the intent is already promoted and stop.
+If `STATUS` is already `statuses.ready` or a locked status, or "Lock check" in the `intent-bundle` skill finds
+`intent.lock` on GitHub's `main`, tell the PM the intent is already promoted and stop. If the lock check is unknown,
+stop and say the lock couldn't be confirmed.
 
 ## Promote — Step P2: Final sync
 
@@ -68,8 +69,8 @@ Run `gh issue comment <url> --body "Promoted to **Ready** for planning."`. Tell 
 
 ## Revoke — Step R1: Guard
 
-If `STATUS` is `statuses.create` and there's no `<repoDir>/<repoPath>/intent.lock`, tell the PM the intent isn't
-promoted and stop.
+Run "Lock check" in the `intent-bundle` skill (GitHub's `main`, not the local clone). If `STATUS` is
+`statuses.create` and the check says unlocked, tell the PM the intent isn't promoted and stop.
 
 If `STATUS` is a locked status or the lock exists, engineering has started planning or building. Tell the PM, and ask
 them to confirm that they want to pull it back before you continue.
@@ -80,10 +81,9 @@ Set the item's Status to `statuses.create`.
 
 ## Revoke — Step R3: Unlock
 
-Skip this step when there's no `intent.lock`. Otherwise run "Sync the lock" in the `intent-bundle` skill for this
-issue, then pull
-`<repoDir>` and check that `intent.lock` is gone. If the run fails, tell the PM that the board says Create but the
-intent is still locked, and show them the run's link.
+Skip this step when "Lock check" says unlocked. Otherwise run "Sync the lock" in the `intent-bundle` skill for this
+issue, then run "Lock check" again and confirm `intent.lock` is gone from GitHub's `main`. If the run fails, tell
+the PM that the board says Create but the intent is still locked, and show them the run's link.
 
 ## Revoke — Step R4: Record
 
