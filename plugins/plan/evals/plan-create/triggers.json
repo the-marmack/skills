@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "plan-create",
+  "triggers": [
+    { "query": "/plan-create intent-themarmack#7", "should_trigger": true },
+    { "query": "Plan the label-reprint intent so AI agents can build it", "should_trigger": true },
+    { "query": "Break this Ready intent down into tasks for the agents", "should_trigger": true },
+    { "query": "Turn https://github.com/the-marmack/intent-jdoe/issues/12 into a technical plan", "should_trigger": true },
+    { "query": "Which the-marmack repo should the invoice-export intent be built in? Plan it", "should_trigger": true },
+    { "query": "Lock the onboarding intent and write its plan", "should_trigger": true },
+    { "query": "Resume planning the dark-mode intent that's already in Plan", "should_trigger": true },
+    { "query": "Hand the password-reset intent off to AI as an ordered task list", "should_trigger": true },
+    { "query": "Start a new intent for dark mode", "should_trigger": false },
+    { "query": "Promote my intent to Ready", "should_trigger": false },
+    { "query": "Revoke the intent so the PM can edit it again", "should_trigger": false },
+    { "query": "Publish my Word edits to the intent repo", "should_trigger": false },
+    { "query": "Plan my sprint for next week", "should_trigger": false },
+    { "query": "Make a plan for refactoring this module", "should_trigger": false },
+    { "query": "Break this Jira epic into user stories", "should_trigger": false },
+    { "query": "Run terraform plan for the staging workspace", "should_trigger": false }
+  ]
+}

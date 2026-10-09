@@ -53,14 +53,27 @@ Intent authoring for product managers who don't use git. Intents live in each PM
 issue and the project board. Requires only `gh`. The local clone defaults to `~/Documents/intents/repo`; set `repoDir`
 in `~/Documents/intents/.config.json` to use another checkout.
 
-| Skill           | What it does                                                                                                                                                                                         |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `intent-create` | Opens a tracking issue on the board (status Create) and interviews the PM until the required sections are covered. Then writes `intent.docx` and publishes `intents/<issue>-<short-name>/intent.md`. |
-| `intent-sync`   | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`. With no name, lists the unlocked intents to pick from. Refuses intents that have an `intent.lock`.                 |
-| `intent-lock`   | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if it was in **Plan**, runs the `intent-lock` workflow to remove the lock. Only that workflow writes `intent.lock`.    |
+| Skill              | What it does                                                                                                                                                                                                                            |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `intent-create`    | Opens a tracking issue on the board (status Create) and hands over to a door, by default `intent-interview`, until the required sections are covered. Then writes `intent.docx` and publishes `intents/<issue>-<short-name>/intent.md`. |
+| `intent-interview` | The default door: drafts every required section from the PM's words and asks only about the gaps, in at most three rounds. On its own it fills the gaps in an existing unlocked intent and publishes them with `intent-sync`.           |
+| `intent-bundle`    | The contract every intent skill shares: the local and repo layout, the required sections, the board and the lock, and Word conversion. Checks an intent without changing it.                                                            |
+| `intent-sync`      | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`. With no name, lists the unlocked intents to pick from. Refuses intents that have an `intent.lock`.                                                    |
+| `intent-lock`      | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if it was in **Plan**, runs the `intent-lock` workflow to remove the lock. Only that workflow writes `intent.lock`.                                       |
 
 The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-promote` and `/intent-revoke`
 as thin entry points to these skills.
+
+### plan
+
+Planning for promoted intents, run from a clone of `the-marmack/intents`. The intent's format and lock are defined by
+the intent plugin's `intent-bundle` skill.
+
+| Skill         | What it does                                                                                                                                                                                                                                                                                                                              |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plan-create` | Moves a **Ready** intent to **Plan** and runs its repo's `intent-lock` workflow, which locks it. Then picks the `the-marmack` repo where the work belongs and breaks the intent into small ordered tasks for AI agents, with acceptance criteria traced to the intent, in `plans/<pm-repo>/<issue>-<short-name>/plan.md` and `plan.json`. |
+
+The plugin also ships the Claude Code command `/plan-create` as a thin entry point to the skill.
 
 ### workflow
 

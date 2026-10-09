@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/evals.schema.json",
+  "skill_name": "plan-create",
+  "evals": [
+    {
+      "id": "write-plan-new-repo",
+      "name": "Write a traced plan for a locked intent whose work needs a new repo",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions, so skip steps 1, 2, 3 and 6: the board says Plan and the intent is locked. In step 4, read the intent from intent/intent.md and its lock from intent/intent.lock in the current directory instead of GitHub. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. In step 9, write plans/intent-themarmack/7-label-reprint/plan.md and plan.json, with Lee Lead as the author and 2026-10-08 as the date, and don't publish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *)",
+      "files": ["files/intent/intent.md", "files/intent/intent.lock"],
+      "expectations": [
+        "Task 1 creates and scaffolds the new repo.",
+        "Every success criterion and the constraint map to at least one task in the Traceability table.",
+        "No task replaces the printers or the printer queue."
+      ],
+      "assertions": [
+        { "type": "file_exists", "path": "plans/intent-themarmack/7-label-reprint/plan.md" },
+        { "type": "file_exists", "path": "plans/intent-themarmack/7-label-reprint/plan.json" },
+        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "(?m)^### Task 1\\b" },
+        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "(?m)^## Traceability$" },
+        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "SC1" },
+        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "abc1234" },
+        { "type": "not_regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "\\{\\{" },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; d=json.load(open('plans/intent-themarmack/7-label-reprint/plan.json')); assert d['targetRepo']=='the-marmack/label-reprint' and d['newRepo'] is True and d['intent']['lockCommit']=='abc1234' and d['intent']['issue'] in (7,'7') and len(d['tasks'])>=2\"",
+          "requires": "python3"
+        }
+      ]
+    },
+    {
+      "id": "create-status-refused",
+      "name": "Refuse to plan an intent that isn't promoted",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#9. GitHub and git are unavailable, so skip steps 1 and 2. The board says the item's Status is Create. Apply step 3 exactly, and write what you tell the user to plan-report.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "expectations": ["The report says the intent isn't promoted and the PM must run /intent-promote first."],
+      "assertions": [
+        { "type": "file_exists", "path": "plan-report.md" },
+        { "type": "regex", "path": "plan-report.md", "pattern": "intent-promote" },
+        { "type": "command", "run": "test ! -e plans" }
+      ]
+    }
+  ]
+}
