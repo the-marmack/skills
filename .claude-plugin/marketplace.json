@@ -48,7 +48,7 @@
     {
       "name": "intent",
       "source": "./plugins/intent",
-      "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits (warning first if the intent changed on GitHub), /intent-refresh rebuilds your Word file from GitHub, /intent-promote moves the intent to Ready for planning and /intent-revoke takes it back to Create; the repo's intent-lock workflow locks it from Plan through Done.",
+      "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits (warning first if the intent changed on GitHub), /intent-refresh rebuilds your Word file from GitHub, /intent-promote moves the intent to Ready for planning, and /intent-revoke takes it back to Create and removes its lock; planning locks an intent with lock.yaml in the-marmack/intents.",
       "keywords": ["intent", "product-management", "github-projects", "docx"]
     },
     {

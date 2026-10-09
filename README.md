@@ -50,8 +50,9 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 Intent authoring for product managers who don't use git. Intents live in each PM's private
 `the-marmack/intent-<github-username>` repo. Each PM edits a Word file under
 `~/Documents/intents/<issue>-<short-name>/`, and the plugin handles Word conversion (built-in OS tools only), git, the
-issue and the project board. Requires only `gh`. The local clone defaults to `~/Documents/intents/repo`; set `repoDir`
-in `~/Documents/intents/.config.json` to use another checkout. An intent is locked when planning has written its
+issue and the project board. `intent.md` on `main` is the truth, and Word is one door into it. Requires `gh`, plus git
+for the local clone until #22 removes it. The clone defaults to `~/Documents/intents/repo`; set `repoDir` in
+`~/Documents/intents/.config.json` to use another checkout. An intent is locked when planning has written its
 `lock.yaml` to `the-marmack/intents`, so every PM needs read access to that repository; the skills check the lock on
 GitHub, never in a clone.
 
@@ -59,7 +60,7 @@ GitHub, never in a clone.
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `intent-create`    | Opens a tracking issue on the board (status Create) and hands over to a door, by default `intent-interview`, until the required sections are covered. Then writes `intent.docx` and publishes `intents/<issue>-<short-name>/intent.md`.                                                                                                         |
 | `intent-interview` | The default door: drafts every required section from the PM's words and asks only about the gaps, in at most three rounds. On its own it fills the gaps in an existing unlocked intent and publishes them with `intent-sync`.                                                                                                                   |
-| `intent-bundle`    | The contract every intent skill shares: the local and repo layout, the required sections, the board and the lock, and Word conversion. Checks an intent without changing it.                                                                                                                                                                    |
+| `intent-bundle`    | The contract every intent skill shares: the local and repo layout, the frontmatter, the required sections, the ready gate (with the `scripts/check.py` gate script), the board and the lock, and Word conversion. Checks an intent without changing it.                                                                                         |
 | `intent-sync`      | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`, after warning if `intent.md` changed on GitHub since the last sync (`intent.md` on `main` is the truth; Word is a door). `/intent-refresh` rebuilds the Word file from GitHub. With no name, lists the unlocked intents to pick from. Refuses locked intents. |
 | `intent-lock`      | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if planning had started, deletes the intent's `lock.yaml` in `the-marmack/intents` and closes its draft plan PR.                                                                                                                                                  |
 
