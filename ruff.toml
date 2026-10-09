@@ -1,3 +1,6 @@
+# Copyright 2026 the-marmack
+# SPDX-License-Identifier: MIT
+#
 # Lint and format the Python helper scripts and their tests (make lint runs `ruff check` and `ruff format --check`).
 line-length = 120
 target-version = "py310"
