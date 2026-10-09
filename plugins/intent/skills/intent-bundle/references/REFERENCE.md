@@ -8,7 +8,6 @@ All intent-plugin skills use the same layout under `~/Documents/intents/` (on Wi
 ```text
 ~/Documents/intents/
   .config.json            # plugin settings, written on first run
-  repo/                   # default clone of the PM's intent-<user> repo (see "Repo location")
   <issue>-<short-name>/
     intent.docx           # the PM's Word copy of intent.md on main; a door, not the truth
     intent.<YYYYMMDD-HHMM>.docx  # backups kept by "Refresh the Word file"
@@ -26,7 +25,6 @@ machine last wrote or refreshed from; "Changed on GitHub" compares it with `main
 {
     "owner": "the-marmack",
     "pmRepo": "intent-<github-login>",
-    "repoDir": "/Users/<me>/Documents/intents/repo",
     "project": { "owner": "the-marmack", "number": 2, "title": "Intents (test)" },
     "statuses": { "create": "Create", "ready": "Ready", "plan": "Plan" }
 }
@@ -37,24 +35,64 @@ The first run creates this file:
 - `owner` defaults to `the-marmack`.
 - `pmRepo` defaults to `intent-$(gh api user -q .login)`. Check the repo exists with `gh repo view`. If it doesn't, stop
   and ask an admin to create it. Never create the repo yourself.
-- `repoDir` follows "Repo location" below.
 - For `project`, list the projects with `gh project list --owner <owner> --format json`. If exactly one title starts
   with `Intents`, use it without asking. Otherwise ask the PM which one to use.
 
-## Repo location
+## GitHub recipes
 
-`repoDir` in `.config.json` is the absolute path of the PM's local clone. Every intent-plugin skill resolves it the same
-way, so the location is never rediscovered:
+Every intent skill talks to GitHub through `gh` alone: no clone, no git, no shell script. A PM machine needs only the
+`gh` CLI, logged in (`gh auth login`). If an old `.config.json` still has `repoDir`, ignore it and leave that folder
+alone. `O` is `owner`, `R` is `pmRepo`, and `P` is the intent's `repoPath`.
 
-1. If `repoDir` is missing, set it to the absolute form of `~/Documents/intents/repo` (on Windows,
-   `%USERPROFILE%\Documents\intents\repo`) and save it to `.config.json`. Don't ask the PM.
-2. If the `repoDir` folder doesn't exist, run `gh repo clone <owner>/<pmRepo> "<repoDir>"`.
-3. If it exists but `git -C "<repoDir>" rev-parse --git-dir` fails, stop and tell the PM that `repoDir` in
-   `.config.json` points at a folder that isn't their intent repo.
-4. Otherwise run `git -C "<repoDir>" pull --rebase --quiet`.
+**Working files:** write drafts (`intent.md`, the commit request) to the OS temp folder (`$TMPDIR` on macOS, `$env:TEMP`
+on Windows), never into `~/Documents/intents/<issue>-<short>/`, which holds only the Word file, its backups and
+`.intent.json`.
 
-To use an existing checkout somewhere else, the PM changes `repoDir` in `.config.json` by hand. The skills never prompt
-for it.
+| Recipe                | `gh` (macOS and Windows alike)                                                                | GitHub MCP tool                                            |
+| --------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Who am I              | `gh api user -q '{login: .login, name: .name}'`                                               | `get_me`                                                   |
+| Read a file           | `gh api "repos/$O/$R/contents/$P/intent.md?ref=main" -H "Accept: application/vnd.github.raw"` | `get_file_contents`                                        |
+| List a folder         | `gh api "repos/$O/$R/contents/intents?ref=main" -q '.[].name'`                                | `get_file_contents` (a folder)                             |
+| Last commit of a file | `gh api "repos/$O/$R/commits?path=$P/intent.md&sha=main&per_page=1" -q '.[0].sha'`            | `list_commits` (with `path`)                               |
+| Head of `main`        | `gh api "repos/$O/$R/git/ref/heads/main" -q .object.sha`                                      | `list_branches`                                            |
+| Commit files          | "Commit to main" below                                                                        | `push_files` (several) or `create_or_update_file` (one)    |
+| Create the issue      | `gh issue create -R $O/$R --title … --label intent --body-file <file>`                        | `create_issue`                                             |
+| Comment               | `gh issue comment <n> -R $O/$R --body-file <file>`                                            | `add_issue_comment`                                        |
+| Add or remove a label | `gh issue edit <n> -R $O/$R --add-label <l>` / `--remove-label <l>`                           | `update_issue`                                             |
+| Board (Projects)      | "Board" below                                                                                 | none: use `gh`                                             |
+| Lock check            | "Lock check" below                                                                            | `get_file_contents` on `intents/` in `the-marmack/intents` |
+
+The MCP names are from github/github-mcp-server; check your server's tool list.
+
+### Commit to main
+
+One GraphQL call commits any number of files to `main` at once. GitHub signs the commit and authors it as the `gh`
+login, so no git identity is needed. It is refused if `main` moved since you read it:
+
+1. Read the head of `main` (`HEAD`) before you build the new content.
+2. Base64-encode each file: `base64 < intent.md | tr -d '\n'` on macOS, or
+   `[Convert]::ToBase64String([IO.File]::ReadAllBytes("intent.md"))` in PowerShell.
+3. Write `commit.json` in the temp folder:
+
+    ```json
+    {
+        "query": "mutation($i: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $i) { commit { oid } } }",
+        "variables": {
+            "i": {
+                "branch": { "repositoryNameWithOwner": "<owner>/<pmRepo>", "branchName": "main" },
+                "expectedHeadOid": "<HEAD>",
+                "message": { "headline": "intent(<issue>): <verb> <short>" },
+                "fileChanges": { "additions": [{ "path": "<repoPath>/intent.md", "contents": "<base64>" }] }
+            }
+        }
+    }
+    ```
+
+    Deletions go in `"deletions": [{ "path": "…" }]` next to `additions`.
+
+4. `gh api graphql --input commit.json -q .data.createCommitOnBranch.commit.oid` prints the new commit's SHA.
+5. If GitHub answers "Expected branch to point to …", `main` moved: read the file again. If it hasn't changed, retry
+   once with the new `HEAD`; if it has, stop and tell the PM someone else changed the intent.
 
 ## Required sections
 
@@ -111,6 +149,17 @@ An intent is **ready** to be planned when all of these hold:
 python3 <skill dir>/scripts/check.py --ready < intent.md
 ```
 
+**On a PM's machine it's optional**, because a PM needs only `gh`. Run it only when a real Python is already there, and
+never start one that would prompt an install:
+
+- **macOS:** `/usr/bin/python3` is a stub that pops up the Xcode Command Line Tools install. Run the script only if
+  `xcode-select -p` succeeds or `command -v python3` is something other than `/usr/bin/python3`.
+- **Windows:** `python` may be a Microsoft Store alias that opens the Store. Run the script only if `py -3 --version`
+  succeeds, and call it as `py -3 <skill dir>/scripts/check.py`.
+
+Without Python, apply the same structural rules yourself (the list below), and say the script didn't run. Planner
+machines (the `plan` plugin's `plan-create`) always run their copy.
+
 It prints one JSON object (`ok`, `ready`, `errors`, `warnings`, `frontmatter`, `sections`) and exits `0` when the check
 passes, `1` when it fails and `2` on a usage error. It checks:
 
@@ -123,22 +172,13 @@ passes, `1` when it fails and `2` on a usage error. It checks:
 Without `--ready`, a blocking question is only a warning. Whether each section is _good enough_ stays the agent's
 judgement: run the script first, then rate the sections against "Required sections".
 
-## Git identity
-
-Set it only inside `<repoDir>`, never with `--global`. Use the PM's GitHub noreply address:
-
-```sh
-R=<repoDir>
-git -C "$R" config user.name "$(gh api user -q '.name // .login')"
-git -C "$R" config user.email "$(gh api user -q .id)+$(gh api user -q .login)@users.noreply.github.com"
-```
-
 ## Board
 
 The board is `project` in `.config.json`. Its Status options are `statuses.create`, `statuses.ready` and
 `statuses.plan`, followed by `In progress`, `Test` and `Done`. **Locked statuses** are `statuses.plan` and every status
-after it; the `intent-lock` workflow's `LOCK_STATUSES` lists them. If `.config.json` has no `statuses.plan`, use `Plan`.
-Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by default.
+after it: planning has started. The lock itself is "Lock check", not the column. If `.config.json` has no
+`statuses.plan`, use `Plan`. Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by
+default.
 
 ### Resolve IDs
 
@@ -284,8 +324,8 @@ $d.SaveAs2((Join-Path $PWD 'intent.docx'), 16); $d.Close(); $w.Quit(); Remove-It
 
 ### Word to markdown (sync)
 
-Extract the text with its structure, then write `<repoDir>/<repoPath>/intent.md` yourself. Never write an `intent.md`
-into the local intent folder:
+Extract the text with its structure, then write `intent.md` yourself to a working file (see "GitHub recipes"). Never
+write an `intent.md` into the local intent folder:
 
 ```sh
 # macOS: Word -> HTML on stdout

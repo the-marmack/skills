@@ -23,10 +23,10 @@ in the `intent-bundle` skill. The interview rules and the step map are in
 - **Out:** the current content of every section.
 
 - **From `intent-create`:** start from `request`. Nothing else exists yet.
-- **On its own:** read `.config.json` and the intent's `.intent.json`, and pull `repoDir`, as described in the
-  `intent-bundle` skill. Run "Lock check" in the `intent-bundle` skill, which reads `main` on GitHub, not the local
-  clone. If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. Run
-  `/intent-revoke <short>` first if it needs changes." If it's unknown, stop and say the lock couldn't be confirmed.
+- **On its own:** read `.config.json` and the intent's `.intent.json`, as described in the `intent-bundle` skill.
+  Run "Lock check" in the `intent-bundle` skill, which reads `main` on GitHub. If it's locked, stop and tell the PM:
+  "*(intent title)* is being planned and is locked. Run `/intent-revoke <short>` first if it needs changes." If it's
+  unknown, stop and say the lock couldn't be confirmed.
   Then run "Changed on GitHub": if `main` moved since `syncedSha`, run "Refresh the Word file" first, so the interview
   starts from the current version. Then read `intent.docx` into sections, following "Word conversion → Word to
   markdown" in the `intent-bundle` skill.

@@ -1,6 +1,6 @@
 ---
 name: intent-sync
-description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and push it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo, a thin layer over git for people who have never used it. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
+description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and commit it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo through the GitHub API (gh only, no git or clone), warning first if intent.md changed on GitHub since the last sync. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
 license: MIT
 ---
 
@@ -17,12 +17,11 @@ others.
 ## Step 1 — Preflight
 
 - **In:** nothing.
-- **Out:** `.config.json` and an up-to-date clone at `repoDir`.
+- **Out:** `.config.json`.
 
 1. Run `gh auth status`. If it fails, ask the PM to run `gh auth login` and stop.
 2. Read `~/Documents/intents/.config.json`. If it is missing, tell the PM to run `/intent-create` first and stop.
-3. Resolve `repoDir` and clone or pull it, following "Repo location" in the `intent-bundle` skill.
-4. If `<repoDir>` has no `user.email`, set one following "Git identity" in the `intent-bundle` skill.
+3. Nothing is cloned and git isn't needed: every GitHub step uses "GitHub recipes" in the `intent-bundle` skill.
 
 ## Step 2 — Select
 
@@ -31,7 +30,7 @@ others.
 
 Sync publishes one intent at a time. An intent is **locked** when planning has started: `the-marmack/intents` holds its
 `lock.yaml` (see the `intent-bundle` skill), so engineering is planning or building it and it can't change here. Find
-out with "Lock check" in the `intent-bundle` skill, which reads GitHub, never the local clone. If the check comes back
+out with "Lock check" in the `intent-bundle` skill, which reads GitHub. If the check comes back
 unknown, say the lock couldn't be confirmed and stop.
 
 - **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
@@ -50,8 +49,7 @@ A folder with an `intent.docx` but no `.intent.json` was never created through `
 - **In:** the chosen intent's `repoPath` from `.intent.json`.
 - **Out:** the intent, confirmed unlocked.
 
-Run "Lock check" in the `intent-bundle` skill for this intent, right before converting. It reads `main` on GitHub, not
-the local clone.
+Run "Lock check" in the `intent-bundle` skill for this intent, right before converting. It reads `main` on GitHub.
 
 - **locked:** stop and tell the PM: "*(intent title)* is being planned and is locked. Run `/intent-revoke <short>`
   first if it needs changes."
@@ -78,14 +76,14 @@ If nobody can answer, don't overwrite: report the question and stop.
 ## Step 4 — Convert
 
 - **In:** `~/Documents/intents/<issue>-<short>/intent.docx`.
-- **Out:** a fresh `<repoDir>/<repoPath>/intent.md`.
+- **Out:** a fresh working `intent.md` in the temp folder.
 
-Extract the Word file's content and write `<repoDir>/<repoPath>/intent.md` from it. Never write an `intent.md` into the
-local intent folder. Word can't hold frontmatter, so start the file with the frontmatter of the currently published
-`intent.md`: keep every key, set `door: word` (or the door the caller passed, such as `interview`) and `harness` to the
-running tool. See "Frontmatter" in the `intent-bundle` skill. Follow "Word conversion → Word to markdown" in the
-`intent-bundle` skill. Only built-in tools are used. Formatting may differ slightly from run to run, and that's fine:
-content is what matters.
+Extract the Word file's content and write a working `intent.md` in the temp folder from it. Never write an `intent.md`
+into the local intent folder. Word can't hold frontmatter, so start the file with the frontmatter of the currently
+published `intent.md`: keep every key, set `door: word` (or the door the caller passed, such as `interview`) and
+`harness` to the running tool. See "Frontmatter" in the `intent-bundle` skill. Follow "Word conversion → Word to
+markdown" in the `intent-bundle` skill. Only built-in tools are used. Formatting may differ slightly from run to run,
+and that's fine: content is what matters.
 
 Check that the converted file still contains these headings: `## Problem`, `## Proposed outcome`,
 `## Affected users and systems`, `## Constraints`, `## Out of scope`. If any are missing, warn the PM which ones, but
@@ -96,23 +94,12 @@ still sync, because the PM owns the content.
 - **In:** the converted `intent.md`.
 - **Out:** a commit on `main` and a one-line report.
 
-```sh
-R=<repoDir>
-git -C "$R" add "<repoPath>/intent.md"
-```
+Compare the new file with the published copy ("Read a file" in the `intent-bundle` skill). If the only differences are
+formatting (whitespace, bullet characters, blank lines, emphasis markup), don't commit: report **no changes** and set
+`syncedSha` to the `HEAD` from Step 3b.
 
-Before committing, compare the new file with the published copy (`git -C "$R" diff --cached`). If the only
-differences are formatting (whitespace, bullet characters, blank lines, emphasis markup), run
-`git -C "$R" restore --staged --worktree "<repoPath>/intent.md"` and report **no changes**. Otherwise, commit:
-
-```sh
-git -C "$R" commit -m "intent(<issue>): sync <short>"
-```
-
-Then run `git -C "$R" push origin HEAD:main`. If the push is rejected, run
-`git -C "$R" pull --rebase` and push once more. If it fails again, stop and show the error.
-
-After a push, set `syncedSha` in `.intent.json` to the new commit (`git -C "$R" rev-parse HEAD`). After **no
-changes**, set it to the `HEAD` from Step 3b.
+Otherwise commit it to `<repoPath>/intent.md` on `main` with "Commit to main" in the `intent-bundle` skill, headline
+`intent(<issue>): sync <short>`. If GitHub says `main` moved, follow that recipe's retry rule; if it still fails, stop
+and show the error. Set `syncedSha` in `.intent.json` to the commit it returns.
 
 Report one line: **synced** (with a link to the file on GitHub), **no changes** or **failed**.

@@ -1,6 +1,6 @@
 ---
 name: intent-bundle
-description: Defines what a PM intent is and holds the recipes the intent skills share — the ~/Documents/intents layout and .config.json, the intent-<user> repo clone, the intent.md sections and when each is good enough, the board statuses Create, Ready, Plan, In progress, Test and Done, the lock.yaml that planning writes to the-marmack/intents, and Word conversion. Checks one intent and reports which required sections are good enough, weak or missing, without changing it. Use when someone asks whether an intent is complete or ready to promote, what an intent holds, where its files live or how its lock works. Not for creating (intent-create), filling in (intent-interview), syncing (intent-sync), promoting or revoking (intent-lock) or planning (plan-create) an intent.
+description: Defines what a PM intent is and holds the recipes the intent skills share — the ~/Documents/intents layout and .config.json, the gh-only GitHub recipes (no clone, no git; with a GitHub MCP map), the intent.md sections and when each is good enough, the board statuses Create, Ready, Plan, In progress, Test and Done, the lock.yaml that planning writes to the-marmack/intents, and Word conversion. Checks one intent and reports which required sections are good enough, weak or missing, without changing it. Use when someone asks whether an intent is complete or ready to promote, what an intent holds, where its files live or how its lock works. Not for creating (intent-create), filling in (intent-interview), syncing (intent-sync), promoting or revoking (intent-lock) or planning (plan-create) an intent.
 license: MIT
 ---
 
@@ -34,11 +34,10 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Recipe                          | Used by                                      |
 | ------------------------------- | -------------------------------------------- |
 | Local layout and `.config.json` | every intent skill                           |
-| Repo location                   | every intent skill                           |
+| GitHub recipes                  | every intent skill                           |
 | Frontmatter                     | intent-create, intent-interview, intent-sync |
 | Required sections               | intent-create, intent-interview, intent-sync |
 | Ready gate                      | the check below, plan-create                 |
-| Git identity                    | intent-create, intent-sync, intent-lock      |
 | Board                           | intent-lock                                  |
 | Lock check                      | intent-sync, intent-interview, intent-lock   |
 | Remove the central lock         | intent-lock                                  |
@@ -50,13 +49,12 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **In:** a short name, an issue number or `<issue>-<short>`.
 - **Out:** a one-line verdict per required section. Nothing is changed.
 
-1. Read `~/Documents/intents/.config.json`, resolve `repoDir` following "Repo location", and read the intent's
-   `.intent.json`.
-2. Read `<repoDir>/<repoPath>/intent.md`. It is the last synced version, so say that Word edits not yet synced aren't
-   checked.
+1. Read `~/Documents/intents/.config.json` and the intent's `.intent.json`.
+2. Read `<repoPath>/intent.md` from `main` on GitHub ("GitHub recipes"). It's the published version, so say that Word
+   edits not yet synced aren't checked.
 3. Rate each required section as **good enough**, **weak** or **missing** against "Required sections", with a short
-   reason for anything that isn't good enough. Then report the lock state from "Lock check": it asks GitHub's `main`,
-   never the local clone.
-4. End with one line from "Ready gate": `Ready gate: pass`, or `Ready gate: fail — <reasons>`. Run
-   `python3 scripts/check.py --ready < intent.md` from this skill first and include its errors in the reasons.
+   reason for anything that isn't good enough. Then report the lock state from "Lock check".
+4. End with one line from "Ready gate": `Ready gate: pass`, or `Ready gate: fail — <reasons>`. Run this skill's
+   `scripts/check.py --ready` first when a real Python is present ("Gate script"), and include its errors in the
+   reasons; otherwise apply its rules yourself.
 5. Change nothing. For gaps, suggest the `intent-interview` skill, or editing `intent.docx` and running `/intent-sync`.

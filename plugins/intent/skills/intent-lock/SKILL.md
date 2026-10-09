@@ -24,11 +24,10 @@ others. Steps 1 and 2 run for both actions. After that, run only that action's o
 ## Step 1 — Preflight
 
 - **In:** the action (`promote` or `revoke`) and a short name.
-- **Out:** `.config.json`, an up-to-date clone at `repoDir` and the intent's `.intent.json`.
+- **Out:** `.config.json` and the intent's `.intent.json`.
 
-1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Resolve `repoDir` and clone or pull it, following
-   "Repo location" in the `intent-bundle` skill.
-   If `<repoDir>` has no `user.email`, set one following "Git identity" in the `intent-bundle` skill.
+1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Nothing is cloned and git isn't needed: GitHub
+   steps use "GitHub recipes" in the `intent-bundle` skill.
 2. If no short name was given, list the intents (`<issue>-<short>` folders with a `.intent.json`) together with their
    board status, and ask which one.
 3. Read `.intent.json` from the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also
@@ -68,7 +67,7 @@ Run `gh issue comment <url> --body "Promoted to **Ready** for planning."`. Tell 
 
 ## Revoke — Step R1: Guard
 
-Run "Lock check" in the `intent-bundle` skill (GitHub's `main`, not the local clone). If `STATUS` is
+Run "Lock check" in the `intent-bundle` skill (GitHub's `main`). If `STATUS` is
 `statuses.create` and the check says unlocked, tell the PM the intent isn't promoted and stop.
 
 If `STATUS` is a locked status or the lock exists, engineering has started planning or building. Tell the PM, and ask

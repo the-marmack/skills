@@ -50,9 +50,8 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 Intent authoring for product managers who don't use git. Intents live in each PM's private
 `the-marmack/intent-<github-username>` repo. Each PM edits a Word file under
 `~/Documents/intents/<issue>-<short-name>/`, and the plugin handles Word conversion (built-in OS tools only), git, the
-issue and the project board. `intent.md` on `main` is the truth, and Word is one door into it. Requires `gh`, plus git
-for the local clone until #22 removes it. The clone defaults to `~/Documents/intents/repo`; set `repoDir` in
-`~/Documents/intents/.config.json` to use another checkout. An intent is locked when planning has written its
+issue and the project board. `intent.md` on `main` is the truth, and Word is one door into it. A PM needs only `gh`: the
+skills talk to GitHub through its API, with no clone and no git. An intent is locked when planning has written its
 `lock.yaml` to `the-marmack/intents`, so every PM needs read access to that repository; the skills check the lock on
 GitHub, never in a clone.
 

@@ -5,7 +5,7 @@
     {
       "id": "check-weak-locked",
       "name": "Report weak and missing sections of a locked intent without changing it",
-      "prompt": "Use the intent-bundle skill to check the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the intent-bundle skill to check the intent 'label-reprint'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and intents-root/repo stands in for main of the PM repo on GitHub: read published files there, and where the skill would commit to main, write the file there instead. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/7-label-reprint/.intent.json",
@@ -61,7 +61,7 @@
     {
       "id": "check-complete",
       "name": "Report a complete, unlocked intent as complete",
-      "prompt": "Use the intent-bundle skill to check intent 8. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the intent-bundle skill to check intent 8. In this environment the intents root is intents-root/ (not ~/Documents/intents) and intents-root/repo stands in for main of the PM repo on GitHub: read published files there, and where the skill would commit to main, write the file there instead. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/8-invoice-export/.intent.json",
@@ -96,7 +96,7 @@
     {
       "id": "check-blocking-question",
       "name": "Fail the ready gate on a blocking open question",
-      "prompt": "Use the intent-bundle skill to check intent 9. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the intent-bundle skill to check intent 9. In this environment the intents root is intents-root/ (not ~/Documents/intents) and intents-root/repo stands in for main of the PM repo on GitHub: read published files there, and where the skill would commit to main, write the file there instead. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "files": [
         "files/intents-root/9-invoice-totals/.intent.json",
