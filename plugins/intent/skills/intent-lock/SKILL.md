@@ -91,5 +91,6 @@ Skip this step when "Lock check" says unlocked. Otherwise:
 
 ## Revoke — Step R4: Record
 
-Run `gh issue comment <url> --body "Revoked: moved back to **Create**."`. Tell the PM they can edit `intent.docx` again
+Remove the `locked` label if the issue has it (`gh issue edit <url> --remove-label locked`). Then run
+`gh issue comment <url> --body "Revoked: moved back to **Create**."`. Tell the PM they can edit `intent.docx` again
 and publish their changes with `/intent-sync`.

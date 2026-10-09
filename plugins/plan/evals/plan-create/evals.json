@@ -5,7 +5,7 @@
     {
       "id": "write-plan-new-repo",
       "name": "Reuse an existing lock and write a plan for a new repo",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock for it; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. Use Lee Lead as the author and 2026-10-08 as the date. In step 9, don't call GitHub: the new branch starts as a copy of central/, so write its files under branch/ instead (branch/intents/...), and write the draft PR's title and body to pr.md and the issue comment to comment.md.",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock for it; the issue already has the locked label and a comment containing <!-- intent-locked -->; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. Write every GitHub command you would run for in step 3, one per line, to commands.md, instead of running it. Use Lee Lead as the author and 2026-10-08 as the date. In step 9, don't call GitHub: the new branch starts as a copy of central/, so write its files under branch/ instead (branch/intents/...), and write the draft PR's title and body to pr.md and the issue comment to comment.md.",
       "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(cp *) Bash(python3 *)",
       "files": [
         "files/pm-main/intents/7-label-reprint/intent.md",
@@ -83,6 +83,10 @@
           "type": "regex",
           "path": "pr.md",
           "pattern": "(?i)draft"
+        },
+        {
+          "type": "command",
+          "run": "! grep -q 'gh issue comment' commands.md 2>/dev/null"
         }
       ]
     },
@@ -128,7 +132,7 @@
     {
       "id": "lock-written",
       "name": "Lock a Ready intent by writing lock.yaml",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#7, but stop after step 3. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Ready; central/ has no lock for it; the last commit that changed intents/7-label-reprint/intent.md on main is def5678, and its content is the one in pm-main/; your gh login is lee-lead; the time is 2026-10-09T10:00:00Z. Instead of moving the card, say in the report that you would move it to Plan. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7, but stop after step 3. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Ready; central/ has no lock for it; the last commit that changed intents/7-label-reprint/intent.md on main is def5678, and its content is the one in pm-main/; your gh login is lee-lead; the time is 2026-10-09T10:00:00Z. Issue #7 has the label intent only and no comments. Write every GitHub command you would run for the label and the comment, one per line, to commands.md, instead of running it. Instead of moving the card, say in the report that you would move it to Plan. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(python3 *)",
       "files": ["files/pm-main/intents/7-label-reprint/intent.md"],
       "expectations": [
@@ -171,6 +175,16 @@
         {
           "type": "command",
           "run": "test ! -e plans"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "--add-label[ =]\"?locked"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "<!-- intent-locked -->"
         }
       ]
     },

@@ -60,6 +60,9 @@ the reference; every step uses `gh` and nothing is cloned.
    exists, someone locked it first: re-read it, and continue only if its `sha` is the one you pinned. Otherwise refuse
    with "already locked at `<sha>`".
 6. **Move the card to `Plan`** ("Move to Plan"), unless it's already in Plan or a later column.
+7. **Label and comment** ("Label and comment" in the reference): add the `locked` label to the intent's issue and a
+   comment linking the intent's folder in `the-marmack/intents`. Both are for people only; nothing reads them, and the
+   lock file stays the truth. Skip what's already there, so a repeat run adds nothing.
 
 ## Step 4 — Read intent
 

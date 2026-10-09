@@ -8,7 +8,7 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 | --------------- | -------------------------------------------------------- |
 | 1 Preflight     | Planner rights, Board                                    |
 | 2 Select intent | List plannable intents                                   |
-| 3 Lock          | Lock, Gate, Lock file, Move to Plan                      |
+| 3 Lock          | Lock, Gate, Lock file, Move to Plan, Label and comment   |
 | 4 Read intent   | Read the intent                                          |
 | 5 Choose repo   | Find candidate repos                                     |
 | 6 Survey repo   | Survey the target repo                                   |
@@ -45,6 +45,24 @@ The last column is the item ID that "Move to Plan" needs.
 
 `content.repository` is `the-marmack/<pmRepo>`. An item already has a plan when `intents/<login>-<number>-*/plan.md`
 exists on `main` here, or an open PR's head branch starts with `plan/<login>-<number>-`.
+
+## Label and comment
+
+After the lock, mark the intent's issue for people. Each part is skipped when it's already done, so a resumed or
+repeated run adds nothing:
+
+```sh
+O=the-marmack; R=<pmRepo>; I=<issue>; F=intents/<login>-<issue>-<short>
+gh label create locked -R "$O/$R" --color B60205 --description "Planning has locked this intent" 2>/dev/null || true
+gh issue edit "$I" -R "$O/$R" --add-label locked
+# comment only if no earlier comment carries the marker
+gh issue view "$I" -R "$O/$R" --json comments -q '.comments[].body' | grep -q '<!-- intent-locked -->' ||
+  gh issue comment "$I" -R "$O/$R" --body "Locked for planning at \`<sha>\`: https://github.com/$O/intents/tree/main/$F
+
+<!-- intent-locked -->"
+```
+
+`/intent-revoke` removes the label. The comment stays as history.
 
 ## Move to Plan
 
