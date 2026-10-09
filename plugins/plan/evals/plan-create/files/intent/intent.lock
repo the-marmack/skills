@@ -1,8 +1,0 @@
-{
-  "status": "Plan",
-  "lockedBy": "themarmack",
-  "lockedAt": "2026-10-08T09:00:00Z",
-  "commit": "abc1234",
-  "issue": "https://github.com/the-marmack/intent-themarmack/issues/7",
-  "run": "https://github.com/the-marmack/intent-themarmack/actions/runs/2"
-}

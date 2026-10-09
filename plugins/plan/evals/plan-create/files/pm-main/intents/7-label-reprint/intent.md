@@ -1,3 +1,8 @@
+---
+door: interview
+harness: claude-code
+---
+
 # Intent: One-click label reprint
 
 **Author:** Pat PM

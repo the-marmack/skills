@@ -4,24 +4,34 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 
 ## Step map
 
-| Step                    | Recipe below                                             |
-| ----------------------- | -------------------------------------------------------- |
-| 1 Preflight             | Board                                                    |
-| 2 Select intent         | List plannable intents                                   |
-| 3 Start planning (lock) | Move to Plan, Sync the lock                              |
-| 4 Read intent           | Read the intent                                          |
-| 5 Choose repo           | Find candidate repos                                     |
-| 6 Survey repo           | Survey the target repo                                   |
-| 7 Break down            | Task rules, [../templates/plan.md](../templates/plan.md) |
-| 8 Review                | None                                                     |
-| 9 Write plan            | plan.json, Publish                                       |
+| Step            | Recipe below                                             |
+| --------------- | -------------------------------------------------------- |
+| 1 Preflight     | Planner rights, Board                                    |
+| 2 Select intent | List plannable intents                                   |
+| 3 Lock          | Lock, Gate, Lock file, Move to Plan, Sync the lock       |
+| 4 Read intent   | Read the intent                                          |
+| 5 Choose repo   | Find candidate repos                                     |
+| 6 Survey repo   | Survey the target repo                                   |
+| 7 Break down    | Task rules, [../templates/plan.md](../templates/plan.md) |
+| 8 Review        | None                                                     |
+| 9 Write plan    | plan.json, Publish                                       |
 
 ## Board
 
 The intents board is the org project `the-marmack` #2 ("Intents (test)"). Its Status options are `Create`, `Ready`,
-`Plan`, `In progress`, `Test` and `Done`. Promoted intents are `Ready`. Moving one to `Plan` starts planning and locks
-it. An intent is locked exactly when its Status is `Plan` or any later status, and `intents/<issue>-<short>/intent.lock`
-in the PM repo records that.
+`Plan`, `In progress`, `Test` and `Done`. Promoted intents are `Ready`. Planning locks an intent by writing
+`intents/<login>-<issue>-<short>/lock.yaml` to `main` of `the-marmack/intents`, then moves the card to `Plan`. The lock
+file is the truth; the column is for people.
+
+## Planner rights
+
+Planning runs as the planner's own `gh` login, with no App. It needs push access to `main` of `the-marmack/intents` (for
+`lock.yaml`), read access to the PM repos, and write access to the board:
+
+```sh
+gh api repos/the-marmack/intents -q .permissions.push   # must print true
+gh auth status 2>&1 | grep -q "'project'" || echo "missing project scope: gh auth refresh -s project"
+```
 
 ## List plannable intents
 
@@ -49,10 +59,53 @@ gh project item-edit --id "$ITEM" --project-id "$PID" --field-id "$FID" --single
 Use `Ready` in place of `Plan` to move it back. A `project` scope error means the user must run
 `gh auth refresh -s project`.
 
-## Sync the lock
+## Lock
 
-The PM repo's `intent-lock` workflow reads the issue's Status and adds or removes `intent.lock` to match. Never write or
-delete the lock yourself.
+Every call goes to GitHub; nothing is cloned. `<login>` is the PM repo name without `intent-`.
+
+```sh
+O=the-marmack; R=<pmRepo>; I=<issue>; L=<login>
+
+# 1. Refuse early: the issue must be open and labelled intent
+gh issue view "$I" -R "$O/$R" --json state,labels -q '[.state, ([.labels[].name]|join(","))]|@tsv'
+
+# 2. Existing lock? (a folder <login>-<issue>-* with lock.yaml)
+FOLDER=$(gh api repos/$O/intents/contents/intents -q ".[]|select(.type==\"dir\" and (.name|startswith(\"$L-$I-\"))).name")
+[ -n "$FOLDER" ] && gh api "repos/$O/intents/contents/intents/$FOLDER/lock.yaml" -H "Accept: application/vnd.github.raw"
+
+# 3. Pin the intent: the last commit that changed intent.md on main, and the file at that commit
+DIR=$(gh api "repos/$O/$R/contents/intents" -q ".[]|select(.type==\"dir\" and (.name|startswith(\"$I-\"))).name")
+SHA=$(gh api "repos/$O/$R/commits?path=intents/$DIR/intent.md&sha=main&per_page=1" -q '.[0].sha')
+gh api "repos/$O/$R/contents/intents/$DIR/intent.md?ref=$SHA" -H "Accept: application/vnd.github.raw" > intent.md
+
+# 5. Write the lock (see "Lock file"); base64 without line breaks
+gh api -X PUT "repos/$O/intents/contents/intents/$L-$DIR/lock.yaml" \
+  -f message="lock($L#$I): ${DIR#*-}" -f branch=main -f content="$(base64 < lock.yaml | tr -d '\n')"
+```
+
+A 404 in step 2 means there's no lock yet. The card's Status comes from "List plannable intents". If the PUT in step 5
+answers 422 or 409, the file exists already: re-read it and compare its `sha` (SKILL.md, Step 3).
+
+## Lock file
+
+`intents/<login>-<issue>-<short>/lock.yaml` on `main` of `the-marmack/intents`:
+
+```yaml
+repository: the-marmack/intent-<login>
+issue: 7
+intent: intents/7-label-reprint/intent.md
+sha: <commit SHA of intent.md at the head of main when it was locked>
+locked_by: <planner's gh login>
+locked_at: <UTC ISO-8601 timestamp>
+```
+
+It's written once and never rewritten. Only a revoke removes it.
+
+## Sync the lock (transition)
+
+Until the PM-side skills read `lock.yaml` and the lock workflow is retired, also refresh the old `intent.lock` in the PM
+repo. Skip this if the repo has no `.github/workflows/intent-lock.yaml`. The workflow reads the issue's Status and adds
+or removes `intent.lock` to match. Never write or delete that file yourself.
 
 ```sh
 REPO=the-marmack/<pmRepo>; N=<issue>
@@ -76,15 +129,13 @@ Exit `0` means the structure passes. Exit `1` means it fails: stop and show the 
 
 ## Read the intent
 
+Read `intent.md` at the lock's `sha`, never at the head of `main`:
+
 ```sh
-O=the-marmack; R=<pmRepo>; I=<issue>
-DIR=$(gh api "repos/$O/$R/contents/intents" -q ".[]|select(.type==\"dir\" and (.name|startswith(\"$I-\"))).name")
-gh api "repos/$O/$R/contents/intents/$DIR/intent.md" -H "Accept: application/vnd.github.raw"
-gh api "repos/$O/$R/contents/intents/$DIR/intent.lock" -H "Accept: application/vnd.github.raw"   # 404 = not promoted
+gh api "repos/the-marmack/<pmRepo>/contents/<intent path from lock.yaml>?ref=<sha>" -H "Accept: application/vnd.github.raw"
 ```
 
-`intent.lock` is JSON with `status`, `lockedBy`, `lockedAt`, `commit`, `issue` and `run`. Its `commit` (the last commit
-that changed `intent.md`) is `lockCommit`, so the plan records exactly which version of the intent it was built from.
+The lock's `sha` is `lockCommit`, so the plan records exactly which version of the intent it was built from.
 
 ## Find candidate repos
 
@@ -156,7 +207,7 @@ Each task is handed to an AI agent that has only the plan, the intent and the re
         "issue": 1,
         "url": "<issue url>",
         "path": "intents/<issue>-<short>/intent.md",
-        "lockCommit": "<intent.lock commit>"
+        "lockCommit": "<the sha in lock.yaml>"
     },
     "targetRepo": "the-marmack/<name>",
     "newRepo": false,

@@ -4,40 +4,192 @@
   "evals": [
     {
       "id": "write-plan-new-repo",
-      "name": "Write a traced plan for a locked intent whose work needs a new repo",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions, so skip steps 1, 2, 3 and 6: the board says Plan and the intent is locked. In step 4, read the intent from intent/intent.md and its lock from intent/intent.lock in the current directory instead of GitHub. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. In step 9, write plans/intent-themarmack/7-label-reprint/plan.md and plan.json, with Lee Lead as the author and 2026-10-08 as the date, and don't publish.",
+      "name": "Reuse an existing lock and write a plan for a new repo",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Plan; central/ already holds the lock for it; the head of main for intents/7-label-reprint/intent.md is commit def5678, and the file's content at the locked commit is the one in pm-main/. In step 5, no existing repo fits, and the answer is the new repo the-marmack/label-reprint. Treat step 8 as approved. In step 9, write plans/intent-themarmack/7-label-reprint/plan.md and plan.json, with Lee Lead as the author and 2026-10-08 as the date, and don't publish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *)",
-      "files": ["files/intent/intent.md", "files/intent/intent.lock"],
+      "files": [
+        "files/pm-main/intents/7-label-reprint/intent.md",
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml"
+      ],
       "expectations": [
         "Task 1 creates and scaffolds the new repo.",
         "Every success criterion and the constraint map to at least one task in the Traceability table.",
-        "No task replaces the printers or the printer queue."
+        "No task replaces the printers or the printer queue.",
+        "The existing lock is reused, not rewritten, and the plan is built from the locked commit abc1234."
       ],
       "assertions": [
-        { "type": "file_exists", "path": "plans/intent-themarmack/7-label-reprint/plan.md" },
-        { "type": "file_exists", "path": "plans/intent-themarmack/7-label-reprint/plan.json" },
-        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "(?m)^### Task 1\\b" },
-        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "(?m)^## Traceability$" },
-        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "SC1" },
-        { "type": "regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "abc1234" },
-        { "type": "not_regex", "path": "plans/intent-themarmack/7-label-reprint/plan.md", "pattern": "\\{\\{" },
+        {
+          "type": "file_exists",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md"
+        },
+        {
+          "type": "file_exists",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.json"
+        },
+        {
+          "type": "regex",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "pattern": "(?m)^### Task 1\\b"
+        },
+        {
+          "type": "regex",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "pattern": "(?m)^## Traceability$"
+        },
+        {
+          "type": "regex",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "pattern": "SC1"
+        },
+        {
+          "type": "regex",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "pattern": "abc1234"
+        },
+        {
+          "type": "not_regex",
+          "path": "plans/intent-themarmack/7-label-reprint/plan.md",
+          "pattern": "\\{\\{"
+        },
         {
           "type": "command",
           "run": "python3 -c \"import json; d=json.load(open('plans/intent-themarmack/7-label-reprint/plan.json')); assert d['targetRepo']=='the-marmack/label-reprint' and d['newRepo'] is True and d['intent']['lockCommit']=='abc1234' and d['intent']['issue'] in (7,'7') and len(d['tasks'])>=2\"",
           "requires": "python3"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^sha: abc1234$"
+        },
+        {
+          "type": "not_regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "def5678"
+        }
+      ]
+    },
+    {
+      "id": "lock-written",
+      "name": "Lock a Ready intent by writing lock.yaml",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7, but stop after step 3. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Ready; central/ has no lock for it; the last commit that changed intents/7-label-reprint/intent.md on main is def5678, and its content is the one in pm-main/; your gh login is lee-lead; the time is 2026-10-09T10:00:00Z. The PM repo has no intent-lock workflow. Instead of moving the card, say in the report that you would move it to Plan. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(python3 *)",
+      "files": ["files/pm-main/intents/7-label-reprint/intent.md"],
+      "expectations": [
+        "The report says the intent passed the gate, was locked at def5678 and that the card moves to Plan."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^repository: the-marmack/intent-themarmack$"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^issue: 7$"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^intent: intents/7-label-reprint/intent\\.md$"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^sha: def5678$"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml",
+          "pattern": "(?m)^locked_by: lee-lead$"
+        },
+        {
+          "type": "file_exists",
+          "path": "plan-report.md"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e plans"
         }
       ]
     },
     {
       "id": "create-status-refused",
       "name": "Refuse to plan an intent that isn't promoted",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#9. GitHub and git are unavailable, so skip steps 1 and 2. The board says the item's Status is Create. Apply step 3 exactly, and write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is open with the label intent; its card is in Create; central/ has no lock for it. Apply step 3 exactly. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "expectations": ["The report says the intent isn't promoted and the PM must run /intent-promote first."],
       "assertions": [
-        { "type": "file_exists", "path": "plan-report.md" },
-        { "type": "regex", "path": "plan-report.md", "pattern": "intent-promote" },
-        { "type": "command", "run": "test ! -e plans" }
+        {
+          "type": "file_exists",
+          "path": "plan-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "plan-report.md",
+          "pattern": "intent-promote"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e central"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e plans"
+        }
+      ],
+      "files": ["files/pm-main/intents/7-label-reprint/intent.md"]
+    },
+    {
+      "id": "closed-issue-refused",
+      "name": "Refuse to lock a closed intent",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#7. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #7 is closed (not planned) and has the label intent; its card is in Ready; central/ has no lock for it. Apply step 3 exactly. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": ["files/pm-main/intents/7-label-reprint/intent.md"],
+      "expectations": ["The report says the issue is closed, so nothing was locked."],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "plan-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "plan-report.md",
+          "pattern": "(?i)closed"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e central"
+        }
+      ]
+    },
+    {
+      "id": "gate-fail-refused",
+      "name": "Refuse to lock an intent that fails the ready gate",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#9. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #9 is open with the label intent; its card is in Ready; central/ has no lock for it; the last commit that changed intents/9-invoice-totals/intent.md on main is fed9876, and its content is the one in pm-main/. Apply step 3 exactly. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(python3 *)",
+      "files": ["files/pm-main/intents/9-invoice-totals/intent.md"],
+      "expectations": [
+        "The report says the ready gate failed because of the blocking open question, so nothing was locked."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "plan-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "plan-report.md",
+          "pattern": "(?i)blocking"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e central"
+        }
       ]
     }
   ]
