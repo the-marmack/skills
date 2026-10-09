@@ -151,6 +151,47 @@
           "pattern": "null"
         }
       ]
+    },
+    {
+      "id": "handover-to-interview",
+      "name": "intent-create hands the content over to intent-interview",
+      "prompt": "Use the intent-create skill for the PM's idea: 'Support agents need to bulk-export order notes to CSV for the fulfilment team.' Skip steps 1 and 3: the title is 'Bulk export order notes to CSV', the short name bulk-export-notes, and the issue is 9 (https://github.com/the-marmack/intent-themarmack/issues/9). The author is Pat PM, the date 2026-10-09, and you are running in claude-code. GitHub, git and Word conversion tools are unavailable and nobody can answer questions: accept your own recommended answer for each question, and park anything you can't settle under Open questions. pm-main/ in the current directory stands in for main of the PM repo the-marmack/intent-themarmack: read files there, and where a skill would commit to main, write the file there instead and append one line to commits.md with the commit's headline and the name of the skill that made it. Treat each commit's SHA as c1, c2, … in order. For the lock check, central/ stands in for main of the-marmack/intents (it has no locks). Don't call gh. Stop at the start of step 6 and write which skill filled the sections, and how, to handover.md. Even if a skill tells you to stop, write handover.md before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(python3 *)",
+      "expectations": [
+        "intent-create commits only the bare intent itself and hands the sections to the intent-interview skill, which commits them one at a time."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "commits.md"
+        },
+        {
+          "type": "command",
+          "run": "head -1 commits.md | grep -q 'create'"
+        },
+        {
+          "type": "command",
+          "run": "test $(grep -c 'intent-interview' commits.md) -ge 3"
+        },
+        {
+          "type": "command",
+          "run": "test $(grep -v 'intent-interview' commits.md | grep -c 'interview') -eq 0"
+        },
+        {
+          "type": "file_exists",
+          "path": "handover.md"
+        },
+        {
+          "type": "regex",
+          "path": "handover.md",
+          "pattern": "intent-interview"
+        },
+        {
+          "type": "regex",
+          "path": "pm-main/intents/9-bulk-export-notes/intent.md",
+          "pattern": "(?m)^## Problem\\n\\n\\S"
+        }
+      ]
     }
   ]
 }

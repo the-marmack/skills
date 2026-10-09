@@ -134,6 +134,40 @@
           "run": "test ! -e intents-root"
         }
       ]
+    },
+    {
+      "id": "handback-to-review",
+      "name": "As intent-create's door, hand back instead of reviewing or approving",
+      "prompt": "Use the intent-interview skill as the door for intent-create, for issue 7 (short name label-reprint); intent-create has already committed the bare intent. The PM's request: 'Warehouse staff waste about 20 minutes a shift re-printing shipping labels because the printer queue drops jobs. I want reprints to be one click from the order screen.' The author is Pat PM. You are running in claude-code. GitHub, git and Word conversion tools are unavailable and nobody can answer questions: accept your own recommended answer for each question, and park anything you can't settle under Open questions. pm-main/ in the current directory stands in for main of the PM repo the-marmack/intent-themarmack: read files there, and where the skill would commit to main, write the file there instead and append the commit's headline as one line to commits.md. Treat each commit's SHA as c1, c2, … in order. For the lock check, central/ stands in for main of the-marmack/intents (it has no locks). Don't call gh. When you're done, write what you hand back to intent-create, and anything you would tell the PM, to handback.md. Even if the skill tells you to stop, write handback.md before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(python3 *)",
+      "files": ["files/pm-main/intents/7-label-reprint/intent.md"],
+      "expectations": [
+        "The interview hands back to intent-create when the sections are done: it doesn't run the review, doesn't ask the PM to accept, and doesn't tell them to move the card or run /intent-promote."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "handback.md"
+        },
+        {
+          "type": "regex",
+          "path": "handback.md",
+          "pattern": "(?i)intent-create"
+        },
+        {
+          "type": "not_regex",
+          "path": "handback.md",
+          "pattern": "(?i)move (the|its) card|intent-promote"
+        },
+        {
+          "type": "command",
+          "run": "test $(grep -c 'interview' commits.md) -ge 3"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e intents-root"
+        }
+      ]
     }
   ]
 }
