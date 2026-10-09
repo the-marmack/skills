@@ -1,6 +1,6 @@
 ---
 name: intent-create
-description: Create a new product intent for a PM who has no git experience — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), hand over to the intent-interview door until the required sections (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) are covered, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word and publish intents/<issue>-<short-name>/intent.md to their repo. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting, locking or revoking one (intent-lock), or writing engineering plans and task breakdowns (plan-create).
+description: Create a new product intent for a PM who has no git experience — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), commit a bare intents/<issue>-<short-name>/intent.md to main, hand over to the intent-interview door, which commits each required section (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) as the PM accepts it, review the result and the ready gate with the PM, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting, locking or revoking one (intent-lock), or writing engineering plans and task breakdowns (plan-create).
 license: MIT
 ---
 
@@ -48,46 +48,58 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
    and the board's "Item added to project" workflow puts the card in `statuses.create`. Record `itemId: null`; the
    other skills find the card when they need it ("Board → Find the item" in the `intent-bundle` skill).
 
-## Step 4 — Door
+## Step 4 — Bare intent
 
-- **In:** `request`.
-- **Out:** a filled answer for every required section, with leftovers moved to Open questions.
+- **In:** `title`, `short`, `request`, `issue` and `url`.
+- **Out:** `intents/<issue>-<short>/intent.md` on `main`, and the issue linking to it.
+
+Every door works on a folder that already exists on GitHub, so publish a bare intent first:
+
+1. Fill in [templates/intent.md](templates/intent.md): the frontmatter (`door: interview`, `harness`: the tool you're
+   running in, such as `claude-code` or `codex`), the title, `author` (the `gh api user` name, or the login if no name
+   is set), today's `date`, the issue URL and the **Request** (`request`, grammar and typos fixed only). Leave the
+   other sections empty: keep their headings and the `Success criteria:` line, and drop the `{{…}}` hints.
+2. Write it to a working `intent.md` in the temp folder ("GitHub recipes"), never into the local intent folder, and
+   commit it to `intents/<issue>-<short>/intent.md` on `main` with "Commit to main", headline
+   `intent(<issue>): create <short>`.
+3. Comment on the issue with a link to the file:
+   `https://github.com/<owner>/<pmRepo>/blob/main/intents/<issue>-<short>/intent.md`.
+
+## Step 5 — Door
+
+- **In:** `issue`, `short` and `request`.
+- **Out:** every required section filled on `main`, one commit per accepted section.
 
 The door is a word in the request, such as "interview". With no door named, apply the `intent-interview` skill without
-waiting for the PM to ask, and pass it `request`. Today the interview is the only door. When it hands the sections back,
-continue with Step 5.
+waiting for the PM to ask, and pass it the issue, `short` and `request`. It reads the bare intent from `main` and
+commits each accepted section. Today the interview is the only door. When it hands back, continue with Step 6.
 
-## Step 5 — Write local files
+## Step 6 — Review
 
-- **In:** the section content, `issue` and `url`.
-- **Out:** `~/Documents/intents/<issue>-<short>/` containing only `intent.docx` and `.intent.json`, and a working copy
-  of `intent.md` in the temp folder.
+- **In:** `intent.md` on `main`.
+- **Out:** an intent the PM has accepted.
 
-1. Fill in [templates/intent.md](templates/intent.md). Replace every `{{…}}`: `author` is the `gh api user` name (or
-   its login if no name is set), `date` is today's date, `door` is the door used in Step 4 (`interview`), and `harness`
-   is the tool you're running in (`claude-code`, `codex`, …). Write the result to a working `intent.md` in the temp
-   folder ("GitHub recipes"), never into the local intent folder.
-2. Generate `~/Documents/intents/<issue>-<short>/intent.docx` from it using "Word conversion → Markdown to Word" in the
-   `intent-bundle` skill. This uses only built-in tools, so nothing needs installing.
-3. Write `.intent.json` with `{"issue", "url", "title", "itemId", "repoPath": "intents/<issue>-<short>", "syncedSha": null}`.
-   Step 6 fills in `syncedSha`.
+Read `intent.md` from `main`, show it to the PM in plain language, and run the ready gate (the gate script with
+`--ready` when a real Python is present, otherwise its rules; see "Ready gate" in the `intent-bundle` skill). Report the
+result. Then ask one question: **accept, or edit a section?** An edit goes back to the `intent-interview` skill for that
+section only, then returns here. At most three rounds.
 
-## Step 6 — Publish
+## Step 7 — Write local files
 
-- **In:** the working `intent.md`.
-- **Out:** the intent committed to `main` and linked from the issue.
+- **In:** the accepted `intent.md` on `main`.
+- **Out:** `~/Documents/intents/<issue>-<short>/` containing only `intent.docx` and `.intent.json`.
 
-Commit the working `intent.md` to `intents/<issue>-<short>/intent.md` on `main` with "Commit to main" in the
-`intent-bundle` skill, headline `intent(<issue>): create <short>`. Set `syncedSha` in `.intent.json` to the commit it
-returns. Then add a comment to the issue that links to the file:
-`https://github.com/<owner>/<pmRepo>/blob/main/intents/<issue>-<short>/intent.md`.
+1. Build `~/Documents/intents/<issue>-<short>/intent.docx` from `intent.md` on `main`, using "Word conversion →
+   Markdown to Word" in the `intent-bundle` skill. This uses only built-in tools, so nothing needs installing.
+2. Write `.intent.json` with `{"issue", "url", "title", "itemId": null, "repoPath": "intents/<issue>-<short>",
+   "syncedSha"}`, where `syncedSha` is the last commit of `intent.md` on `main` ("Last commit of a file").
 
-## Step 7 — Hand off
+## Step 8 — Hand off
 
-Open `~/Documents/intents/<issue>-<short>/` for the PM: `open` on macOS, `explorer` on Windows. Then tell them three things:
+Open `~/Documents/intents/<issue>-<short>/` for the PM: `open` on macOS, `explorer` on Windows. Then tell them:
 
-- Edit `intent.docx` in Word.
-- Run `/intent-sync` to publish their changes.
-- Run `/intent-promote` when the intent is ready.
+- **Next step:** when the intent is ready, move its card to **Ready** on the board, or run `/intent-promote`. That's
+  their approval; nothing is planned before it.
+- To change it later: edit `intent.docx` in Word and run `/intent-sync`, or run the interview again.
 
 List any Open questions that are still unanswered.

@@ -11,5 +11,5 @@ Apply the `intent-create` skill.
 
 The PM's rough idea (may be empty — then ask for it): $ARGUMENTS
 
-Follow the skill's steps in order: preflight, name, issue first, door (the `intent-interview` skill), write local files,
-publish, hand off.
+Follow the skill's steps in order: preflight, name, issue first, bare intent, door (the `intent-interview` skill),
+review, write local files, hand off.

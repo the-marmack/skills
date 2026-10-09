@@ -15,9 +15,9 @@
 
 Which command each step runs, and which recipe it follows. The recipes are in the `intent-bundle` skill.
 
-| Step      | Command                                                   | `intent-bundle` recipe                                                          |
-| --------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Read      | Lock check, Changed on GitHub, then read `intent.docx`    | Local layout, Lock check, Changed on GitHub, Word conversion → Word to markdown |
-| Draft     | None                                                      | Required sections                                                               |
-| Interview | None                                                      | Required sections                                                               |
-| Hand back | Rewrite `intent.docx`, then apply the `intent-sync` skill | Word conversion → Markdown to Word                                              |
+| Step      | Command                                                                      | `intent-bundle` recipe                                      |
+| --------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Read      | Lock check, then read `intent.md` and the head of `main` from GitHub         | Local layout, GitHub recipes, Lock check                    |
+| Draft     | None                                                                         | Required sections                                           |
+| Interview | Per accepted section: `check.py` (if Python), `gh api graphql --input …`     | Required sections, Frontmatter, Gate script, Commit to main |
+| Finish    | `check.py --ready` (if Python); refresh `intent.docx` if this machine has it | Ready gate, Refresh the Word file                           |
