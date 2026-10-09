@@ -18,9 +18,10 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 
 ## Board
 
-The intents board is the org project `the-marmack` #2 ("Intents (test)"). Its Status options are `Create`, `Ready` and
-`Plan`. Promoted intents are `Ready`. Moving one to `Plan` starts planning and locks it. An intent is locked exactly
-when its Status is `Plan`, and `intents/<issue>-<short>/intent.lock` in the PM repo records that.
+The intents board is the org project `the-marmack` #2 ("Intents (test)"). Its Status options are `Create`, `Ready`,
+`Plan`, `In progress`, `Test` and `Done`. Promoted intents are `Ready`. Moving one to `Plan` starts planning and locks
+it. An intent is locked exactly when its Status is `Plan` or any later status, and `intents/<issue>-<short>/intent.lock`
+in the PM repo records that.
 
 ## List plannable intents
 

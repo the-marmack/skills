@@ -30,7 +30,7 @@ others.
 - **Out:** exactly one intent folder.
 
 Sync publishes one intent at a time. An intent is **locked** when `<repoDir>/<repoPath>/intent.lock` exists: it has
-moved to Plan on the board and engineering is planning it, so it can't change here.
+moved to Plan (or a later column) on the board and engineering is planning or building it, so it can't change here.
 
 - **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
   also works).

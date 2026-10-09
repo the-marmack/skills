@@ -1,6 +1,6 @@
 ---
 name: intent-lock
-description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits and moves the intent's issue from Create to Ready so engineering can plan it; revoke moves it from Ready or Plan back to Create and, if planning had started, runs the repo's intent-lock workflow to remove intents/<issue>-<short-name>/intent.lock so editing can resume. The lock itself is set by that workflow when the issue reaches Plan, never by this skill. Use when a PM wants to promote, approve, finalize, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the plan plugin's plan-create), or moving non-intent issues around a board.
+description: Promote or revoke a PM's intent on the GitHub project board — promote syncs the latest Word edits and moves the intent's issue from Create to Ready so engineering can plan it; revoke moves it from Ready or any later column back to Create and, if planning had started, runs the repo's intent-lock workflow to remove intents/<issue>-<short-name>/intent.lock so editing can resume. The lock itself is set by that workflow when the issue reaches Plan and kept through Done, never by this skill. Use when a PM wants to promote, approve, finalize, mark ready, revoke, unlock, reopen or send back an intent, or runs /intent-promote or /intent-revoke. Not for creating a new intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the plan plugin's plan-create), or moving non-intent issues around a board.
 license: MIT
 ---
 
@@ -11,12 +11,13 @@ board recipes and the lock are in the `intent-bundle` skill. Which command and r
 [references/REFERENCE.md](references/REFERENCE.md).
 
 The board decides whether an intent is locked, and `intent.lock` in the repo records it. The PM repo's `intent-lock`
-workflow is the only thing that writes or removes the lock. It locks the intent while its Status is `statuses.plan`.
+workflow is the only thing that writes or removes the lock. It locks the intent while its Status is a
+locked status: `statuses.plan` or any later status (In progress, Test, Done).
 
-| Action      | Board status               | Lock file                                    |
-| ----------- | -------------------------- | -------------------------------------------- |
-| **promote** | Create → **Ready**         | none; `/plan-create` locks it later via Plan |
-| **revoke**  | Ready or Plan → **Create** | removed by the workflow if present           |
+| Action      | Board status                | Lock file                                    |
+| ----------- | --------------------------- | -------------------------------------------- |
+| **promote** | Create → **Ready**          | none; `/plan-create` locks it later via Plan |
+| **revoke**  | Ready or later → **Create** | removed by the workflow if present           |
 
 Each step below has its own inputs and outputs, so steps can be reordered, swapped or removed without touching the
 others. Steps 1 and 2 run for both actions. After that, run only that action's own steps.
@@ -45,7 +46,7 @@ board, add it and save the new `itemId` to `.intent.json`.
 
 ## Promote — Step P1: Guard
 
-If `STATUS` is already `statuses.ready` or `statuses.plan`, or `<repoDir>/<repoPath>/intent.lock` exists, tell the PM
+If `STATUS` is already `statuses.ready` or a locked status, or `<repoDir>/<repoPath>/intent.lock` exists, tell the PM
 the intent is already promoted and stop.
 
 ## Promote — Step P2: Final sync
@@ -70,8 +71,8 @@ Run `gh issue comment <url> --body "Promoted to **Ready** for planning."`. Tell 
 If `STATUS` is `statuses.create` and there's no `<repoDir>/<repoPath>/intent.lock`, tell the PM the intent isn't
 promoted and stop.
 
-If `STATUS` is `statuses.plan` or the lock exists, engineering has started planning. Tell the PM, and ask them to
-confirm that they want to pull it back before you continue.
+If `STATUS` is a locked status or the lock exists, engineering has started planning or building. Tell the PM, and ask
+them to confirm that they want to pull it back before you continue.
 
 ## Revoke — Step R2: Move to Create
 

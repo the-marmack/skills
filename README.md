@@ -59,7 +59,7 @@ in `~/Documents/intents/.config.json` to use another checkout.
 | `intent-interview` | The default door: drafts every required section from the PM's words and asks only about the gaps, in at most three rounds. On its own it fills the gaps in an existing unlocked intent and publishes them with `intent-sync`.           |
 | `intent-bundle`    | The contract every intent skill shares: the local and repo layout, the required sections, the board and the lock, and Word conversion. Checks an intent without changing it.                                                            |
 | `intent-sync`      | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`. With no name, lists the unlocked intents to pick from. Refuses intents that have an `intent.lock`.                                                    |
-| `intent-lock`      | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if it was in **Plan**, runs the `intent-lock` workflow to remove the lock. Only that workflow writes `intent.lock`.                                       |
+| `intent-lock`      | Promote moves the issue to **Ready**. Revoke moves it back to **Create** and, if it was in **Plan** or later, runs the `intent-lock` workflow to remove the lock. Only that workflow writes `intent.lock`.                              |
 
 The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-promote` and `/intent-revoke`
 as thin entry points to these skills.

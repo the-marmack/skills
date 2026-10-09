@@ -84,8 +84,9 @@ git -C "$R" config user.email "$(gh api user -q .id)+$(gh api user -q .login)@us
 ## Board
 
 The board is `project` in `.config.json`. Its Status options are `statuses.create`, `statuses.ready` and
-`statuses.plan`. If `.config.json` has no `statuses.plan`, use `Plan`. Use `gh`'s built-in `-q` for JSON queries rather
-than `jq`, which isn't installed by default.
+`statuses.plan`, followed by `In progress`, `Test` and `Done`. **Locked statuses** are `statuses.plan` and every status
+after it; the `intent-lock` workflow's `LOCK_STATUSES` lists them. If `.config.json` has no `statuses.plan`, use `Plan`.
+Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by default.
 
 ### Resolve IDs
 
