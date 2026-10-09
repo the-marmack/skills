@@ -26,8 +26,8 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **Status** lives on the board: Create → Ready → Plan → In progress → Test → Done. Promoting moves Create to Ready,
   planning moves Ready to Plan, and the build moves it on from there.
 - **Locked:** exactly when `the-marmack/intents` has `intents/<login>-<issue>-<short>/lock.yaml` on `main`, whatever
-  the card's column. `plan-create` writes it when planning starts, and only `/intent-revoke` removes it. Until the old
-  lock workflow is retired, an `intent.lock` in the PM repo also counts. Check with "Lock check".
+  the card's column. `plan-create` writes it when planning starts, and only `/intent-revoke` removes it. Check with
+  "Lock check".
 
 ## Shared recipes
 
@@ -42,7 +42,6 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Board                           | intent-create, intent-lock                   |
 | Lock check                      | intent-sync, intent-interview, intent-lock   |
 | Remove the central lock         | intent-lock                                  |
-| Sync the lock, Lock file        | intent-lock (transition)                     |
 | Word conversion                 | intent-create, intent-interview, intent-sync |
 
 ## Check an intent

@@ -185,36 +185,36 @@ Use `$READY` or `$PLAN` for the other statuses. If `gh` reports a missing `proje
 ## Lock check
 
 An intent is **locked** when `the-marmack/intents` has `intents/<login>-<issue>-<short>/lock.yaml` on `main`, written by
-`plan-create` (`<login>` is `pmRepo` without `intent-`). Until the lock workflow is retired, an `intent.lock` in the PM
-repo's `intents/<issue>-<short>/` also counts.
+`plan-create` (`<login>` is `pmRepo` without `intent-`). Nothing in the PM repo records the lock.
 
-Always ask GitHub. Never look in a local clone: it can be stale, and a lock can land after the last pull. Two calls read
-both `main` trees:
+Always ask GitHub. Never look in a local clone: it can be stale, and a lock can land after the last pull. One call reads
+the whole `main` tree of `the-marmack/intents`:
 
 ```sh
-O=<owner>; R=<pmRepo>; L=${R#intent-}; I=<issue>; P=<repoPath>
+O=<owner>; R=<pmRepo>; L=${R#intent-}; I=<issue>
 Q='if .truncated then error("tree truncated") else .tree[].path end'
-if C=$(gh api "repos/$O/intents/git/trees/main?recursive=1" -q "$Q" 2>&1) &&
-  M=$(gh api "repos/$O/$R/git/trees/main?recursive=1" -q "$Q" 2>&1)
+if C=$(gh api "repos/$O/intents/git/trees/main?recursive=1" -q "$Q" 2>&1)
 then
-  if printf '%s\n' "$C" | grep -Eq "^intents/$L-$I-[^/]+/lock\.yaml$" ||
-    printf '%s\n' "$M" | grep -qx "$P/intent.lock"
+  if printf '%s\n' "$C" | grep -Eq "^intents/$L-$I-[^/]+/lock\.yaml$"
   then STATE=locked; else STATE=unlocked; fi
 else
-  STATE=unknown   # no network, no access, missing repo or branch: $C or $M holds the error
+  STATE=unknown   # no network, no access: $C holds the error
 fi
 ```
 
-To list every locked intent at once (for example to offer only unlocked ones), keep the `$C` and `$M` lists and match
-each intent against them.
+To list every locked intent at once (for example to offer only unlocked ones), keep the `$C` list and match each intent
+against it.
 
 - **locked:** a lock exists. Block: don't change, sync or interview the intent.
-- **unlocked:** both trees were read and neither has a lock for it.
+- **unlocked:** the tree was read and has no lock for it.
 - **unknown:** GitHub couldn't be read. Block as well, and tell the PM the lock couldn't be confirmed and to try again
   once `gh auth status` works. Never treat an error as unlocked. A PM needs read access to `the-marmack/intents`;
   without it every check is unknown, so ask an admin for it.
 
-On Windows, run the same `gh api` calls in PowerShell. A non-zero exit means unknown.
+On Windows, run the same `gh api` call in PowerShell. A non-zero exit means unknown.
+
+The lock only means anything to the intent skills, which refuse to change a locked intent. Nothing stops a plain
+`git push` to the PM repo. Stronger enforcement is tracked in the-marmack/intents#1.
 
 ## Remove the central lock
 
@@ -227,40 +227,6 @@ BLOB=$(gh api "repos/the-marmack/intents/contents/$F" -q .sha)
 gh api -X DELETE "repos/the-marmack/intents/contents/$F" -f message="unlock(<login>#<issue>): <short>" \
   -f sha="$BLOB" -f branch=main
 ```
-
-## Sync the lock (transition)
-
-Until it's retired, the PM repo's `.github/workflows/intent-lock.yaml` reads the issue's Status from the board and adds
-or removes `intents/<issue>-<short>/intent.lock` to match. Only that workflow writes the lock. Dispatch it and wait for
-it:
-
-```sh
-REPO=<owner>/<pmRepo>; N=<issue>
-gh workflow run intent-lock.yaml -R "$REPO" -f issue="$N"
-sleep 5
-RUN=$(gh run list -R "$REPO" --workflow intent-lock.yaml --event workflow_dispatch --limit 1 --json databaseId -q '.[0].databaseId')
-gh run watch "$RUN" -R "$REPO" --exit-status
-```
-
-If the workflow is missing from the repo, ask an admin to add it. Never write or delete `intent.lock` by hand.
-
-## Lock file
-
-`intents/<issue>-<short>/intent.lock` is JSON written by the workflow:
-
-```json
-{
-    "status": "Plan",
-    "lockedBy": "<who dispatched the run>",
-    "lockedAt": "<UTC ISO-8601 timestamp>",
-    "commit": "<last commit that changed intent.md>",
-    "issue": "<issue url>",
-    "run": "<workflow run url>"
-}
-```
-
-The lock only means anything to the intent skills, which refuse to change a locked intent. Nothing stops a plain
-`git push`. Stronger enforcement is tracked in the-marmack/intents#1.
 
 ## Word conversion
 

@@ -86,8 +86,7 @@ Skip this step when "Lock check" says unlocked. Otherwise:
    the PM a planner has to revoke it.
 2. Close an open draft plan PR for the intent, if there is one
    (`gh pr list -R the-marmack/intents --head plan/<login>-<issue>-<short>`), with a comment.
-3. If the PM repo still has the `intent-lock` workflow, run "Sync the lock" to remove the old `intent.lock` too.
-4. Run "Lock check" again and confirm it says unlocked. If it doesn't, tell the PM the board says Create but the
+3. Run "Lock check" again and confirm it says unlocked. If it doesn't, tell the PM the board says Create but the
    intent is still locked.
 
 ## Revoke — Step R4: Record

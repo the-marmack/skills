@@ -8,7 +8,7 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 | --------------- | -------------------------------------------------------- |
 | 1 Preflight     | Planner rights, Board                                    |
 | 2 Select intent | List plannable intents                                   |
-| 3 Lock          | Lock, Gate, Lock file, Move to Plan, Sync the lock       |
+| 3 Lock          | Lock, Gate, Lock file, Move to Plan                      |
 | 4 Read intent   | Read the intent                                          |
 | 5 Choose repo   | Find candidate repos                                     |
 | 6 Survey repo   | Survey the target repo                                   |
@@ -100,20 +100,6 @@ locked_at: <UTC ISO-8601 timestamp>
 ```
 
 It's written once and never rewritten. Only a revoke removes it.
-
-## Sync the lock (transition)
-
-Until the PM-side skills read `lock.yaml` and the lock workflow is retired, also refresh the old `intent.lock` in the PM
-repo. Skip this if the repo has no `.github/workflows/intent-lock.yaml`. The workflow reads the issue's Status and adds
-or removes `intent.lock` to match. Never write or delete that file yourself.
-
-```sh
-REPO=the-marmack/<pmRepo>; N=<issue>
-gh workflow run intent-lock.yaml -R "$REPO" -f issue="$N"
-sleep 5
-RUN=$(gh run list -R "$REPO" --workflow intent-lock.yaml --event workflow_dispatch --limit 1 --json databaseId -q '.[0].databaseId')
-gh run watch "$RUN" -R "$REPO" --exit-status
-```
 
 ## Gate
 

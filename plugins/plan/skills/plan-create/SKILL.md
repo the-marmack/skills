@@ -60,9 +60,6 @@ the reference; every step uses `gh` and nothing is cloned.
    exists, someone locked it first: re-read it, and continue only if its `sha` is the one you pinned. Otherwise refuse
    with "already locked at `<sha>`".
 6. **Move the card to `Plan`** ("Move to Plan"), unless it's already in Plan or a later column.
-7. **Transition:** while the PM repo still has the `intent-lock` workflow, also run "Sync the lock", so the PM-side
-   skills, which still read `intent.lock` in the PM repo, see the intent as locked. A failed run is a warning, not a
-   stop.
 
 ## Step 4 — Read intent
 
