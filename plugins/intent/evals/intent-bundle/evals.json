@@ -18,10 +18,25 @@
         "The report says the intent is locked."
       ],
       "assertions": [
-        { "type": "file_exists", "path": "check-report.md" },
-        { "type": "regex", "path": "check-report.md", "pattern": "(?i)proposed outcome" },
-        { "type": "regex", "path": "check-report.md", "pattern": "(?i)out of scope" },
-        { "type": "regex", "path": "check-report.md", "pattern": "(?i)lock" },
+        {
+          "type": "file_exists",
+          "path": "check-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)proposed outcome"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)out of scope"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)lock"
+        },
         {
           "type": "regex",
           "path": "intents-root/repo/intents/7-label-reprint/intent.md",
@@ -32,7 +47,15 @@
           "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "(?m)^## Out of scope$"
         },
-        { "type": "file_exists", "path": "intents-root/repo/intents/7-label-reprint/intent.lock" }
+        {
+          "type": "file_exists",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.lock"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)ready gate: fail"
+        }
       ]
     },
     {
@@ -46,12 +69,63 @@
       ],
       "expectations": [
         "Every required section is rated good enough.",
-        "The report says the intent isn't locked."
+        "The report says the intent isn't locked.",
+        "The report ends with a ready-gate line that passes."
       ],
       "assertions": [
-        { "type": "file_exists", "path": "check-report.md" },
-        { "type": "regex", "path": "check-report.md", "pattern": "(?i)good enough" },
-        { "type": "command", "run": "test ! -e intents-root/repo/intents/8-invoice-export/intent.lock" }
+        {
+          "type": "file_exists",
+          "path": "check-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)good enough"
+        },
+        {
+          "type": "command",
+          "run": "test ! -e intents-root/repo/intents/8-invoice-export/intent.lock"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)ready gate: pass"
+        }
+      ]
+    },
+    {
+      "id": "check-blocking-question",
+      "name": "Fail the ready gate on a blocking open question",
+      "prompt": "Use the intent-bundle skill to check intent 9. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. GitHub and git are unavailable, so don't pull. Write the check, one line per required section plus one line about the lock, to check-report.md. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/9-invoice-totals/.intent.json",
+        "files/intents-root/repo/intents/9-invoice-totals/intent.md"
+      ],
+      "expectations": [
+        "Every required section is rated good enough.",
+        "The ready gate fails because an open question is marked (blocking)."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "check-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)ready gate: fail"
+        },
+        {
+          "type": "regex",
+          "path": "check-report.md",
+          "pattern": "(?i)blocking"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/9-invoice-totals/intent.md",
+          "pattern": "\\(blocking\\)"
+        }
       ]
     }
   ]

@@ -3,13 +3,13 @@ door: interview
 harness: claude-code
 ---
 
-# Intent: Export invoices as CSV
+# Intent: Export invoice totals as CSV
 
 **Author:** Pat PM
 
 **Date:** 2026-10-07
 
-**Issue:** <https://github.com/the-marmack/intent-themarmack/issues/8>
+**Issue:** <https://github.com/the-marmack/intent-themarmack/issues/9>
 
 ## Request
 
@@ -44,4 +44,5 @@ Finance admins at customer firms, the billing page and the invoices API.
 
 ## Open questions
 
+- Which tax regions must the totals cover? (blocking) (owner: Pat PM)
 - Should credit notes be part of the export? (owner: Pat PM)

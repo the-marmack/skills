@@ -1,3 +1,8 @@
+---
+door: {{door}}
+harness: {{harness}}
+---
+
 # Intent: {{title}}
 
 **Author:** {{author}}

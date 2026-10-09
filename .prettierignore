@@ -20,3 +20,5 @@ CHANGELOG.md
 # Shared Makefile library submodule (linted in its own repo) and on-demand tool bin
 make/
 .bin/
+# the intent template has {{…}} placeholders in its YAML frontmatter, which prettier rewrites
+plugins/intent/skills/intent-create/templates/intent.md

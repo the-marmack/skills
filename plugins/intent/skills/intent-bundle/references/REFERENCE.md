@@ -71,6 +71,36 @@ can't be settled now is parked.
 An intent is **complete** when every required section is good enough. The published `intent.md` must also keep these
 headings: `## Problem`, `## Proposed outcome`, `## Affected users and systems`, `## Constraints`, `## Out of scope`.
 
+## Frontmatter
+
+`intent.md` starts with YAML frontmatter. It records who wrote this version, never a status:
+
+```yaml
+---
+door: interview # free text: interview, word, hand, …
+harness: claude-code # free text: the tool that wrote this version (claude-code, codex, github-web, …)
+supersedes: https://github.com/the-marmack/intent-<login>/issues/<n> # optional: the locked intent this replaces
+---
+```
+
+- Each door sets `door` and `harness` when it writes `intent.md`: `intent-create` and `intent-interview` set
+  `door: interview`, and `intent-sync` sets `door: word` (or the door its caller passes).
+- Keep `supersedes` and any other key that is already there. Never drop the frontmatter.
+- Word can't hold frontmatter, so it never goes into `intent.docx`. A Word sync takes it from the published `intent.md`
+  (see "Word to markdown").
+
+## Ready gate
+
+An intent is **ready** to be planned when all of these hold:
+
+1. It's complete: every required section is good enough (the table above, judged by the agent).
+2. No line under `## Open questions` contains `(blocking)`. Mark a question `(blocking)` when planning can't start until
+   it's answered.
+3. The folder holds only allowed files. For now that's `intent.md` alone; `sources.md` and `design/` come later.
+
+`plan-create` runs the gate before it locks an intent and refuses one that fails. A script for the structural parts
+(headings, success criteria, `(blocking)`) is planned; until then the agent applies the gate.
+
 ## Git identity
 
 Set it only inside `<repoDir>`, never with `--global`. Use the PM's GitHub noreply address:
@@ -197,10 +227,10 @@ The output doesn't need to be byte-identical between runs. What matters is the i
 
 ### Markdown to Word (create)
 
-Write the filled template as simple HTML in `<issue>-<short>/intent.html`, inside the local intent folder. Use only
-`h1`, `h2`, `p`, `ul`/`li`, `strong`, `em` and `a`, and start the file with `<html><head><meta charset="utf-8"></head>`.
-Without the charset, dashes, accents and curly quotes turn into garbage such as `â€”` in Word. Then convert it and
-delete the HTML file:
+Write the filled template as simple HTML in `<issue>-<short>/intent.html`, inside the local intent folder. Leave the
+frontmatter out: Word can't hold it, and it stays in `intent.md`. Use only `h1`, `h2`, `p`, `ul`/`li`, `strong`, `em`
+and `a`, and start the file with `<html><head><meta charset="utf-8"></head>`. Without the charset, dashes, accents and
+curly quotes turn into garbage such as `â€”` in Word. Then convert it and delete the HTML file:
 
 ```sh
 # macOS
@@ -237,3 +267,5 @@ Map the structure onto the template's shape:
   them against the template's section names.
 - In Windows XML, the `w:pStyle` values `Heading1` and `Heading2` mark headings, and `w:numPr` marks list items.
 - Keep the PM's words. Don't summarize, reorder or "improve" them.
+- Start the file with the frontmatter of the currently published `intent.md`. Keep every key, set `door` to `word` (or
+  the door the caller passed) and `harness` to the running tool. If the published file has no frontmatter, add one.

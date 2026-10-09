@@ -14,10 +14,15 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **Local folder:** `~/Documents/intents/<issue>-<short>/` holds only `intent.docx`, the PM's source of truth, and
   `.intent.json`.
 - **Repo folder:** `intents/<issue>-<short>/` on `main` of `<owner>/<pmRepo>` holds `intent.md`, generated from the
-  Word file, and `intent.lock` while the intent is being planned or built.
+  Word file, and `intent.lock` while the intent is being planned or built. Only `intent.md` is allowed there today;
+  `sources.md` and `design/` are reserved for later.
+- **Frontmatter:** `intent.md` starts with YAML frontmatter: `door` and `harness` (free text, which door and tool
+  wrote this version) and an optional `supersedes`. See "Frontmatter".
 - **Sections:** `intent.md` has Request, Problem, Proposed outcome, Affected users and systems, Constraints, Out of scope
   and Open questions. It holds no status.
 - **Complete:** every required section is good enough, as defined in "Required sections".
+- **Ready:** complete, no open question marked `(blocking)`, and only allowed files in the folder. See "Ready gate";
+  planning refuses an intent that fails it.
 - **Status** lives on the board: Create → Ready → Plan → In progress → Test → Done. Promoting moves Create to Ready,
   planning moves Ready to Plan, and the build moves it on from there.
 - **Locked:** exactly when the Status is Plan or later (In progress, Test, Done). `intent.lock` records it, and only the
@@ -29,7 +34,9 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | ------------------------------- | -------------------------------------------- |
 | Local layout and `.config.json` | every intent skill                           |
 | Repo location                   | every intent skill                           |
+| Frontmatter                     | intent-create, intent-interview, intent-sync |
 | Required sections               | intent-create, intent-interview, intent-sync |
+| Ready gate                      | the check below, plan-create                 |
 | Git identity                    | intent-create, intent-sync, intent-lock      |
 | Board                           | intent-create, intent-lock                   |
 | Lock check                      | intent-sync, intent-interview, intent-lock   |
@@ -48,4 +55,5 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 3. Rate each required section as **good enough**, **weak** or **missing** against "Required sections", with a short
    reason for anything that isn't good enough. Then report the lock state from "Lock check": it asks GitHub's `main`,
    never the local clone.
-4. Change nothing. For gaps, suggest the `intent-interview` skill, or editing `intent.docx` and running `/intent-sync`.
+4. End with one line from "Ready gate": `Ready gate: pass`, or `Ready gate: fail — <reasons>`.
+5. Change nothing. For gaps, suggest the `intent-interview` skill, or editing `intent.docx` and running `/intent-sync`.

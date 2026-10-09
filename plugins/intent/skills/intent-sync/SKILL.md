@@ -62,8 +62,11 @@ Never edit, delete or bypass a lock here.
 - **Out:** a fresh `<repoDir>/<repoPath>/intent.md`.
 
 Extract the Word file's content and write `<repoDir>/<repoPath>/intent.md` from it. Never write an `intent.md` into the
-local intent folder. Follow "Word conversion → Word to markdown" in the `intent-bundle` skill. Only built-in tools
-are used. Formatting may differ slightly from run to run, and that's fine: content is what matters.
+local intent folder. Word can't hold frontmatter, so start the file with the frontmatter of the currently published
+`intent.md`: keep every key, set `door: word` (or the door the caller passed, such as `interview`) and `harness` to the
+running tool. See "Frontmatter" in the `intent-bundle` skill. Follow "Word conversion → Word to markdown" in the
+`intent-bundle` skill. Only built-in tools are used. Formatting may differ slightly from run to run, and that's fine:
+content is what matters.
 
 Check that the converted file still contains these headings: `## Problem`, `## Proposed outcome`,
 `## Affected users and systems`, `## Constraints`, `## Out of scope`. If any are missing, warn the PM which ones, but

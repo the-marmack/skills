@@ -1,8 +1,3 @@
----
-door: interview
-harness: claude-code
----
-
 # Intent: Export invoices as CSV
 
 **Author:** Pat PM
@@ -40,6 +35,7 @@ Finance admins at customer firms, the billing page and the invoices API.
 ## Out of scope
 
 - PDF export
+- EDITED-IN-WORD: exports for closed accounts
 - Scheduled or emailed exports
 
 ## Open questions

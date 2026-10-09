@@ -40,6 +40,52 @@
           "pattern": "ORIGINAL-PUBLISHED-TEXT"
         }
       ]
+    },
+    {
+      "id": "frontmatter-kept-on-sync",
+      "name": "Keep the published frontmatter when syncing from Word",
+      "prompt": "Use the intent-sync skill to sync the intent 'invoice-export'. In this environment the intents root is intents-root/ (not ~/Documents/intents) and repoDir is intents-root/repo. Git, GitHub and Word conversion tools are unavailable, so skip preflight and Step 5 (push). The text extracted from intents-root/8-invoice-export/intent.docx is already in word-text.md; use it as the converted Word content in Step 4 and write intents-root/repo/intents/8-invoice-export/intent.md. You are running in claude-code. For the lock check, intents-root/repo stands in for GitHub's main: a file there exists on main, and a file missing there is missing on main. Don't call gh.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/8-invoice-export/.intent.json",
+        "files/intents-root/repo/intents/8-invoice-export/intent.md",
+        "files/word-text.md"
+      ],
+      "expectations": [
+        "The synced intent.md keeps the published frontmatter, with door set to word, and contains the Word edit."
+      ],
+      "assertions": [
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "\\A---\\n"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "(?m)^door: word$"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "(?m)^harness: \\S+"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "(?m)^supersedes: https://github\\.com/the-marmack/intent-themarmack/issues/5$"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "EDITED-IN-WORD"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/8-invoice-export/intent.md",
+          "pattern": "(?m)^## Proposed outcome$"
+        }
+      ]
     }
   ]
 }

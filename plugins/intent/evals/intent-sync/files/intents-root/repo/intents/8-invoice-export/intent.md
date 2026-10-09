@@ -1,6 +1,7 @@
 ---
 door: interview
 harness: claude-code
+supersedes: https://github.com/the-marmack/intent-themarmack/issues/5
 ---
 
 # Intent: Export invoices as CSV

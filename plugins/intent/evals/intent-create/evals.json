@@ -73,6 +73,21 @@
           "type": "command",
           "run": "python3 -c \"import json; d=json.load(open('intents-root/7-label-reprint/.intent.json')); assert d['issue'] in (7,'7') and d['repoPath']=='intents/7-label-reprint'\"",
           "requires": "python3"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+          "pattern": "\\A---\\n"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+          "pattern": "(?m)^door: interview$"
+        },
+        {
+          "type": "regex",
+          "path": "intents-root/repo/intents/7-label-reprint/intent.md",
+          "pattern": "(?m)^harness: \\S+"
         }
       ]
     }

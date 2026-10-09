@@ -50,4 +50,5 @@ Draft each empty or weak section from what the PM has already said. Keep the PM'
 - **From `intent-create`:** hand the sections back and stop. `intent-create` writes and publishes the files.
 - **On its own:** rewrite `~/Documents/intents/<issue>-<short>/intent.docx` from the updated sections, following
   "Word conversion → Markdown to Word" in the `intent-bundle` skill, and keep the title, author, date and issue lines as
-  they were. Then apply the `intent-sync` skill for this intent, and list any Open questions that are still unanswered.
+  they were. Then apply the `intent-sync` skill for this intent with door `interview`, so the published frontmatter
+  says `door: interview` (see "Frontmatter" in the `intent-bundle` skill), and list any Open questions that are still unanswered.

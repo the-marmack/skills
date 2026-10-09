@@ -64,7 +64,8 @@ continue with Step 5.
   `<repoDir>/intents/<issue>-<short>/intent.md`.
 
 1. Fill in [templates/intent.md](templates/intent.md). Replace every `{{…}}`: `author` is the `gh api user` name (or
-   its login if no name is set), and `date` is today's date. Write the result to
+   its login if no name is set), `date` is today's date, `door` is the door used in Step 4 (`interview`), and `harness`
+   is the tool you're running in (`claude-code`, `codex`, …). Write the result to
    `<repoDir>/intents/<issue>-<short>/intent.md`, never into the local folder.
 2. Generate `~/Documents/intents/<issue>-<short>/intent.docx` from it using "Word conversion → Markdown to Word" in the
    `intent-bundle` skill. This uses only built-in tools, so nothing needs installing.
