@@ -16,6 +16,9 @@ config:
   # Allow bare fenced-code style choices used by templates.
   MD046:
     style: fenced
+  # .editorconfig sets markdown indent to 4, and prettier indents nested lists to match.
+  MD007:
+    indent: 4
 
 globs:
   - "**/*.md"
