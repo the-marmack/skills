@@ -31,7 +31,7 @@
     {
       "id": "create-status-refused",
       "name": "Refuse to plan an intent that isn't promoted",
-      "prompt": "Use the plan-create skill to plan intent-themarmack#9. GitHub and git are unavailable, so skip steps 1 and 2. The board says the item's Status is Create. Apply step 3 exactly, and write what you tell the user to plan-report.md.",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#9. GitHub and git are unavailable, so skip steps 1 and 2. The board says the item's Status is Create. Apply step 3 exactly, and write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
       "allowed_tools": "Read Write Edit Glob Grep Skill",
       "expectations": ["The report says the intent isn't promoted and the PM must run /intent-promote first."],
       "assertions": [
