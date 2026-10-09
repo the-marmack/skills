@@ -39,7 +39,7 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Required sections               | intent-create, intent-interview, intent-sync |
 | Ready gate                      | the check below, plan-create                 |
 | Git identity                    | intent-create, intent-sync, intent-lock      |
-| Board                           | intent-create, intent-lock                   |
+| Board                           | intent-lock                                  |
 | Lock check                      | intent-sync, intent-interview, intent-lock   |
 | Remove the central lock         | intent-lock                                  |
 | Word conversion                 | intent-create, intent-interview, intent-sync |

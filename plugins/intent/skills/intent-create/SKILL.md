@@ -1,6 +1,6 @@
 ---
 name: intent-create
-description: Create a new product intent for a PM who has no git experience — open a tracking issue in their intent-<user> GitHub repo and put it on the project board in the Create column, hand over to the intent-interview door until the required sections (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) are covered, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word and publish intents/<issue>-<short-name>/intent.md to their repo. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting, locking or revoking one (intent-lock), or writing engineering plans and task breakdowns (plan-create).
+description: Create a new product intent for a PM who has no git experience — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), hand over to the intent-interview door until the required sections (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) are covered, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word and publish intents/<issue>-<short-name>/intent.md to their repo. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting, locking or revoking one (intent-lock), or writing engineering plans and task breakdowns (plan-create).
 license: MIT
 ---
 
@@ -41,12 +41,13 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
 ## Step 3 — Issue first
 
 - **In:** `title` and `request`.
-- **Out:** `issue` (the number), `url` and `itemId`.
+- **Out:** `issue` (the number) and `url`.
 
 1. Run `gh issue create -R <owner>/<pmRepo> --title "Intent: <title>" --label intent` with a body of
    `## Request` followed by `request`. If the `intent` label is missing, create it with `gh label create` first.
-2. Add the issue to the project and set **Status** to `statuses.create`, using "Board" in the `intent-bundle` skill. If
-   the board update fails, keep going, warn the PM, and record `itemId: null`.
+2. Don't touch the board. The PM repo's `add-to-project` workflow adds every issue labelled `intent` to the project,
+   and the board's "Item added to project" workflow puts the card in `statuses.create`. Record `itemId: null`; the
+   other skills find the card when they need it ("Board → Find the item" in the `intent-bundle` skill).
 
 ## Step 4 — Door
 

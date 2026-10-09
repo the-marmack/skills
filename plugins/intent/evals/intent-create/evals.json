@@ -90,6 +90,45 @@
           "pattern": "(?m)^harness: \\S+"
         }
       ]
+    },
+    {
+      "id": "no-board-write",
+      "name": "Create the issue without touching the board",
+      "prompt": "Use the intent-create skill for the PM's idea: 'Support agents need to bulk-export order notes to CSV.' GitHub is unavailable, nobody can answer questions, and the title is 'Bulk export order notes to CSV' with short name bulk-export-notes. Skip step 1 and stop after step 3. The PM repo is the-marmack/intent-themarmack and its intent label exists. Instead of running the commands in step 3, write exactly the commands you would run, one per line, to commands.md, then write what you would record for itemId to item.md. Even if the skill tells you to stop, write both files before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "expectations": [
+        "The only GitHub command is the issue creation with the intent label; the board is left to the repo's add-to-project workflow."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "commands.md"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "gh issue create"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "--label[ =]\"?intent"
+        },
+        {
+          "type": "not_regex",
+          "path": "commands.md",
+          "pattern": "gh project|item-add|item-edit"
+        },
+        {
+          "type": "file_exists",
+          "path": "item.md"
+        },
+        {
+          "type": "regex",
+          "path": "item.md",
+          "pattern": "null"
+        }
+      ]
     }
   ]
 }
