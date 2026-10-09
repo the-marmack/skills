@@ -43,6 +43,24 @@ for f in plugins/*/evals/*/*.json; do
 done
 """
 
+# Python helper scripts in the skills (scripts/*.py) and their tests (plugins/<plugin>/tests/).
+# ruff and pytest run through uvx at exact versions, so they need no extra [tools] pins:
+# uv and python come from the toolchain library.
+[py-lint]
+hide = true
+dir = "{{config_root}}"
+run = [
+  "uvx ruff@0.17.0 check plugins/*/skills/*/scripts plugins/*/tests",
+  "uvx ruff@0.17.0 format --check plugins/*/skills/*/scripts plugins/*/tests"
+]
+
+# plan-create keeps its own copy of intent-bundle's gate script (a plugin can't reach another plugin's files by path);
+# the copies must stay byte-identical.
+[script-copies]
+hide = true
+dir = "{{config_root}}"
+run = "cmp plugins/intent/skills/intent-bundle/scripts/check.py plugins/plan/skills/plan-create/scripts/check.py"
+
 [installer-syntax]
 hide = true
 dir = "{{config_root}}"
@@ -53,7 +71,7 @@ description = "format prose, inject license headers"
 run = [{ task = "fmt-prose" }, { task = "license" }]
 
 [lint]
-description = "prose lint + license check + evolve checks + plugin validate + fixture/installer checks"
+description = "prose lint + license check + evolve checks + plugin validate + fixture/installer checks + ruff + script copies"
 run = [
   { task = "license-check" },
   { task = "lint-containers" },
@@ -62,13 +80,16 @@ run = [
   { task = "evolve-checks" },
   { task = "plugin-validate" },
   { task = "fixture-json" },
-  { task = "installer-syntax" }
+  { task = "installer-syntax" },
+  { task = "py-lint" },
+  { task = "script-copies" }
 ]
 
 [test]
-description = "validate the plugins and that eval results meet the minimum thresholds"
+description = "script tests, then validate the plugins and that eval results meet the minimum thresholds"
 dir = "{{config_root}}"
 run = [
+  "uvx --from pytest==9.1.1 pytest -q plugins/*/tests",
   "evolve run checks",
   "evolve report --check --junit=coverage/junit.xml --cobertura=coverage/cobertura-coverage.xml"
 ]

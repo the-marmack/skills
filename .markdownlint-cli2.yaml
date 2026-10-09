@@ -31,3 +31,5 @@ ignores:
   - "**/CHANGELOG.md"
   # shared Makefile library submodule — linted in its own repo
   - "make/**"
+  # script test fixtures are malformed on purpose
+  - "plugins/*/tests/**/fixtures/**"

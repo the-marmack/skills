@@ -62,6 +62,18 @@ RUN=$(gh run list -R "$REPO" --workflow intent-lock.yaml --event workflow_dispat
 gh run watch "$RUN" -R "$REPO" --exit-status
 ```
 
+## Gate
+
+The intent must pass the ready gate (the `intent-bundle` skill, "Ready gate") before planning locks it. This skill
+carries its own copy of the gate script, byte-identical to `intent-bundle`'s, because one plugin can't reach another
+plugin's files by path:
+
+```sh
+python3 <skill dir>/scripts/check.py --ready < intent.md
+```
+
+Exit `0` means the structure passes. Exit `1` means it fails: stop and show the `errors` from its JSON output.
+
 ## Read the intent
 
 ```sh

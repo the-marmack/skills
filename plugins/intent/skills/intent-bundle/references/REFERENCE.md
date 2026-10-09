@@ -98,8 +98,27 @@ An intent is **ready** to be planned when all of these hold:
    it's answered.
 3. The folder holds only allowed files. For now that's `intent.md` alone; `sources.md` and `design/` come later.
 
-`plan-create` runs the gate before it locks an intent and refuses one that fails. A script for the structural parts
-(headings, success criteria, `(blocking)`) is planned; until then the agent applies the gate.
+`plan-create` runs the gate before it locks an intent and refuses one that fails.
+
+### Gate script
+
+`scripts/check.py` in this skill checks the structural part. It's Python standard library only and never prompts:
+
+```sh
+python3 <skill dir>/scripts/check.py --ready < intent.md
+```
+
+It prints one JSON object (`ok`, `ready`, `errors`, `warnings`, `frontmatter`, `sections`) and exits `0` when the check
+passes, `1` when it fails and `2` on a usage error. It checks:
+
+- the frontmatter has `door` and `harness`;
+- the title starts with `# Intent:`;
+- each required heading appears exactly once and isn't empty;
+- `## Proposed outcome` has a `Success criteria:` line followed by `-` bullets;
+- with `--ready`, no open question is marked `(blocking)`.
+
+Without `--ready`, a blocking question is only a warning. Whether each section is _good enough_ stays the agent's
+judgement: run the script first, then rate the sections against "Required sections".
 
 ## Git identity
 

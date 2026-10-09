@@ -55,5 +55,6 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 3. Rate each required section as **good enough**, **weak** or **missing** against "Required sections", with a short
    reason for anything that isn't good enough. Then report the lock state from "Lock check": it asks GitHub's `main`,
    never the local clone.
-4. End with one line from "Ready gate": `Ready gate: pass`, or `Ready gate: fail — <reasons>`.
+4. End with one line from "Ready gate": `Ready gate: pass`, or `Ready gate: fail — <reasons>`. Run
+   `python3 scripts/check.py --ready < intent.md` from this skill first and include its errors in the reasons.
 5. Change nothing. For gaps, suggest the `intent-interview` skill, or editing `intent.docx` and running `/intent-sync`.
