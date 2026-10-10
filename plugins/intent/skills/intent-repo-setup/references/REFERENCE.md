@@ -31,6 +31,7 @@ gh api orgs/$O/repos -f name="$R" -F private=true -F auto_init=true \
 | `templates/README.md`           | `README.md`                             | Replace `{{login}}` with `L` |
 | `templates/settings.json`       | `.claude/settings.json`                 |                              |
 | `templates/add-to-project.yaml` | `.github/workflows/add-to-project.yaml` | Keep its SHA pin current     |
+| `templates/intent-check.yaml`   | `.github/workflows/intent-check.yaml`   | Keep both pins current       |
 | `templates/gitkeep`             | `intents/.gitkeep`                      | Empty file                   |
 | `templates/basic-path.md`       | `docs/basic-path.md`                    | The no-plugin guide          |
 
