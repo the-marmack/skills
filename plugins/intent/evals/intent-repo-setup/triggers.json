@@ -1,0 +1,62 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "intent-repo-setup",
+  "triggers": [
+    {
+      "query": "/intent-repo-setup pat-pm",
+      "should_trigger": true
+    },
+    {
+      "query": "Onboard a new PM, their GitHub login is jsmith",
+      "should_trigger": true
+    },
+    {
+      "query": "Set up an intent repo for our new product manager alee",
+      "should_trigger": true
+    },
+    {
+      "query": "Create the intent-<user> repository for dkim and give her access",
+      "should_trigger": true
+    },
+    {
+      "query": "The add-to-project workflow is missing from intent-pat-pm, repair the PM repo",
+      "should_trigger": true
+    },
+    {
+      "query": "Bring every PM's intent repo up to date with the latest standard files",
+      "should_trigger": true
+    },
+    {
+      "query": "Provision a PM repo with the labels, secrets and access it needs",
+      "should_trigger": true
+    },
+    {
+      "query": "Give the new PM read access to the-marmack/intents and set up their repo",
+      "should_trigger": true
+    },
+    {
+      "query": "I'm a PM and I want to write up a new idea",
+      "should_trigger": false
+    },
+    {
+      "query": "Publish my Word edits to my intent",
+      "should_trigger": false
+    },
+    {
+      "query": "Create a new GitHub repository for the billing service",
+      "should_trigger": false
+    },
+    {
+      "query": "Promote my intent to Ready",
+      "should_trigger": false
+    },
+    {
+      "query": "Plan the label reprint intent",
+      "should_trigger": false
+    },
+    {
+      "query": "Set the FF_MERGE_CLIENT_ID secret on the toolchain repo",
+      "should_trigger": false
+    }
+  ]
+}

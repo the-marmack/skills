@@ -1,0 +1,140 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/evals.schema.json",
+  "skill_name": "intent-repo-setup",
+  "evals": [
+    {
+      "id": "new-repo",
+      "name": "Set up a new PM repo end to end",
+      "prompt": "Use the intent-repo-setup skill for the PM pat-pm. Facts: the user pat-pm exists; the-marmack/intent-pat-pm doesn't exist yet (after you create it, its main has only the initial commit, with SHA aaa1111); the admin's answers are client id Iv1.abc123 and private key file keys/app.pem; the board App is installed on all repositories; pat-pm has no access to intent-pat-pm or the-marmack/intents. GitHub is unavailable and you mustn't call gh. Instead, append every gh command that would change something (create, set, add, PUT, graphql) to commands.md, one per line, exactly as you'd run it, and write your step-by-step report to report.md. Even if the skill tells you to stop, write both files before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": ["files/keys/app.pem"],
+      "expectations": [
+        "Every step runs once: create the private repo, one commit with the four files, both labels, both secrets, write on the PM repo and read on the-marmack/intents.",
+        "The private key is passed from the file and never shown."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "commands.md"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "orgs/the-marmack/repos"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "private=true"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "graphql"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "label create intent"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "label create locked"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "secret set INTENT_LOCK_CLIENT_ID"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "secret set INTENT_LOCK_PRIVATE_KEY[^\\n]*(<|keys/app\\.pem)"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "intent-pat-pm/collaborators/pat-pm[^\\n]*push"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "intents/collaborators/pat-pm[^\\n]*pull"
+        },
+        {
+          "type": "command",
+          "run": "! grep -rq 'FAKE-PRIVATE-KEY' commands.md report.md"
+        }
+      ]
+    },
+    {
+      "id": "rerun-up-to-date",
+      "name": "A re-run on an up-to-date repo changes nothing",
+      "prompt": "Use the intent-repo-setup skill for the PM pat-pm. Facts: the user pat-pm exists; the-marmack/intent-pat-pm exists, and uptodate/ in the current directory is its main (read files there); its labels are intent and locked; its secrets are INTENT_LOCK_CLIENT_ID and INTENT_LOCK_PRIVATE_KEY; the board App is installed on all repositories; pat-pm has write on intent-pat-pm and read on the-marmack/intents. GitHub is unavailable and you mustn't call gh. Instead, append every gh command that would change something (create, set, add, PUT, graphql) to commands.md, one per line, exactly as you'd run it, and write your step-by-step report to report.md. Even if the skill tells you to stop, write both files before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/uptodate/README.md",
+        "files/uptodate/.claude/settings.json",
+        "files/uptodate/.github/workflows/add-to-project.yaml",
+        "files/uptodate/intents/.gitkeep"
+      ],
+      "expectations": ["The report says every step was already fine, and nothing is changed."],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "report.md"
+        },
+        {
+          "type": "regex",
+          "path": "report.md",
+          "pattern": "(?i)already fine"
+        },
+        {
+          "type": "command",
+          "run": "! grep -Eq 'graphql|secret set|label create|-X PUT|orgs/the-marmack/repos' commands.md 2>/dev/null"
+        }
+      ]
+    },
+    {
+      "id": "edited-readme-asks",
+      "name": "Ask before overwriting a PM-edited README",
+      "prompt": "Use the intent-repo-setup skill for the PM pat-pm. Facts: the user pat-pm exists; the-marmack/intent-pat-pm exists, and edited/ in the current directory is its main (read files there); its labels are intent and locked; its secrets are INTENT_LOCK_CLIENT_ID and INTENT_LOCK_PRIVATE_KEY; the board App is installed on all repositories; pat-pm has write on intent-pat-pm and read on the-marmack/intents. Nobody can answer questions: write any question you'd ask the admin to report.md and take no action that needs the answer. GitHub is unavailable and you mustn't call gh. Instead, append every gh command that would change something (create, set, add, PUT, graphql) to commands.md, one per line, exactly as you'd run it, and write your step-by-step report to report.md. Even if the skill tells you to stop, write both files before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/edited/README.md",
+        "files/edited/.claude/settings.json",
+        "files/edited/.github/workflows/add-to-project.yaml",
+        "files/edited/intents/.gitkeep"
+      ],
+      "expectations": [
+        "README.md differs from the template, so the skill asks before overwriting it and doesn't commit it; the PM's notes are kept."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "report.md"
+        },
+        {
+          "type": "regex",
+          "path": "report.md",
+          "pattern": "README"
+        },
+        {
+          "type": "regex",
+          "path": "report.md",
+          "pattern": "(?i)overwrite|differ"
+        },
+        {
+          "type": "command",
+          "run": "! grep -q 'graphql' commands.md 2>/dev/null"
+        },
+        {
+          "type": "regex",
+          "path": "edited/README.md",
+          "pattern": "PAT-EDITED"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Adds every issue labelled `intent` to the Intents board (org project #2), so the intent skills never write the board
+# themselves. A card added this way lands in the project's default column, which the board's "Item added to project"
+# workflow sets to Create.
+#
+# The reusable workflow mints a short-lived token from the the-marmack-intent-projects GitHub App (organization
+# projects write, issues and pull requests read). Its client id and key are this repo's INTENT_LOCK_CLIENT_ID and
+# INTENT_LOCK_PRIVATE_KEY secrets: org secrets don't reach private repos on the free plan.
+name: Add to Project
+
+on:
+  issues:
+    # labeled as well as opened: the intent label may be added after the issue is opened
+    types: [opened, labeled]
+
+# the App token does the privileged work; the caller grants nothing
+permissions: {}
+
+jobs:
+  add:
+    uses: the-marmack/github-workflows/.github/workflows/add-to-project.yaml@deaafcab541dc01a13da8c3a2443fd96082ec35d # v6.4.0
+    with:
+      project-url: https://github.com/orgs/the-marmack/projects/2
+      labeled: intent
+    secrets:
+      app-client-id: ${{ secrets.INTENT_LOCK_CLIENT_ID }}
+      app-private-key: ${{ secrets.INTENT_LOCK_PRIVATE_KEY }}

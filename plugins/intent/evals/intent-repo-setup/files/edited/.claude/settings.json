@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "the-marmack": {
+      "source": {
+        "source": "github",
+        "repo": "the-marmack/skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "intent@the-marmack": true,
+    "plan@the-marmack": true
+  }
+}
