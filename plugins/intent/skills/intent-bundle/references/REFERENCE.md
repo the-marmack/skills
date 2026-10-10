@@ -69,7 +69,9 @@ The MCP names are from github/github-mcp-server; check your server's tool list.
 One GraphQL call commits any number of files to `main` at once. GitHub signs the commit and authors it as the `gh`
 login, so no git identity is needed. It is refused if `main` moved since you read it:
 
-1. Read the head of `main` (`HEAD`) before you build the new content.
+1. Read the head of `main` (`HEAD`) before you build the new content. For each later commit in the same run, use the
+   commit SHA the previous one returned as `HEAD`: reading the branch right after a commit can still return the old head
+   for a few seconds.
 2. Base64-encode each file: `base64 < intent.md | tr -d '\n'` on macOS, or
    `[Convert]::ToBase64String([IO.File]::ReadAllBytes("intent.md"))` in PowerShell.
 3. Write `commit.json` in the temp folder:
@@ -91,8 +93,9 @@ login, so no git identity is needed. It is refused if `main` moved since you rea
     Deletions go in `"deletions": [{ "path": "…" }]` next to `additions`.
 
 4. `gh api graphql --input commit.json -q .data.createCommitOnBranch.commit.oid` prints the new commit's SHA.
-5. If GitHub answers "Expected branch to point to …", `main` moved: read the file again. If it hasn't changed, retry
-   once with the new `HEAD`; if it has, stop and tell the PM someone else changed the intent.
+5. If GitHub answers "Expected branch to point to …", `main` moved: wait a few seconds, then read the head and the file
+   again. If the file hasn't changed, retry once with the new `HEAD`; if it has, stop and tell the PM someone else
+   changed the intent.
 
 ## Required sections
 
