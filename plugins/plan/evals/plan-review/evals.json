@@ -1,0 +1,109 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/evals.schema.json",
+  "skill_name": "plan-review",
+  "evals": [
+    {
+      "id": "answer-traceability",
+      "name": "Answer which task covers a success criterion",
+      "prompt": "Use the plan-review skill on PR #5. GitHub and the network are unavailable, so don't call gh. Instead: pr/ in the current directory holds the plan PR's files at its head commit (the-marmack/intents PR #5, a draft), pm/ holds the PM repo the-marmack/intent-themarmack at the locked commit, the target repo the-marmack/label-reprint doesn't exist yet, and the review guides aren't available (skip them). The reviewer asks: 'Which task makes sure a reprint reaches the printer in under 5 seconds, and what does it depend on?' Write your answer to answer.md.",
+      "allowed_tools": "Read Write Glob Grep Skill",
+      "files": [
+        "files/pr/intents/themarmack-7-label-reprint/plan.md",
+        "files/pr/intents/themarmack-7-label-reprint/plan.json",
+        "files/pr/intents/themarmack-7-label-reprint/lock.yaml",
+        "files/pm/intents/7-label-reprint/intent.md"
+      ],
+      "expectations": ["The answer names Task 3 and SC2, and says Task 3 depends on Task 2."],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "answer.md"
+        },
+        {
+          "type": "regex",
+          "path": "answer.md",
+          "pattern": "Task 3"
+        },
+        {
+          "type": "regex",
+          "path": "answer.md",
+          "pattern": "(?i)task 2"
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; d=json.load(open('pr/intents/themarmack-7-label-reprint/plan.json')); assert len(d['tasks'])==3\" && grep -q '^### Task 4' pr/intents/themarmack-7-label-reprint/plan.md",
+          "requires": "python3"
+        }
+      ]
+    },
+    {
+      "id": "check-finds-mismatch",
+      "name": "The check reports plan.json missing a task",
+      "prompt": "Use the plan-review skill on PR #5. GitHub and the network are unavailable, so don't call gh. Instead: pr/ in the current directory holds the plan PR's files at its head commit (the-marmack/intents PR #5, a draft), pm/ holds the PM repo the-marmack/intent-themarmack at the locked commit, the target repo the-marmack/label-reprint doesn't exist yet, and the review guides aren't available (skip them). The reviewer asks you to check the plan. Write the check report to check.md.",
+      "allowed_tools": "Read Write Glob Grep Skill",
+      "files": [
+        "files/pr/intents/themarmack-7-label-reprint/plan.md",
+        "files/pr/intents/themarmack-7-label-reprint/plan.json",
+        "files/pr/intents/themarmack-7-label-reprint/lock.yaml",
+        "files/pm/intents/7-label-reprint/intent.md"
+      ],
+      "expectations": ["The report flags that plan.json has no Task 4 while plan.md does; traceability is ok."],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "check.md"
+        },
+        {
+          "type": "regex",
+          "path": "check.md",
+          "pattern": "plan\\.json"
+        },
+        {
+          "type": "regex",
+          "path": "check.md",
+          "pattern": "(?i)task 4|id 4|\\b4\\b"
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; d=json.load(open('pr/intents/themarmack-7-label-reprint/plan.json')); assert len(d['tasks'])==3\" && grep -q '^### Task 4' pr/intents/themarmack-7-label-reprint/plan.md",
+          "requires": "python3"
+        }
+      ]
+    },
+    {
+      "id": "fix-request-no-edit",
+      "name": "Asked to fix the plan, explain the change but edit nothing",
+      "prompt": "Use the plan-review skill on PR #5. GitHub and the network are unavailable, so don't call gh. Instead: pr/ in the current directory holds the plan PR's files at its head commit (the-marmack/intents PR #5, a draft), pm/ holds the PM repo the-marmack/intent-themarmack at the locked commit, the target repo the-marmack/label-reprint doesn't exist yet, and the review guides aren't available (skip them). The reviewer says: 'plan.json is missing task 4 — just fix it for me and commit it.' Write your reply to reply.md.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(git *)",
+      "files": [
+        "files/pr/intents/themarmack-7-label-reprint/plan.md",
+        "files/pr/intents/themarmack-7-label-reprint/plan.json",
+        "files/pr/intents/themarmack-7-label-reprint/lock.yaml",
+        "files/pm/intents/7-label-reprint/intent.md"
+      ],
+      "expectations": [
+        "The reply says what to add to plan.json (task 4, depends on 3) but makes no change itself, and asks the reviewer to make the edit as its own commit."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "reply.md"
+        },
+        {
+          "type": "regex",
+          "path": "reply.md",
+          "pattern": "(?i)commit"
+        },
+        {
+          "type": "command",
+          "run": "python3 -c \"import json; d=json.load(open('pr/intents/themarmack-7-label-reprint/plan.json')); assert len(d['tasks'])==3\" && grep -q '^### Task 4' pr/intents/themarmack-7-label-reprint/plan.md",
+          "requires": "python3"
+        },
+        {
+          "type": "command",
+          "run": "! git log --oneline 2>/dev/null | grep -q ."
+        }
+      ]
+    }
+  ]
+}

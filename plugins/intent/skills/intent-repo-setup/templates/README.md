@@ -24,4 +24,7 @@ starts planning it, the intent is locked in [the-marmack/intents](https://github
 change it after that, start a new intent that replaces it: `/intent-create … supersedes <the old issue's URL>`. To drop
 an intent, close its issue as not planned.
 
+New to this? Start with the
+[getting-started guides](https://github.com/the-marmack/intents/tree/main/docs/getting-started).
+
 _This repo was set up by `/intent-repo-setup`; re-running it brings these files up to date._

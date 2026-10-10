@@ -54,7 +54,7 @@
     {
       "name": "plan",
       "source": "./plugins/plan",
-      "description": "Turn a promoted PM intent into a technical plan for AI agents — /plan-create runs the ready gate and locks the intent with lock.yaml in the-marmack/intents (pinned to its commit), picks the the-marmack repo where the work belongs, and breaks the intent into small ordered tasks with acceptance criteria traced to the intent, published as a draft pull request in the intent's folder in the-marmack/intents.",
+      "description": "Turn a promoted PM intent into a technical plan for AI agents — /plan-create runs the ready gate and locks the intent with lock.yaml in the-marmack/intents (pinned to its commit), picks the the-marmack repo where the work belongs, and breaks the intent into small ordered tasks with acceptance criteria traced to the intent, published as a draft pull request in the intent's folder in the-marmack/intents; /plan-review loads a plan PR so reviewers can ask it questions (read-only).",
       "keywords": ["plan", "intent", "product-management", "github-projects", "ai-agents"]
     }
   ]

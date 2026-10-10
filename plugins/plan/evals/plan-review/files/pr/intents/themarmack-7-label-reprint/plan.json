@@ -1,0 +1,16 @@
+{
+  "intent": {
+    "repo": "the-marmack/intent-themarmack",
+    "issue": 7,
+    "sha": "abc1234",
+    "lock": "intents/themarmack-7-label-reprint/lock.yaml"
+  },
+  "revision": 0,
+  "targetRepo": "the-marmack/label-reprint",
+  "newRepo": true,
+  "tasks": [
+    { "id": 1, "title": "Create the-marmack/label-reprint", "dependsOn": [] },
+    { "id": 2, "title": "Label print service client", "dependsOn": [1] },
+    { "id": 3, "title": "Reprint endpoint with a 5-second budget", "dependsOn": [2] }
+  ]
+}

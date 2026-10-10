@@ -1,0 +1,58 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
+  "skill_name": "plan-review",
+  "triggers": [
+    {
+      "query": "/plan-review 12",
+      "should_trigger": true
+    },
+    {
+      "query": "Help me review the draft plan for the label reprint intent",
+      "should_trigger": true
+    },
+    {
+      "query": "Which task in this plan covers the 5 second success criterion?",
+      "should_trigger": true
+    },
+    {
+      "query": "Open plan PR 7 so I can ask questions about it",
+      "should_trigger": true
+    },
+    {
+      "query": "Check the plan for gaps before I approve it",
+      "should_trigger": true
+    },
+    {
+      "query": "Why does task 3 depend on task 2 in the plan?",
+      "should_trigger": true
+    },
+    {
+      "query": "Explain this plan to me, I'm the PM",
+      "should_trigger": true
+    },
+    {
+      "query": "Plan the label reprint intent",
+      "should_trigger": false
+    },
+    {
+      "query": "Write a new intent about printer status",
+      "should_trigger": false
+    },
+    {
+      "query": "Review the code changes in PR 42 of the billing service",
+      "should_trigger": false
+    },
+    {
+      "query": "Merge the plan PR",
+      "should_trigger": false
+    },
+    {
+      "query": "Sync my Word edits",
+      "should_trigger": false
+    },
+    {
+      "query": "Start building task 1 of the plan",
+      "should_trigger": false
+    }
+  ]
+}

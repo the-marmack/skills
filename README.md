@@ -47,6 +47,10 @@ Modern Python on the Astral toolchain (`uv`, `ruff`, `ty`/`pyright`).
 
 ### intent
 
+New here? The getting-started guides (software, building an intent, building and reviewing a plan, the whole workflow)
+are in [the-marmack/intents/docs/getting-started](https://github.com/the-marmack/intents/tree/main/docs/getting-started)
+(private: PMs and planners have access).
+
 Intent authoring for product managers who don't use git. Intents live in each PM's private
 `the-marmack/intent-<github-username>` repo. Each PM edits a Word file under
 `~/Documents/intents/<issue>-<short-name>/`, and the plugin handles Word conversion (built-in OS tools only), git, the
@@ -75,8 +79,9 @@ the intent plugin's `intent-bundle` skill.
 | Skill         | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `plan-create` | Checks a **Ready** intent against the ready gate, locks it with `lock.yaml` in `the-marmack/intents` (pinned to the intent's commit) and moves it to **Plan**. Then picks the `the-marmack` repo where the work belongs and breaks the intent into small ordered tasks for AI agents, with acceptance criteria traced to the intent, as `plan.md` and `plan.json` next to the lock in `intents/<login>-<issue>-<short-name>/`, published as a draft pull request (revisions add `plan_rev1.md` and so on). |
+| `plan-review` | Read-only companion for reviewing a draft plan PR: loads the plan, its lock, the intent at the locked commit, the target repo and the review guide, answers questions and checks the plan for gaps. It never edits: reviewers make each change as its own commit.                                                                                                                                                                                                                                          |
 
-The plugin also ships the Claude Code command `/plan-create` as a thin entry point to the skill.
+The plugin also ships the Claude Code commands `/plan-create` and `/plan-review` as thin entry points to the skills.
 
 ### workflow
 
