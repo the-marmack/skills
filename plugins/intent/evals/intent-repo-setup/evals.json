@@ -77,7 +77,8 @@
         "files/uptodate/README.md",
         "files/uptodate/.claude/settings.json",
         "files/uptodate/.github/workflows/add-to-project.yaml",
-        "files/uptodate/intents/.gitkeep"
+        "files/uptodate/intents/.gitkeep",
+        "files/uptodate/docs/basic-path.md"
       ],
       "expectations": ["The report says every step was already fine, and nothing is changed."],
       "assertions": [
@@ -105,7 +106,8 @@
         "files/edited/README.md",
         "files/edited/.claude/settings.json",
         "files/edited/.github/workflows/add-to-project.yaml",
-        "files/edited/intents/.gitkeep"
+        "files/edited/intents/.gitkeep",
+        "files/edited/docs/basic-path.md"
       ],
       "expectations": [
         "README.md differs from the template, so the skill asks before overwriting it and doesn't commit it; the PM's notes are kept."

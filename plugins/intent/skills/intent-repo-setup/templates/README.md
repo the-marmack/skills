@@ -15,7 +15,8 @@ Intents written by **{{login}}**. You never need git here: the `intent` plugin d
 
 `intents/<issue>-<short-name>/intent.md` on `main` is the intent. Your Word file in
 `~/Documents/intents/<issue>-<short-name>/` is one way to edit it, the interview is another, and you can also edit
-`intent.md` on GitHub directly.
+`intent.md` on GitHub directly. No plugin? [docs/basic-path.md](docs/basic-path.md) shows how to write an intent in the
+browser.
 
 ## Approving and the lock
 

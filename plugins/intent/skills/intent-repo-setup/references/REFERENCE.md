@@ -32,6 +32,7 @@ gh api orgs/$O/repos -f name="$R" -F private=true -F auto_init=true \
 | `templates/settings.json`       | `.claude/settings.json`                 |                              |
 | `templates/add-to-project.yaml` | `.github/workflows/add-to-project.yaml` | Keep its SHA pin current     |
 | `templates/gitkeep`             | `intents/.gitkeep`                      | Empty file                   |
+| `templates/basic-path.md`       | `docs/basic-path.md`                    | The no-plugin guide          |
 
 Read each one on `main` with `intent-bundle`'s "Read a file"; a 404 means missing. Compare after replacing `{{login}}`
 and ignoring a trailing newline. Commit all the changes at once: "Commit to main" takes several `additions`.
