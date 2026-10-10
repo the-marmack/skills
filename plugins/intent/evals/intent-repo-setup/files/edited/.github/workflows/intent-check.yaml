@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   check:
-    uses: the-marmack/github-workflows/.github/workflows/intent-check.yaml@1ef12e51af43012462ff633fd8c7fc186c645cc9 # v6.5.0
+    uses: the-marmack/github-workflows/.github/workflows/intent-check.yaml@0b6776cefa84ebeb634a7fab0213352e3446a3d6 # v6.5.1
     with:
       skills-ref: 0b3a43c5dffb9967723fa29313e31512c070482c # main
