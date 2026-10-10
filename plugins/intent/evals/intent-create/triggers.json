@@ -23,7 +23,7 @@
       "should_trigger": true
     },
     {
-      "query": "I'm a PM and don't know git — how do I submit a new product idea for the team?",
+      "query": "I'm a PM and don't know git \u2014 how do I submit a new product idea for the team?",
       "should_trigger": true
     },
     {
@@ -47,8 +47,8 @@
       "should_trigger": false
     },
     {
-      "query": "Revoke the password-reset intent so I can keep editing it",
-      "should_trigger": false
+      "query": "Replace the locked password-reset intent with a new version",
+      "should_trigger": true
     },
     {
       "query": "Break this approved intent down into engineering tasks and a plan",

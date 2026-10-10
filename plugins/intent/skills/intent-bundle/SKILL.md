@@ -1,6 +1,6 @@
 ---
 name: intent-bundle
-description: Defines what a PM intent is and holds the recipes the intent skills share — the ~/Documents/intents layout and .config.json, the gh-only GitHub recipes (no clone, no git; with a GitHub MCP map), the intent.md sections and when each is good enough, the board statuses Create, Ready, Plan, In progress, Test and Done, the lock.yaml that planning writes to the-marmack/intents, and Word conversion. Checks one intent and reports which required sections are good enough, weak or missing, without changing it. Use when someone asks whether an intent is complete or ready to promote, what an intent holds, where its files live or how its lock works. Not for creating (intent-create), filling in (intent-interview), syncing (intent-sync), promoting or revoking (intent-lock) or planning (plan-create) an intent.
+description: Defines what a PM intent is and holds the recipes the intent skills share — the ~/Documents/intents layout and .config.json, the gh-only GitHub recipes (no clone, no git; with a GitHub MCP map), the intent.md sections and when each is good enough, the board statuses Create, Ready, Plan, In progress, Test and Done, the lock.yaml that planning writes to the-marmack/intents, and Word conversion. Checks one intent and reports which required sections are good enough, weak or missing, without changing it. Use when someone asks whether an intent is complete or ready to promote, what an intent holds, where its files live or how its lock works. Not for creating (intent-create), filling in (intent-interview), syncing (intent-sync), promoting (intent-promote) or planning (plan-create) an intent.
 license: MIT
 ---
 
@@ -26,23 +26,24 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **Status** lives on the board: Create → Ready → Plan → In progress → Test → Done. Promoting moves Create to Ready,
   planning moves Ready to Plan, and the build moves it on from there.
 - **Locked:** exactly when `the-marmack/intents` has `intents/<login>-<issue>-<short>/lock.yaml` on `main`, whatever
-  the card's column. `plan-create` writes it when planning starts, and only `/intent-revoke` removes it. Check with
+  the card's column. `plan-create` writes it when planning starts, and nothing removes it: **locked means locked**.
+  A change is a new intent that supersedes it ("Supersedes"); closing the issue as not planned drops it. Check with
   "Lock check".
 
 ## Shared recipes
 
-| Recipe                          | Used by                                      |
-| ------------------------------- | -------------------------------------------- |
-| Local layout and `.config.json` | every intent skill                           |
-| GitHub recipes                  | every intent skill                           |
-| Frontmatter                     | intent-create, intent-interview, intent-sync |
-| Required sections               | intent-create, intent-interview, intent-sync |
-| Ready gate                      | the check below, plan-create                 |
-| Board                           | intent-lock                                  |
-| Lock check                      | intent-sync, intent-interview, intent-lock   |
-| Remove the central lock         | intent-lock                                  |
-| Word conversion                 | intent-create, intent-interview, intent-sync |
-| Changed on GitHub, Refresh      | intent-sync, intent-interview                |
+| Recipe                          | Used by                                       |
+| ------------------------------- | --------------------------------------------- |
+| Local layout and `.config.json` | every intent skill                            |
+| GitHub recipes                  | every intent skill                            |
+| Frontmatter                     | intent-create, intent-interview, intent-sync  |
+| Required sections               | intent-create, intent-interview, intent-sync  |
+| Ready gate                      | the check below, plan-create                  |
+| Board                           | intent-promote                                |
+| Lock check                      | intent-sync, intent-interview, intent-promote |
+| Supersedes                      | intent-create, plan-create                    |
+| Word conversion                 | intent-create, intent-interview, intent-sync  |
+| Changed on GitHub, Refresh      | intent-sync, intent-interview                 |
 
 ## Check an intent
 

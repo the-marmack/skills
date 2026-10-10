@@ -123,7 +123,7 @@ headings: `## Problem`, `## Proposed outcome`, `## Affected users and systems`, 
 ---
 door: interview # free text: interview, word, hand, …
 harness: claude-code # free text: the tool that wrote this version (claude-code, codex, github-web, …)
-supersedes: https://github.com/the-marmack/intent-<login>/issues/<n> # optional: the locked intent this replaces
+supersedes: https://github.com/the-marmack/intent-<login>/issues/<n> # optional: the locked intent this replaces (see "Supersedes")
 ---
 ```
 
@@ -262,17 +262,19 @@ On Windows, run the same `gh api` call in PowerShell. A non-zero exit means unkn
 The lock only means anything to the intent skills, which refuse to change a locked intent. Nothing stops a plain
 `git push` to the PM repo. Stronger enforcement is tracked in the-marmack/intents#1.
 
-## Remove the central lock
+## Supersedes
 
-Revoking deletes the central `lock.yaml`. That needs push access to `the-marmack/intents`; on 403 or 404, stop and tell
-the PM to ask a planner to revoke it:
+**Locked means locked:** nothing unlocks an intent once planning has written its `lock.yaml`. To change a locked intent,
+write a new intent that replaces it:
 
-```sh
-F=intents/<folder>/lock.yaml
-BLOB=$(gh api "repos/the-marmack/intents/contents/$F" -q .sha)
-gh api -X DELETE "repos/the-marmack/intents/contents/$F" -f message="unlock(<login>#<issue>): <short>" \
-  -f sha="$BLOB" -f branch=main
-```
+1. `intent-create` starts the new intent from a copy of the old one's sections and puts the old issue's URL in its
+   frontmatter: `supersedes: https://github.com/<owner>/<pmRepo>/issues/<n>`. The old intent must be in the same PM repo
+   and locked; an unlocked intent is simply edited instead.
+2. Both issues get a comment linking the other.
+3. When `plan-create` locks the new intent, it closes the old issue as not planned ("Superseded by …"). The old
+   `lock.yaml` and any plans stay in `the-marmack/intents` as history.
+
+To drop an intent instead, close its issue as not planned; `plan-create` refuses closed issues.
 
 ## Changed on GitHub
 

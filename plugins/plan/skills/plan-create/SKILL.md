@@ -1,6 +1,6 @@
 ---
 name: plan-create
-description: Turn a promoted (Ready) PM intent into a technical plan for AI agents — check the issue and its board card, run the ready gate, lock it by writing lock.yaml (pinned to the intent's commit) to the-marmack/intents and move the card to Plan, read the intent at that commit, find the existing repo in the the-marmack GitHub org where the work belongs (or ask which new repo to create), survey that repo, and break the intent into small ordered tasks with acceptance criteria traced to the intent's success criteria, published as plan.md and plan.json in the intent's folder next to lock.yaml in the-marmack/intents, as a draft pull request (revisions add plan_rev1.md and so on). Use when someone wants to plan, break down, scope, or hand off an intent to AI, or runs /plan-create. Not for writing or editing the intent itself (intent-create, intent-interview, intent-sync), promoting or revoking it (intent-lock), or doing the implementation work.
+description: Turn a promoted (Ready) PM intent into a technical plan for AI agents — check the issue and its board card, run the ready gate, lock it by writing lock.yaml (pinned to the intent's commit) to the-marmack/intents and move the card to Plan, read the intent at that commit, find the existing repo in the the-marmack GitHub org where the work belongs (or ask which new repo to create), survey that repo, and break the intent into small ordered tasks with acceptance criteria traced to the intent's success criteria, published as plan.md and plan.json in the intent's folder next to lock.yaml in the-marmack/intents, as a draft pull request (revisions add plan_rev1.md and so on). Use when someone wants to plan, break down, scope, or hand off an intent to AI, or runs /plan-create. Not for writing or editing the intent itself (intent-create, intent-interview, intent-sync), promoting it (intent-promote), or doing the implementation work.
 license: MIT
 ---
 
@@ -63,6 +63,9 @@ the reference; every step uses `gh` and nothing is cloned.
 7. **Label and comment** ("Label and comment" in the reference): add the `locked` label to the intent's issue and a
    comment linking the intent's folder in `the-marmack/intents`. Both are for people only; nothing reads them, and the
    lock file stays the truth. Skip what's already there, so a repeat run adds nothing.
+8. **Supersedes:** if the locked `intent.md`'s frontmatter has `supersedes: <issue URL>`, close that issue as not
+   planned with a comment linking the new one ("Close a superseded intent" in the reference), unless it's already
+   closed. Leave its `lock.yaml` and plans in place as history, and say so in the report.
 
 ## Step 4 — Read intent
 
@@ -139,5 +142,5 @@ Step 8's approval is the go-ahead. Never write a plan to `main`. Follow "Publish
 4. Report the PR link, the target repo (and whether it still has to be created), the task count, and any blocking open
    questions.
 
-If planning is abandoned, an unlock is a revoke: the PM runs `/intent-revoke`, which removes the lock and moves the
-card back. Don't delete `lock.yaml` here.
+If planning is abandoned, the lock stays: **locked means locked**. To drop the intent, the PM closes its issue as not
+planned; to change it, they start a new intent that supersedes it. Never delete `lock.yaml`.

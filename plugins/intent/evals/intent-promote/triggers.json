@@ -1,17 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/triggers.schema.json",
-  "skill_name": "intent-lock",
+  "skill_name": "intent-promote",
   "triggers": [
     {
       "query": "/intent-promote invoice-export",
       "should_trigger": true
     },
     {
-      "query": "/intent-revoke password-reset",
-      "should_trigger": true
-    },
-    {
-      "query": "The onboarding intent is done — mark it ready and lock it",
+      "query": "The onboarding intent is done \u2014 mark it ready",
       "should_trigger": true
     },
     {
@@ -19,23 +15,27 @@
       "should_trigger": true
     },
     {
-      "query": "I need to change a promoted intent, send it back to Create",
+      "query": "Finalize the dark-mode intent so engineering can plan it",
       "should_trigger": true
     },
     {
-      "query": "Unlock the checkout-abandonment intent so I can edit it",
+      "query": "Approve my intent for planning",
       "should_trigger": true
     },
     {
-      "query": "Finalize the dark-mode intent",
+      "query": "Submit the label reprint intent to engineering",
       "should_trigger": true
     },
     {
-      "query": "Approve and lock my intent",
+      "query": "My intent is ready, send it to planning",
       "should_trigger": true
     },
     {
       "query": "Create a new intent about mobile notifications",
+      "should_trigger": false
+    },
+    {
+      "query": "Replace the locked checkout intent with a new version",
       "should_trigger": false
     },
     {
@@ -47,15 +47,11 @@
       "should_trigger": false
     },
     {
-      "query": "Add a lock file to package-lock.json",
-      "should_trigger": false
-    },
-    {
-      "query": "Revoke my GitHub personal access token",
-      "should_trigger": false
-    },
-    {
       "query": "Promote the staging deployment to production",
+      "should_trigger": false
+    },
+    {
+      "query": "Plan the label reprint intent",
       "should_trigger": false
     },
     {

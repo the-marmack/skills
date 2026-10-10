@@ -59,7 +59,9 @@
         "files/intents-root/repo/intents/7-label-reprint/intent.md",
         "files/central/intents/themarmack-7-label-reprint/lock.yaml"
       ],
-      "expectations": ["The report says the intent is locked for planning and that /intent-revoke is needed first."],
+      "expectations": [
+        "The report says the intent is locked for planning and that a change needs a new intent that supersedes it."
+      ],
       "assertions": [
         {
           "type": "file_exists",
@@ -73,7 +75,7 @@
         {
           "type": "regex",
           "path": "interview-report.md",
-          "pattern": "intent-revoke"
+          "pattern": "(?i)supersede"
         },
         {
           "type": "command",
@@ -83,6 +85,11 @@
           "type": "regex",
           "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "ORIGINAL-PUBLISHED-TEXT"
+        },
+        {
+          "type": "not_regex",
+          "path": "interview-report.md",
+          "pattern": "intent-revoke"
         }
       ]
     },

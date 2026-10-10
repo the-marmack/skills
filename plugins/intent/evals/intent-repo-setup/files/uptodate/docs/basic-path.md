@@ -73,4 +73,5 @@ as often as you like until planning starts.
 ## 5. Approve it
 
 When it's ready, move its card to **Ready** on the Intents board. That's your approval. Once planning starts the intent
-is locked; ask a planner, or run `/intent-revoke` if you have the plugin, to change it after that.
+is locked for good. To change it after that, write a new intent the same way and add `supersedes: <the old issue's URL>`
+to its frontmatter; to drop it, close its issue as not planned.

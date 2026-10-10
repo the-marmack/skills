@@ -9,7 +9,6 @@ Intents written by **pat-pm**. You never need git here: the `intent` plugin does
 | `/intent-sync`    | Publishes your Word edits. It warns you first if the intent changed on GitHub since.        |
 | `/intent-refresh` | Rebuilds your Word file from GitHub, keeping the old one as a backup.                       |
 | `/intent-promote` | Publishes your last Word edits and moves the card to **Ready**: your approval for planning. |
-| `/intent-revoke`  | Takes an intent back to **Create**, and removes its lock if planning had already started.   |
 
 ## What's true
 
@@ -21,7 +20,8 @@ browser.
 ## Approving and the lock
 
 Moving an intent's card to **Ready** on the board (or running `/intent-promote`) is your approval. When engineering
-starts planning it, the intent is locked in [the-marmack/intents](https://github.com/the-marmack/intents) and can't be
-changed here any more; `/intent-revoke` takes it back if you need to.
+starts planning it, the intent is locked in [the-marmack/intents](https://github.com/the-marmack/intents) for good. To
+change it after that, start a new intent that replaces it: `/intent-create … supersedes <the old issue's URL>`. To drop
+an intent, close its issue as not planned.
 
 _This repo was set up by `/intent-repo-setup`; re-running it brings these files up to date._

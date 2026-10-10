@@ -1,6 +1,6 @@
 ---
 name: intent-sync
-description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and commit it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo through the GitHub API (gh only, no git or clone), warning first if intent.md changed on GitHub since the last sync. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting, locking or revoking one (intent-lock), or general git pushes in code repositories.
+description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and commit it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo through the GitHub API (gh only, no git or clone), warning first if intent.md changed on GitHub since the last sync. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting one (intent-promote), or general git pushes in code repositories.
 license: MIT
 ---
 
@@ -51,8 +51,8 @@ A folder with an `intent.docx` but no `.intent.json` was never created through `
 
 Run "Lock check" in the `intent-bundle` skill for this intent, right before converting. It reads `main` on GitHub.
 
-- **locked:** stop and tell the PM: "*(intent title)* is being planned and is locked. Run `/intent-revoke <short>`
-  first if it needs changes."
+- **locked:** stop and tell the PM: "*(intent title)* is being planned and is locked. To change it, start a new intent
+  that supersedes it: `/intent-create … supersedes <issue URL>`."
 - **unknown:** stop and tell the PM the lock couldn't be confirmed on GitHub, so nothing was synced.
 
 Never edit, delete or bypass a lock here.

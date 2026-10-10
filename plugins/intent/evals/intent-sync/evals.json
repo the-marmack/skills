@@ -13,7 +13,7 @@
         "files/central/intents/themarmack-7-label-reprint/lock.yaml"
       ],
       "expectations": [
-        "The report tells the PM the intent is locked and that /intent-revoke is needed before editing."
+        "The report tells the PM the intent is locked and that a change needs a new intent that supersedes it."
       ],
       "assertions": [
         {
@@ -28,7 +28,7 @@
         {
           "type": "regex",
           "path": "sync-report.md",
-          "pattern": "intent-revoke"
+          "pattern": "(?i)supersede"
         },
         {
           "type": "file_exists",
@@ -38,6 +38,11 @@
           "type": "regex",
           "path": "intents-root/repo/intents/7-label-reprint/intent.md",
           "pattern": "ORIGINAL-PUBLISHED-TEXT"
+        },
+        {
+          "type": "not_regex",
+          "path": "sync-report.md",
+          "pattern": "intent-revoke"
         }
       ]
     },

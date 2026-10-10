@@ -262,6 +262,49 @@
           "run": "test ! -e central"
         }
       ]
+    },
+    {
+      "id": "lock-closes-superseded",
+      "name": "Locking a superseding intent closes the old issue and keeps its lock",
+      "prompt": "Use the plan-create skill to plan intent-themarmack#12, but stop after step 3. GitHub, git and the network are unavailable and nobody can answer questions. Instead of calling GitHub: pm-main/ in the current directory is main of the-marmack/intent-themarmack, central/ is main of the-marmack/intents (to write a file to it, write it under central/), and the facts below stand in for what gh would return. Run the gate script with python3 for real. Skip steps 1 and 2. Facts: issue #12 is open with the label intent; its card is in Ready; central/ has no lock for it but holds the lock of issue #7, which this intent supersedes; issue #7 is open; the last commit that changed intents/12-label-reprint-v2/intent.md on main is def5678, and its content is the one in pm-main/; your gh login is lee-lead; the time is 2026-10-09T10:00:00Z. Issue #12 has the label intent only and no comments. Write every GitHub command you would run for the label, the comment and the superseded issue, one per line, to commands.md, instead of running it. Instead of moving the card, say in the report that you would move it to Plan. Write what you tell the user to plan-report.md. Even if the skill tells you to stop or to change nothing, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *) Bash(python3 *)",
+      "files": [
+        "files/pm-main/intents/12-label-reprint-v2/intent.md",
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml"
+      ],
+      "expectations": [
+        "The new intent is locked, and the old issue #7 is closed as not planned with a 'Superseded by' comment; the old lock stays."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "central/intents/themarmack-12-label-reprint-v2/lock.yaml"
+        },
+        {
+          "type": "regex",
+          "path": "central/intents/themarmack-12-label-reprint-v2/lock.yaml",
+          "pattern": "(?m)^issue: 12$"
+        },
+        {
+          "type": "file_exists",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "issue close"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "(?i)not planned"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "(?i)superseded by"
+        }
+      ]
     }
   ]
 }

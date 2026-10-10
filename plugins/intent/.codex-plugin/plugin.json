@@ -1,7 +1,7 @@
 {
   "name": "intent",
   "version": "0.3.0",
-  "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits (warning first if the intent changed on GitHub), /intent-refresh rebuilds your Word file from GitHub, /intent-promote moves the intent to Ready for planning, and /intent-revoke takes it back to Create and removes its lock; planning locks an intent with lock.yaml in the-marmack/intents; admins set up each PM's repo with /intent-repo-setup.",
+  "description": "Help product managers write and publish intents without touching git — /intent-create interviews you and opens an issue, /intent-sync publishes your Word edits (warning first if the intent changed on GitHub), /intent-refresh rebuilds your Word file from GitHub, /intent-promote moves the intent to Ready for planning; planning locks an intent with lock.yaml in the-marmack/intents, and locked means locked, so a change is a new intent that supersedes it (/intent-create … supersedes <issue URL>); admins set up each PM's repo with /intent-repo-setup.",
   "author": {
     "name": "the-marmack"
   },

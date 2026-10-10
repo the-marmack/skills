@@ -192,6 +192,58 @@
           "pattern": "(?m)^## Problem\\n\\n\\S"
         }
       ]
+    },
+    {
+      "id": "supersede-starts-from-old",
+      "name": "Supersede a locked intent: start from its content and link both issues",
+      "prompt": "Use the intent-create skill: '/intent-create supersedes https://github.com/the-marmack/intent-themarmack/issues/7 — reprints should also work from the handheld scanners, not just the order screen.' GitHub and git are unavailable and nobody can answer questions: accept your own recommended answers. pm-main/ in the current directory stands in for main of the PM repo the-marmack/intent-themarmack (read files there; where you would commit to main, write the file there instead), and central/ stands in for main of the-marmack/intents for the lock check. Skip step 1. In step 3, the new issue is #12 (https://github.com/the-marmack/intent-themarmack/issues/12); instead of running gh commands that change anything, append them to commands.md, one per line. Use the short name label-reprint-v2, author Pat PM, date 2026-10-10, and you are running in claude-code. Stop after step 4. Don't call gh.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill Bash(mkdir *)",
+      "files": [
+        "files/pm-main/intents/7-label-reprint/intent.md",
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml"
+      ],
+      "expectations": [
+        "The new intent starts from the old intent's sections, records supersedes, and both issues are linked; the old intent is untouched."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "pm-main/intents/12-label-reprint-v2/intent.md"
+        },
+        {
+          "type": "regex",
+          "path": "pm-main/intents/12-label-reprint-v2/intent.md",
+          "pattern": "(?m)^supersedes: https://github\\.com/the-marmack/intent-themarmack/issues/7$"
+        },
+        {
+          "type": "regex",
+          "path": "pm-main/intents/12-label-reprint-v2/intent.md",
+          "pattern": "one click"
+        },
+        {
+          "type": "regex",
+          "path": "pm-main/intents/12-label-reprint-v2/intent.md",
+          "pattern": "(?i)handheld scanners"
+        },
+        {
+          "type": "file_exists",
+          "path": "commands.md"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "(?i)superseded by"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "(issues/7\\b| 7 )"
+        },
+        {
+          "type": "command",
+          "run": "! grep -q supersedes pm-main/intents/7-label-reprint/intent.md"
+        }
+      ]
     }
   ]
 }

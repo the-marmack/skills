@@ -1,0 +1,88 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bitwise-media-group/evolve/main/schemas/evals.schema.json",
+  "skill_name": "intent-promote",
+  "evals": [
+    {
+      "id": "promote-to-ready",
+      "name": "Promote an unlocked intent to Ready",
+      "prompt": "Use the intent-promote skill to promote the intent 'label-reprint'. Facts: its card is in Create, and central/ has no lock for it. In this environment the intents root is intents-root/ (not ~/Documents/intents). intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. GitHub, git and Word conversion tools are unavailable, so don't call gh: skip step 2's lookups (facts below), treat step 4's sync as 'no changes', and instead of running a command that changes something on GitHub, append it to commands.md, one per line. Write what you tell the PM to promote-report.md. Even if the skill tells you to stop, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/7-label-reprint/.intent.json",
+        "files/intents-root/repo/intents/7-label-reprint/intent.md"
+      ],
+      "expectations": [
+        "The card moves to Ready and the issue gets a 'Promoted' comment.",
+        "The report says a change after planning starts needs a new intent that supersedes it."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "commands.md"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "item-edit"
+        },
+        {
+          "type": "regex",
+          "path": "commands.md",
+          "pattern": "(?i)promoted"
+        },
+        {
+          "type": "file_exists",
+          "path": "promote-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "promote-report.md",
+          "pattern": "(?i)supersede"
+        },
+        {
+          "type": "not_regex",
+          "path": "promote-report.md",
+          "pattern": "intent-revoke"
+        }
+      ]
+    },
+    {
+      "id": "locked-refused",
+      "name": "Refuse to promote a locked intent and point to supersedes",
+      "prompt": "Use the intent-promote skill to promote the intent 'label-reprint'. Facts: its card is in Plan, and central/ holds its lock. In this environment the intents root is intents-root/ (not ~/Documents/intents). intents-root/repo stands in for main of the PM repo the-marmack/intent-themarmack, and central/ stands in for main of the-marmack/intents: a file there exists on main, and a file missing there is missing on main. GitHub, git and Word conversion tools are unavailable, so don't call gh: skip step 2's lookups (facts below), treat step 4's sync as 'no changes', and instead of running a command that changes something on GitHub, append it to commands.md, one per line. Write what you tell the PM to promote-report.md. Even if the skill tells you to stop, write the report file before you finish.",
+      "allowed_tools": "Read Write Edit Glob Grep Skill",
+      "files": [
+        "files/intents-root/7-label-reprint/.intent.json",
+        "files/intents-root/repo/intents/7-label-reprint/intent.md",
+        "files/central/intents/themarmack-7-label-reprint/lock.yaml"
+      ],
+      "expectations": [
+        "The report says the intent is already promoted and locked, and that a change needs a new intent that supersedes it; nothing is changed."
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "promote-report.md"
+        },
+        {
+          "type": "regex",
+          "path": "promote-report.md",
+          "pattern": "(?i)supersede"
+        },
+        {
+          "type": "not_regex",
+          "path": "promote-report.md",
+          "pattern": "intent-revoke"
+        },
+        {
+          "type": "command",
+          "run": "! grep -q 'item-edit' commands.md 2>/dev/null"
+        },
+        {
+          "type": "file_exists",
+          "path": "central/intents/themarmack-7-label-reprint/lock.yaml"
+        }
+      ]
+    }
+  ]
+}

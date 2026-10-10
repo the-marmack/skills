@@ -1,6 +1,6 @@
 ---
 name: intent-interview
-description: Fills in a PM's intent by chat, one section at a time, straight on GitHub — reads intent.md from main, drafts each required section (problem, proposed outcome with testable success criteria, affected users and systems, constraints, out of scope) from the PM's own words, asks only about the gaps with a recommended answer for each question, and commits each accepted answer to main as it goes, parking anything unsettled under Open questions. It is the default door of intent-create; on its own it continues any unlocked intent from its short name, issue number or issue URL. Use when a PM wants to fill in, complete, flesh out or continue an intent by answering questions. Not for starting a new intent (intent-create), publishing Word edits (intent-sync), checking an intent without changing it (intent-bundle), promoting or revoking (intent-lock) or planning (plan-create).
+description: Fills in a PM's intent by chat, one section at a time, straight on GitHub — reads intent.md from main, drafts each required section (problem, proposed outcome with testable success criteria, affected users and systems, constraints, out of scope) from the PM's own words, asks only about the gaps with a recommended answer for each question, and commits each accepted answer to main as it goes, parking anything unsettled under Open questions. It is the default door of intent-create; on its own it continues any unlocked intent from its short name, issue number or issue URL. Use when a PM wants to fill in, complete, flesh out or continue an intent by answering questions. Not for starting a new intent (intent-create), publishing Word edits (intent-sync), checking an intent without changing it (intent-bundle), promoting (intent-promote) or planning (plan-create).
 license: MIT
 ---
 
@@ -27,8 +27,9 @@ and the step map are in [references/REFERENCE.md](references/REFERENCE.md).
 1. Read `.config.json` (the `intent-bundle` skill). Resolve the intent: from a local `.intent.json` when there is one,
    otherwise find the `intents/<issue>-*` folder on `main` ("List a folder" in "GitHub recipes"). An issue URL also
    gives the repo.
-2. Run "Lock check". If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. Run
-   `/intent-revoke <short>` first if it needs changes." If it's unknown, stop and say the lock couldn't be confirmed.
+2. Run "Lock check". If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. To change
+   it, start a new intent that supersedes it: `/intent-create … supersedes <issue URL>`." If it's unknown, stop and say
+   the lock couldn't be confirmed.
 3. Read `<repoPath>/intent.md` and the head of `main` from GitHub ("Read a file", "Head of `main`"). Never start from the
    Word file: the interview works on what's on `main`.
 
@@ -45,7 +46,9 @@ Draft each empty or weak section from what the PM has already said. Keep the PM'
 - **Out:** every required section filled on `main`, one commit per accepted section, leftovers under Open questions.
 
 Go through the required sections in order. Skip a section that is already good enough ("Required sections" in the
-`intent-bundle` skill). For each of the others:
+`intent-bundle` skill). **Superseding** (the frontmatter has `supersedes`): first ask the PM what should change from the
+intent it replaces, and interview those sections even if they already look good enough; keep the rest as they are.
+For each section to interview:
 
 1. Show the draft and ask about its gaps only, following "Interview rules" in
    [references/REFERENCE.md](references/REFERENCE.md).

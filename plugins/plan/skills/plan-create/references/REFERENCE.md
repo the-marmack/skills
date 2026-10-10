@@ -4,17 +4,17 @@ Use `gh`'s built-in `-q` for JSON queries rather than `jq`.
 
 ## Step map
 
-| Step            | Recipe below                                             |
-| --------------- | -------------------------------------------------------- |
-| 1 Preflight     | Planner rights, Board                                    |
-| 2 Select intent | List plannable intents                                   |
-| 3 Lock          | Lock, Gate, Lock file, Move to Plan, Label and comment   |
-| 4 Read intent   | Read the intent                                          |
-| 5 Choose repo   | Find candidate repos                                     |
-| 6 Survey repo   | Survey the target repo                                   |
-| 7 Break down    | Task rules, [../templates/plan.md](../templates/plan.md) |
-| 8 Review        | None                                                     |
-| 9 Publish       | plan.json, Publish                                       |
+| Step            | Recipe below                                                                      |
+| --------------- | --------------------------------------------------------------------------------- |
+| 1 Preflight     | Planner rights, Board                                                             |
+| 2 Select intent | List plannable intents                                                            |
+| 3 Lock          | Lock, Gate, Lock file, Move to Plan, Label and comment, Close a superseded intent |
+| 4 Read intent   | Read the intent                                                                   |
+| 5 Choose repo   | Find candidate repos                                                              |
+| 6 Survey repo   | Survey the target repo                                                            |
+| 7 Break down    | Task rules, [../templates/plan.md](../templates/plan.md)                          |
+| 8 Review        | None                                                                              |
+| 9 Publish       | plan.json, Publish                                                                |
 
 ## Board
 
@@ -62,7 +62,21 @@ gh issue view "$I" -R "$O/$R" --json comments -q '.comments[].body' | grep -q '<
 <!-- intent-locked -->"
 ```
 
-`/intent-revoke` removes the label. The comment stays as history.
+The label and the comment stay: locked means locked.
+
+## Close a superseded intent
+
+When the intent just locked has `supersedes: <issue URL>` in its frontmatter (see "Supersedes" in the intent plugin's
+`intent-bundle` skill):
+
+```sh
+gh issue view <old issue URL> --json state -q .state        # skip if CLOSED
+gh issue close <old issue URL> --reason "not planned" \
+  --comment "Superseded by <new issue URL>, locked for planning at \`<sha>\`."
+```
+
+Don't touch the old intent's `lock.yaml` or plans in `the-marmack/intents`: they stay as the record of what was planned.
+Its card stays where it is.
 
 ## Move to Plan
 
@@ -117,7 +131,7 @@ locked_by: <planner's gh login>
 locked_at: <UTC ISO-8601 timestamp>
 ```
 
-It's written once and never rewritten. Only a revoke removes it.
+It's written once and never rewritten or removed: locked means locked.
 
 ## Gate
 

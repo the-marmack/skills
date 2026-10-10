@@ -4,7 +4,10 @@
   "triggers": [
     { "query": "Ask me questions to fill in my label-reprint intent", "should_trigger": true },
     { "query": "Interview me so I can finish the invoice-export intent", "should_trigger": true },
-    { "query": "My intent's success criteria are vague, help me sharpen them by asking me questions", "should_trigger": true },
+    {
+      "query": "My intent's success criteria are vague, help me sharpen them by asking me questions",
+      "should_trigger": true
+    },
     { "query": "Continue filling in my intent where we left off", "should_trigger": true },
     { "query": "Help me flesh out the problem and out-of-scope sections of intent 7", "should_trigger": true },
     { "query": "Walk me through the questions my intent still needs answered", "should_trigger": true },
