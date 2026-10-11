@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.4.0](https://github.com/the-marmack/skills/compare/intent--v0.3.0...intent--v0.4.0) (2026-10-11)
+
+
+### Features
+
+* **intent:** add intent-repo-setup for admins ([ce1f2a1](https://github.com/the-marmack/skills/commit/ce1f2a1b639495003685742023bbb23a8a06edf2))
+* **intent:** add the check.py gate script with tests ([1881a16](https://github.com/the-marmack/skills/commit/1881a16d519f334e2eaedeaf5106d2c79196206b)), closes [#13](https://github.com/the-marmack/skills/issues/13)
+* **intent:** bundle contract v1 with frontmatter and a ready gate ([ee4a5a8](https://github.com/the-marmack/skills/commit/ee4a5a80d8b078ab532f42a74908419fae004a02)), closes [#12](https://github.com/the-marmack/skills/issues/12)
+* **intent:** intent-create leaves the board to add-to-project ([75e91aa](https://github.com/the-marmack/skills/commit/75e91aa13263a5a093e2f4880b073e16dcb4ab15)), closes [#20](https://github.com/the-marmack/skills/issues/20)
+* **intent:** intent-repo-setup ships the intent-check caller ([0162ce3](https://github.com/the-marmack/skills/commit/0162ce3db107de0cd4553fda9197b43005804c03))
+* **intent:** interview commits per answer; create starts bare and reviews ([e97c467](https://github.com/the-marmack/skills/commit/e97c467ee4f3f38099670c58731862206cb7e3fe)), closes [#23](https://github.com/the-marmack/skills/issues/23) [#24](https://github.com/the-marmack/skills/issues/24)
+* **intent:** no git on PM machines, the intent skills use gh only ([2f7e369](https://github.com/the-marmack/skills/commit/2f7e36989cd1ffda30a412840a0cb4a2fa830ed6)), closes [#22](https://github.com/the-marmack/skills/issues/22)
+* **intent:** read the central lock in the-marmack/intents ([49937d6](https://github.com/the-marmack/skills/commit/49937d6ac6e4ce70a006d2137b380a12af0fe836)), closes [#16](https://github.com/the-marmack/skills/issues/16)
+* **intent:** supersedes replaces revoke; locked means locked ([1c70638](https://github.com/the-marmack/skills/commit/1c706381dc680418feb02bb6b63c2ffec18f616d)), closes [#30](https://github.com/the-marmack/skills/issues/30)
+* **intent:** Word is a door, intent.md on main is the truth ([a87de49](https://github.com/the-marmack/skills/commit/a87de493bd25aad5e00185693c8280223a03f36e)), closes [#18](https://github.com/the-marmack/skills/issues/18)
+* **plan:** add a read-only plan-review skill ([5461cdc](https://github.com/the-marmack/skills/commit/5461cdc0bde076703c352deeda5bca952d118429))
+* **plan:** label and comment the intent's issue when it's locked ([e465d3b](https://github.com/the-marmack/skills/commit/e465d3b7634ef8f999913e3f04500cf1d050990c)), closes [#21](https://github.com/the-marmack/skills/issues/21)
+
+
+### Bug Fixes
+
+* **intent:** chain the returned commit as the next head ([7af25cc](https://github.com/the-marmack/skills/commit/7af25ccf70f4266b2134d96dadd1ac0a6b7a2d00))
+* **intent:** drop wording about what PMs don't know ([30344cd](https://github.com/the-marmack/skills/commit/30344cdf2ff9c4ad1aaeced4e89b676926129103))
+* **intent:** one short line per command in the slash menu ([fa07642](https://github.com/the-marmack/skills/commit/fa07642c4e3884f83fd96d26a3bf6cdd9546dfe9))
+* **intent:** pin the intent-check caller to github-workflows v6.5.1 ([315c06d](https://github.com/the-marmack/skills/commit/315c06dfe4550923fcba4f316ee72a0aefd50b47))
+
 ## [0.3.0](https://github.com/the-marmack/skills/compare/intent--v0.2.0...intent--v0.3.0) (2026-10-09)
 
 
