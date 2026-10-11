@@ -8,7 +8,6 @@
     }
   },
   "enabledPlugins": {
-    "intent@the-marmack": true,
-    "plan@the-marmack": true
+    "intent@the-marmack": true
   }
 }

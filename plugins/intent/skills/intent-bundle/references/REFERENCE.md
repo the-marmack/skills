@@ -169,7 +169,7 @@ never start one that would prompt an install:
   succeeds, and call it as `py -3 <skill dir>/scripts/check.py`.
 
 Without Python, apply the same structural rules yourself (the list below), and say the script didn't run. Planner
-machines (the `plan` plugin's `plan-create`) always run their copy.
+machines (`plan-create` in the-marmack/intents) always run their copy.
 
 It prints one JSON object (`ok`, `ready`, `errors`, `warnings`, `frontmatter`, `sections`) and exits `0` when the check
 passes, `1` when it fails and `2` on a usage error. It checks:

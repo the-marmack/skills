@@ -12,7 +12,6 @@ import pytest
 HERE = Path(__file__).parent
 FIXTURES = HERE / "fixtures"
 SCRIPT = HERE.parents[1] / "skills" / "intent-bundle" / "scripts" / "check.py"
-PLAN_COPY = HERE.parents[2] / "plan" / "skills" / "plan-create" / "scripts" / "check.py"
 
 
 def run(fixture: str | None, *args: str, text: str | None = None) -> tuple[int, dict | None, str]:
@@ -96,7 +95,3 @@ def test_frontmatter_keeps_extra_keys_and_ignores_comments() -> None:
 def test_bad_usage_exits_2(args: list[str]) -> None:
     code, out, err = run("complete.md", *args)
     assert code == 2 and out is None and "usage" in err
-
-
-def test_plan_create_copy_is_identical() -> None:
-    assert PLAN_COPY.read_bytes() == SCRIPT.read_bytes()

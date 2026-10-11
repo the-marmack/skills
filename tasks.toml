@@ -54,13 +54,6 @@ run = [
   "uvx ruff@0.17.0 format --check plugins/*/skills/*/scripts plugins/*/tests"
 ]
 
-# plan-create keeps its own copy of intent-bundle's gate script (a plugin can't reach another plugin's files by path);
-# the copies must stay byte-identical.
-[script-copies]
-hide = true
-dir = "{{config_root}}"
-run = "cmp plugins/intent/skills/intent-bundle/scripts/check.py plugins/plan/skills/plan-create/scripts/check.py"
-
 [installer-syntax]
 hide = true
 dir = "{{config_root}}"
@@ -81,8 +74,7 @@ run = [
   { task = "plugin-validate" },
   { task = "fixture-json" },
   { task = "installer-syntax" },
-  { task = "py-lint" },
-  { task = "script-copies" }
+  { task = "py-lint" }
 ]
 
 [test]

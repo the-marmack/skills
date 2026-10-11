@@ -9954,52 +9954,6 @@
         }
       }
     },
-    "plan": {
-      "triggers": {
-        "anthropic/claude-opus-5": {
-          "provider": "anthropic",
-          "display": "Claude Opus 5",
-          "passed": 15,
-          "failed": 1,
-          "total": 16,
-          "pass_rate": 0.9375,
-          "avg_run_seconds": 10.5
-        },
-        "anthropic/claude-sonnet-5": {
-          "provider": "anthropic",
-          "display": "Claude Sonnet 5",
-          "passed": 14,
-          "failed": 2,
-          "total": 16,
-          "pass_rate": 0.875,
-          "avg_run_seconds": 9.6
-        }
-      },
-      "skills": {
-        "plan-create": {
-          "triggers": {
-            "anthropic/claude-opus-5": {
-              "provider": "anthropic",
-              "display": "Claude Opus 5",
-              "passed": 15,
-              "failed": 1,
-              "total": 16,
-              "pass_rate": 0.9375,
-              "avg_run_seconds": 10.5
-            },
-            "anthropic/claude-sonnet-5": {
-              "provider": "anthropic",
-              "display": "Claude Sonnet 5",
-              "passed": 14,
-              "failed": 2,
-              "total": 16,
-              "pass_rate": 0.875,
-              "avg_run_seconds": 9.6
-            }
-          }
-        }
-      }
-    },
     "python": {
       "triggers": {
         "anthropic/claude-fable-5": {

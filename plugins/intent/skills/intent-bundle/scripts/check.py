@@ -5,7 +5,7 @@ Usage: python3 check.py [--ready] < intent.md
 
 Prints one JSON object and exits 0 when the check passes, 1 when it fails, 2 on a usage error. Judging whether a
 section is good enough stays with the agent; this only checks what can be checked mechanically. Standard library only,
-no prompts. The copy in the plan plugin's plan-create skill must stay byte-identical (make lint checks it).
+no prompts. Keep it identical to the copy in the-marmack/intents (.claude/skills/plan-create/scripts/check.py).
 """
 
 from __future__ import annotations
