@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0](https://github.com/the-marmack/skills/compare/intent--v0.6.0...intent--v0.7.0) (2026-10-11)
+
+
+### Features
+
+* **intent:** intent-repo-setup checks the App can read locks ([5b6c113](https://github.com/the-marmack/skills/commit/5b6c113237eda5d8f5ccdced9461472f1775b90c))
+* **intent:** PM repos run the intent-check lock flag ([8c98156](https://github.com/the-marmack/skills/commit/8c981562d1c95ae373252e20b4023ef365f61048))
+* **intent:** say who is planning a locked intent ([cdf1235](https://github.com/the-marmack/skills/commit/cdf12350e8dd087ecd035d85ba9d7dd9a6ca6c8a))
+
 ## [0.6.0](https://github.com/the-marmack/skills/compare/intent--v0.5.0...intent--v0.6.0) (2026-10-11)
 
 
