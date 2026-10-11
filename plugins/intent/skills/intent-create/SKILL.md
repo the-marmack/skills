@@ -87,19 +87,18 @@ The door is a word in the request, such as "interview". With no door named, appl
 waiting for the PM to ask, and pass it the issue, `short` and `request`. It reads the bare intent from `main` and
 commits each accepted section. Today the interview is the only door. When it hands back, continue with Step 6.
 
-## Step 6 — Review
+## Step 6 — Ready check
 
 - **In:** `intent.md` on `main`.
-- **Out:** an intent the PM has accepted.
+- **Out:** the ready gate result.
 
-Read `intent.md` from `main`, show it to the PM in plain language, and run the ready gate (the gate script with
-`--ready` when a real Python is present, otherwise its rules; see "Ready gate" in the `intent-bundle` skill). Report the
-result. Then ask one question: **accept, or edit a section?** An edit goes back to the `intent-interview` skill for that
-section only, then returns here. At most three rounds.
+Read `intent.md` from `main` and run the ready gate (the gate script with `--ready` when a real Python is present,
+otherwise its rules; see "Ready gate" in the `intent-bundle` skill). Report the result in one or two lines. Don't ask
+the PM to accept it here: they review it in Word (Step 8).
 
 ## Step 7 — Write local files
 
-- **In:** the accepted `intent.md` on `main`.
+- **In:** `intent.md` on `main`.
 - **Out:** `~/Documents/intents/<issue>-<short>/` containing only `intent.docx` and `.intent.json`.
 
 1. Build `~/Documents/intents/<issue>-<short>/intent.docx` from `intent.md` on `main`, using "Word conversion →
@@ -109,10 +108,12 @@ section only, then returns here. At most three rounds.
 
 ## Step 8 — Hand off
 
-Open `~/Documents/intents/<issue>-<short>/` for the PM: `open` on macOS, `explorer` on Windows. Then tell them:
+Open `~/Documents/intents/<issue>-<short>/intent.docx` in the PM's default editor for `.docx`: `open "<file>"` on
+macOS, `powershell -NoProfile -Command "Invoke-Item '<file>'"` on Windows (from any shell). Then tell them:
 
+- **Review it now:** the intent is open in Word. Edit anything, save, and run `/intent-sync` to publish the changes.
 - **Next step:** when the intent is ready, move its card to **Ready** on the board, or run `/intent-promote`. That's
   their approval; nothing is planned before it.
-- To change it later: edit `intent.docx` in Word and run `/intent-sync`, or run the interview again.
+- To change it later: edit `intent.docx` the same way, or run the interview again.
 
 List any Open questions that are still unanswered.

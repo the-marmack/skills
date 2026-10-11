@@ -66,7 +66,7 @@ about: they go under Open tech questions for the planner, and a stack the PM nam
 
 ## Step 4 — Finish
 
-- **From `intent-create`:** hand back to `intent-create`, which reviews the result with the PM. Stop here.
+- **From `intent-create`:** hand back to `intent-create`, which checks it and opens it in Word for the PM to review. Stop here.
 - **On its own:**
   1. Run the ready gate on the final `intent.md` (`--ready`, or its rules when there's no Python) and report it.
   2. If this machine has the intent's Word file, run "Refresh the Word file", so it matches `main` again.
