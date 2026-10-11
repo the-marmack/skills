@@ -59,11 +59,16 @@ command line or a file in the repo, or keep a copy.
 ## App access
 
 ```sh
-gh api orgs/$O/installations -q '.installations[]|select(.app_slug=="the-marmack-intent-projects")|.repository_selection'
+gh api orgs/$O/installations \
+  -q '.installations[]|select(.app_slug=="the-marmack-intent-projects")|{repository_selection, contents: .permissions.contents}'
 ```
 
-`all` means the App sees every repo. `selected` means the admin must add `$R` under the App's installation settings (Org
-→ Settings → GitHub Apps → the-marmack-intent-projects → Configure → Repository access).
+`all` means the App sees every repo. `selected` means the admin must add `$R` and `intents` under the App's installation
+settings (Org → Settings → GitHub Apps → the-marmack-intent-projects → Configure → Repository access).
+
+`contents` must be `read` (or `write`): `intent-check` uses the App to read locks in `the-marmack/intents`. If it's
+missing, tell the admin to add **Repository → Contents: Read-only** in the App's settings and accept the new permission
+on the installation. Until then, `intent-check` reports the lock as "not checked".
 
 ## Access
 

@@ -52,9 +52,9 @@ print, echo, copy or commit the key.
 
 ## Step 6 — App access
 
-Check that the board App can see the repo ("App access"). If it's installed on all repositories, nothing to do. If it's
-installed on selected repositories and this one isn't among them, tell the admin to add it in the App's settings; it
-can't be done here.
+Check that the board App can see the repo and `the-marmack/intents`, and can read contents ("App access"). If it's
+installed on all repositories with contents read, nothing to do. Otherwise tell the admin what to add in the App's
+settings; it can't be done here.
 
 ## Step 7 — Access
 
