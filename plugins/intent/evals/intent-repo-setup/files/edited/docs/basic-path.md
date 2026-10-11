@@ -48,6 +48,12 @@ Success criteria:
 - <something this won't do>
 
 ## Open questions
+
+## Tech stack (from the PM)
+
+<only if you want a particular technology; otherwise delete this section>
+
+## Open tech questions
 ```
 
 ## 3. Fill in each section
@@ -62,8 +68,10 @@ Each section is good enough when:
 | Constraints                | It lists hard limits or says "None known"                           |
 | Out of scope               | At least one exclusion is listed, or "Nothing excluded yet"         |
 
-Park anything you can't settle under **Open questions**. Add `(blocking)` to a question only if planning can't start
-without its answer: planning refuses an intent that still has one.
+Park anything you can't settle under **Open questions**. Leave technology to the planners: name a stack under **Tech
+stack (from the PM)** only if you have one in mind, and put technical choices you're unsure about under **Open tech
+questions**, or leave both out. Add `(blocking)` to a question only if planning can't start without its answer: planning
+refuses an intent that still has one.
 
 ## 4. Save it
 

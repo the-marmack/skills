@@ -120,6 +120,19 @@ These sections must have real content. Interview the PM about any that are missi
 The **Request** is the PM's raw words, so never interview the PM about it. **Open questions** is where anything that
 can't be settled now is parked.
 
+### Technology
+
+Choosing technology is planning's job. Never ask the PM to choose a language, framework, library, platform, hosting or
+architecture they didn't bring up, and never put a technical question under Open questions. Two optional sections hold
+technology:
+
+- **`## Tech stack (from the PM)`:** only when the PM named a technology, in what they said or in documents they shared.
+  Record it in their words, as their recommendation. It's a hard limit only when the PM says it must be used; then it
+  also goes under Constraints.
+- **`## Open tech questions`:** technical choices the intent leaves open, for the planner, as `(owner: planner)`. Never
+  `(blocking)`: the ready gate ignores this section, and `plan-create` answers each one in the plan. Leave it out when
+  there are none.
+
 An intent is **complete** when every required section is good enough. The published `intent.md` must also keep these
 headings: `## Problem`, `## Proposed outcome`, `## Affected users and systems`, `## Constraints`, `## Out of scope`.
 

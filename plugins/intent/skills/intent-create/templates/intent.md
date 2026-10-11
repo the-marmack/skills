@@ -42,3 +42,12 @@ Success criteria:
 ## Open questions
 
 - {{Question — why it matters (owner: who)}}
+
+## Tech stack (from the PM)
+
+{{Only when the PM named a technology, in what they said or in documents they shared: their words, as their
+recommendation. Otherwise leave this section out.}}
+
+## Open tech questions
+
+- {{A technical choice the intent leaves open, for planning to decide (owner: planner)}}

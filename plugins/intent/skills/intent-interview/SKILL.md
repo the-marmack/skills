@@ -60,7 +60,9 @@ For each section to interview:
    head for the next section. If GitHub says `main` moved, follow the recipe's retry rule.
 
 Anything the PM can't settle goes under Open questions, as `(owner: <author>)`, in the same commit. Mark it
-`(blocking)` only if planning can't start without the answer.
+`(blocking)` only if planning can't start without the answer. Technical choices never go there and are never asked
+about: they go under Open tech questions for the planner, and a stack the PM named goes under Tech stack (from the PM)
+("Technology" in the `intent-bundle` skill).
 
 ## Step 4 — Finish
 

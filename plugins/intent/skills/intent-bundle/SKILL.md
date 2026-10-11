@@ -20,7 +20,8 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **Frontmatter:** `intent.md` starts with YAML frontmatter: `door` and `harness` (free text, which door and tool
   wrote this version) and an optional `supersedes`. See "Frontmatter".
 - **Sections:** `intent.md` has Request, Problem, Proposed outcome, Affected users and systems, Constraints, Out of scope
-  and Open questions. It holds no status.
+  and Open questions, plus the optional Tech stack (from the PM) and Open tech questions ("Technology" in the
+  reference). It holds no status.
 - **Complete:** every required section is good enough, as defined in "Required sections".
 - **Ready:** complete, no open question marked `(blocking)`, and only allowed files in the folder. See "Ready gate";
   planning refuses an intent that fails it.

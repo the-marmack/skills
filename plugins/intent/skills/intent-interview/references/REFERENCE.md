@@ -7,6 +7,8 @@
 - Every question gets a **recommended answer** drawn from what the PM has already said. The PM can reply "yes" to accept
   it.
 - Don't ask the PM what you can look up yourself, such as the repo contents or earlier intents in `intents/` on GitHub.
+- Don't ask about technology. If the PM named a stack, record it under Tech stack (from the PM); leave every other
+  technical choice to planning, under Open tech questions ("Technology" in the `intent-bundle` skill).
 - Use at most **three rounds**. After that, move whatever is still open into Open questions as `(owner: <author>)` and
   continue.
 - Plain language. Keep git out of it; the plugin handles that.
