@@ -38,7 +38,8 @@ unknown, say the lock couldn't be confirmed and stop.
   also works).
 - **No argument:** list every child folder that has a `.intent.json` and isn't locked, showing each intent's title and
   `<issue>-<short>`, and ask the PM to pick one (use the interactive question UI when it exists). Leave locked intents
-  out of the list. If none are unlocked, say so and stop.
+  out of the list. Each option is one intent, newest first, at most four. Don't mark one as recommended or add an option
+  for another intent: the PM types any other name in the free-text answer. If none are unlocked, say so and stop.
 
 A folder with an `intent.docx` but no `.intent.json` was never created through `/intent-create`, so never offer it.
 

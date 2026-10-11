@@ -36,7 +36,8 @@ others. If a step fails, stop and say in one sentence what went wrong and what t
 - **An argument was given:** parse it into `pmRepo` and `issue`.
 - **No argument:** list the board items whose Status is `Ready` or `Plan` (see "List plannable intents" in the
   reference), showing each title, status and `<pmRepo>#<issue>`, and ask which one (use the interactive question UI).
-  Mark any that already have a plan. If there are none, say so and stop.
+  Mark any that already have a plan. Each option is one intent, at most four. Don't mark one as recommended or add an
+  option for another intent: the user types any other one in the free-text answer. If there are none, say so and stop.
 
 ## Step 3 — Lock
 

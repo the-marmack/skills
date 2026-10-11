@@ -18,7 +18,8 @@ themselves as its own commit, so the PR keeps a record of every review decision.
 - **In:** a plan PR number or URL in `the-marmack/intents`, or none.
 - **Out:** the plan, its lock, the intent it was planned from, the target repo's outline and the review guides.
 
-1. With no PR given, list the open draft plan PRs (`plan/*` branches) and ask which one.
+1. With no PR given, ask which open draft plan PR (`plan/*` branches) to review. Each option is one PR, at most four,
+   with no recommended pick and no option for another PR: the user types any other one in the free-text answer.
 2. Read the PR (title, body, files, head commit) and, at its head commit, every `plan*.md` and `plan*.json` in its
    folder plus `lock.yaml`. Reading at the head commit works even after the branch is gone.
 3. Read the intent at the lock's `sha` from the PM repo in `lock.yaml` (`repository`, `intent`). That's the version

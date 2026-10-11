@@ -26,8 +26,10 @@ others.
 
 1. Run `gh auth status`. Read `~/Documents/intents/.config.json`. Nothing is cloned and git isn't needed: GitHub
    steps use "GitHub recipes" in the `intent-bundle` skill.
-2. If no short name was given, list the intents (`<issue>-<short>` folders with a `.intent.json`) together with their
-   board status, and ask which one.
+2. If no short name was given, ask which intent to promote. The options are the intents that can be promoted: the
+   `<issue>-<short>` folders with a `.intent.json` whose card is in Create and that aren't locked. Each option is one
+   intent, newest first, at most four. Don't mark one as recommended or add an option for another intent: the PM types
+   any other name in the free-text answer. If none can be promoted, say so and stop.
 3. Read `.intent.json` from the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also
    works).
 
