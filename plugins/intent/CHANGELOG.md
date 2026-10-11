@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0](https://github.com/the-marmack/skills/compare/intent--v0.9.0...intent--v1.0.0) (2026-10-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **intent:** /intent-repo-setup is no longer in the intent plugin; run it in a clone of the-marmack/intents.
+
+### Features
+
+* **intent:** move intent-repo-setup to the-marmack/intents ([42f7bba](https://github.com/the-marmack/skills/commit/42f7bbabc3f153629b7b83b3d04eb80dddd83099))
+* **intent:** open the Word file for review instead of asking ([b224e3d](https://github.com/the-marmack/skills/commit/b224e3dfae9d4dd04bccf97d859cda9dca43dbdd))
+
 ## [0.9.0](https://github.com/the-marmack/skills/compare/intent--v0.8.0...intent--v0.9.0) (2026-10-11)
 
 

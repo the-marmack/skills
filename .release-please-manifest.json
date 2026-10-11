@@ -4,5 +4,5 @@
   "plugins/actions": "1.0.0",
   "plugins/python": "1.0.0",
   "plugins/workflow": "1.0.0",
-  "plugins/intent": "0.9.0"
+  "plugins/intent": "1.0.0"
 }
