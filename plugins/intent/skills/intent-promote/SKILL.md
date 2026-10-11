@@ -30,8 +30,8 @@ others.
    `<issue>-<short>` folders with a `.intent.json` whose card is in Create and that aren't locked. Each option is one
    intent, newest first, at most four. Don't mark one as recommended or add an option for another intent: the PM types
    any other name in the free-text answer. If none can be promoted, say so and stop.
-3. Read `.intent.json` from the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also
-   works).
+3. Convert a typed short name ("Short name" in the `intent-bundle` skill), then read `.intent.json` from the
+   `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also works).
 
 ## Step 2 — Resolve board item
 

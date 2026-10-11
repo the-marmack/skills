@@ -37,8 +37,10 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
    Read the old `intent.md` from `main`; propose a title based on the old one. `request` is what the PM wants to
    change and why.
 2. If no idea was passed, ask the PM to describe it in a sentence or two. Their words become `request`.
-3. Propose a `title` (5–8 words) and a `short` name (kebab-case, at most 30 characters, matching
-   `^[a-z0-9]+(-[a-z0-9]+)*$`). Confirm both with the PM in a single question.
+3. Propose a `title` (5–8 words) and ask the PM, in one prompt (the interactive question UI when it exists), to confirm
+   it and pick a `short` name. Offer 3–4 short names that follow "Short name" in the `intent-bundle` skill, recommended
+   first; the PM can type their own in the free-text answer. Convert a typed name as that rule says, and show the
+   result if it changed.
 4. If any `~/Documents/intents/*-<short>/` exists locally, or `intents/*-<short>/` exists on `main` on GitHub ("List a
    folder"), say so. Offer a
    different short name, or suggest `/intent-sync` if they meant to update that intent.

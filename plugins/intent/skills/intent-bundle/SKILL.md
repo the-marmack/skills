@@ -17,6 +17,9 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 - **Repo folder:** `intents/<issue>-<short>/` on `main` of `<owner>/<pmRepo>` holds `intent.md`, generated from the
   Word file. While the intent is planned or built, its lock is in `the-marmack/intents` (see "Locked"). Only
   `intent.md` is allowed there today; `sources.md` and `design/` are reserved for later.
+- **Short name:** lowercase kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`), one to three words and at most 20 characters,
+  such as `label-reprint`. Convert any name a PM types, for a new intent or to find one: lowercase it, turn every run of
+  other characters into one `-`, trim `-` from the ends, and drop whole trailing words until it fits.
 - **Frontmatter:** `intent.md` starts with YAML frontmatter: `door` and `harness` (free text, which door and tool
   wrote this version) and an optional `supersedes`. See "Frontmatter".
 - **Sections:** `intent.md` has Request, Problem, Proposed outcome, Affected users and systems, Constraints, Out of scope

@@ -34,8 +34,8 @@ Sync publishes one intent at a time. An intent is **locked** when planning has s
 out with "Lock check" in the `intent-bundle` skill, which reads GitHub. If the check comes back
 unknown, say the lock couldn't be confirmed and stop.
 
-- **A short name was given:** pick the `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>`
-  also works).
+- **A short name was given:** convert it ("Short name" in the `intent-bundle` skill) and pick the
+  `~/Documents/intents/*-<short>/` folder (an issue number or `<issue>-<short>` also works).
 - **No argument:** list every child folder that has a `.intent.json` and isn't locked, showing each intent's title and
   `<issue>-<short>`, and ask the PM to pick one (use the interactive question UI when it exists). Leave locked intents
   out of the list. Each option is one intent, newest first, at most four. Don't mark one as recommended or add an option
