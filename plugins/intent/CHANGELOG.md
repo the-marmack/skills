@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/the-marmack/skills/compare/intent--v0.4.0...intent--v0.5.0) (2026-10-11)
+
+
+### Features
+
+* **intent:** hardcode the org, board and statuses ([533d448](https://github.com/the-marmack/skills/commit/533d4486eac02359c4607d0fe17ba193c83f5e36))
+
+
+### Bug Fixes
+
+* **intent:** pickers list only real choices ([a090d61](https://github.com/the-marmack/skills/commit/a090d61befea00634eb4b2bf73703b205b7a1bbf))
+
 ## [0.4.0](https://github.com/the-marmack/skills/compare/intent--v0.3.0...intent--v0.4.0) (2026-10-11)
 
 
