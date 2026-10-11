@@ -6,7 +6,7 @@ license: MIT
 
 # Promote an intent
 
-The user is a product manager who doesn't know git, so speak in plain language. The local layout, `.config.json`, the
+The user is a product manager, so speak in plain language and keep git out of it. The local layout, `.config.json`, the
 board recipes and the lock are in the `intent-bundle` skill. Which command and recipe each step uses is in
 [references/REFERENCE.md](references/REFERENCE.md).
 

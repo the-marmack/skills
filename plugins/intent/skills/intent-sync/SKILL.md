@@ -6,8 +6,8 @@ license: MIT
 
 # Sync intents to GitHub
 
-The user is a product manager who doesn't know git. Their Word file, `intent.docx`, is the source of truth. This skill
-converts it to markdown and pushes it to `main`, and the PM never sees git. The local layout, `.config.json` and Word
+The user is a product manager. Their Word file, `intent.docx`, is the source of truth. This skill
+converts it to markdown and pushes it to `main`, and does the git work. The local layout, `.config.json` and Word
 conversion are in the `intent-bundle` skill. Which command and recipe each step uses is in
 [references/REFERENCE.md](references/REFERENCE.md).
 

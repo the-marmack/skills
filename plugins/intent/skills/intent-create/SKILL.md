@@ -1,12 +1,12 @@
 ---
 name: intent-create
-description: Create a new product intent for a PM who has no git experience — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), commit a bare intents/<issue>-<short-name>/intent.md to main, hand over to the intent-interview door, which commits each required section (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) as the PM accepts it, review the result and the ready gate with the PM, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting one (intent-promote), or writing engineering plans and task breakdowns (plan-create).
+description: Create a new product intent for a PM — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), commit a bare intents/<issue>-<short-name>/intent.md to main, hand over to the intent-interview door, which commits each required section (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) as the PM accepts it, review the result and the ready gate with the PM, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting one (intent-promote), or writing engineering plans and task breakdowns (plan-create).
 license: MIT
 ---
 
 # Create an intent
 
-The user is a product manager who doesn't know git. Do all of the GitHub work for them, through `gh` only (no clone, no
+The user is a product manager. Do all of the GitHub work for them, through `gh` only (no clone, no
 git), and speak in plain language. This is the entry point of the intent flow: it prepares the issue, hands over to a
 door skill for the content, then writes and publishes the files. The paths, `.config.json`, the GitHub recipes, the
 section rules and the board recipes are in the `intent-bundle` skill. Which command and recipe each step uses is in

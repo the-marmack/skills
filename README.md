@@ -51,7 +51,7 @@ New here? The getting-started guides (software, building an intent, building and
 are in [the-marmack/intents/docs/getting-started](https://github.com/the-marmack/intents/tree/main/docs/getting-started)
 (private: PMs and planners have access).
 
-Intent authoring for product managers who don't use git. Intents live in each PM's private
+Intent authoring for product managers, with the git work handled for them. Intents live in each PM's private
 `the-marmack/intent-<github-username>` repo. Each PM edits a Word file under
 `~/Documents/intents/<issue>-<short-name>/`, and the plugin handles Word conversion (built-in OS tools only), git, the
 issue and the project board. `intent.md` on `main` is the truth, and Word is one door into it. A PM needs only `gh`: the

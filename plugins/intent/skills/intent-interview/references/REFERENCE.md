@@ -9,7 +9,7 @@
 - Don't ask the PM what you can look up yourself, such as the repo contents or earlier intents in `intents/` on GitHub.
 - Use at most **three rounds**. After that, move whatever is still open into Open questions as `(owner: <author>)` and
   continue.
-- Plain language. The PM doesn't know git, and never needs to.
+- Plain language. Keep git out of it; the plugin handles that.
 
 ## Step map
 

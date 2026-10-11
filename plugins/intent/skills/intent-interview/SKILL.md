@@ -8,7 +8,7 @@ license: MIT
 
 The default door of the `intent-create` skill. It turns the PM's words into content for every required section and
 puts each answer on GitHub as soon as the PM accepts it, so nothing is lost if the chat stops halfway. The user is a
-product manager who doesn't know git, so speak in plain language. `intent.md` on `main` is the truth; the section
+product manager, so speak in plain language and keep git out of it. `intent.md` on `main` is the truth; the section
 rules, the frontmatter, the GitHub recipes and Word conversion are in the `intent-bundle` skill. The interview rules
 and the step map are in [references/REFERENCE.md](references/REFERENCE.md).
 
