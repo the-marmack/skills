@@ -1,7 +1,5 @@
 ---
-description:
-    Admin only — create or update a PM's intent repo (the-marmack/intent-<login>) with gh: the repo, its standard files,
-    labels, the board App's secrets, App access and the PM's access. Safe to re-run.
+description: Admin only — set up or update a PM's intent repo.
 argument-hint: <github-login>
 ---
 

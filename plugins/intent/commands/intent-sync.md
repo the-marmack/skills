@@ -1,7 +1,5 @@
 ---
-description:
-    Publish your Word edits to one intent — convert its intent.docx to markdown and push it to your intent repo. With no
-    name, pick from your unlocked intents.
+description: Publish your Word edits to GitHub.
 argument-hint: [short-name]
 ---
 

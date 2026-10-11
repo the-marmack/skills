@@ -1,8 +1,5 @@
 ---
-description:
-    Plan a promoted intent — run the ready gate, lock it with lock.yaml in the-marmack/intents, break it into technical
-    tasks an AI agent can pick up, choose (or name) the repo in the the-marmack org where the work happens, and publish
-    the plan as a draft pull request in the intent's folder.
+description: Turn a promoted intent into a plan.
 argument-hint: [intent issue URL | intent-<user>#<issue>]
 ---
 

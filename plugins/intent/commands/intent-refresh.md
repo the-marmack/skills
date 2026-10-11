@@ -1,7 +1,5 @@
 ---
-description:
-    Refresh your Word file — rebuild intent.docx from the latest intent.md on GitHub, keeping your old file as a backup.
-    Use it after the intent changed on GitHub, through the interview, by hand or from another machine.
+description: Update your Word file with the latest version from GitHub.
 argument-hint: [short-name]
 ---
 

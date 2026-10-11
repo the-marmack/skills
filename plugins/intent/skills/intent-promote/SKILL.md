@@ -1,6 +1,7 @@
 ---
 name: intent-promote
 description: Promote a PM's intent for planning — publishes the latest Word edits with intent-sync, then moves the intent's issue from Create to Ready on the GitHub project board, which is the PM's approval. Moving the card to Ready by hand is approval too. Once planning starts the intent is locked for good (locked means locked); to change it after that, the PM starts a new intent that supersedes it, and to drop it, closes its issue as not planned. Use when a PM wants to promote, approve, finalize, mark ready or submit an intent for planning, or runs /intent-promote. Not for creating or superseding an intent (intent-create), publishing ordinary edits (intent-sync), planning an intent (the plan plugin's plan-create), or moving non-intent issues around a board.
+user-invocable: false
 license: MIT
 ---
 

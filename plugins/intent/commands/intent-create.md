@@ -1,7 +1,5 @@
 ---
-description:
-    Create a new intent — open a tracking issue, interview you for the required sections, and write an editable Word
-    file under ~/Documents/intents.
+description: Start a new intent and write it up with Claude.
 argument-hint: [rough idea in your own words]
 ---
 

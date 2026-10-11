@@ -1,6 +1,7 @@
 ---
 name: intent-create
 description: Create a new product intent for a PM — open a tracking issue labelled intent in their intent-<user> GitHub repo (the repo's add-to-project workflow puts it on the board in Create), commit a bare intents/<issue>-<short-name>/intent.md to main, hand over to the intent-interview door, which commits each required section (problem, proposed outcome with testable success criteria, affected users, constraints, out of scope) as the PM accepts it, review the result and the ready gate with the PM, then write ~/Documents/intents/<issue>-<short-name>/intent.docx for editing in Word. Use when a PM wants to create, start, draft, capture or write up a new intent, idea or feature request, or runs /intent-create. Not for filling in an existing intent (intent-interview), syncing edits (intent-sync), promoting one (intent-promote), or writing engineering plans and task breakdowns (plan-create).
+user-invocable: false
 license: MIT
 ---
 

@@ -1,7 +1,5 @@
 ---
-description:
-    Review a draft plan by talking to it — loads the plan PR, its lock, the intent it was built from, the target repo
-    and the review guide, then answers your questions and checks the plan on request. Read-only: you make the changes.
+description: Review a draft plan with Claude.
 argument-hint: [plan PR number or URL]
 ---
 

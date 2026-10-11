@@ -1,6 +1,7 @@
 ---
 name: intent-interview
 description: Fills in a PM's intent by chat, one section at a time, straight on GitHub — reads intent.md from main, drafts each required section (problem, proposed outcome with testable success criteria, affected users and systems, constraints, out of scope) from the PM's own words, asks only about the gaps with a recommended answer for each question, and commits each accepted answer to main as it goes, parking anything unsettled under Open questions. It is the default door of intent-create; on its own it continues any unlocked intent from its short name, issue number or issue URL. Use when a PM wants to fill in, complete, flesh out or continue an intent by answering questions. Not for starting a new intent (intent-create), publishing Word edits (intent-sync), checking an intent without changing it (intent-bundle), promoting (intent-promote) or planning (plan-create).
+user-invocable: false
 license: MIT
 ---
 

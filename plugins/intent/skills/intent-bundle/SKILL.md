@@ -1,6 +1,7 @@
 ---
 name: intent-bundle
 description: Defines what a PM intent is and holds the recipes the intent skills share — the ~/Documents/intents layout and .config.json, the gh-only GitHub recipes (no clone, no git; with a GitHub MCP map), the intent.md sections and when each is good enough, the board statuses Create, Ready, Plan, In progress, Test and Done, the lock.yaml that planning writes to the-marmack/intents, and Word conversion. Checks one intent and reports which required sections are good enough, weak or missing, without changing it. Use when someone asks whether an intent is complete or ready to promote, what an intent holds, where its files live or how its lock works. Not for creating (intent-create), filling in (intent-interview), syncing (intent-sync), promoting (intent-promote) or planning (plan-create) an intent.
+user-invocable: false
 license: MIT
 ---
 

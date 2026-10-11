@@ -1,5 +1,5 @@
 ---
-description: Promote an intent — sync it and move its issue to Ready on the project board, your approval for planning.
+description: Send an intent to engineering for planning.
 argument-hint: <short-name>
 ---
 

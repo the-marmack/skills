@@ -1,6 +1,7 @@
 ---
 name: plan-review
 description: Read-only companion for reviewing a draft plan PR in the-marmack/intents — loads the plan (plan.md, plan.json and any plan_rev files at the PR head), its lock.yaml, the intent at the locked commit from the PM's intent-<user> repo, the target repo's README and layout, and the getting-started review and workflow guides, then answers reviewers' questions about the plan with references to tasks, success criteria and constraints, and on request checks the plan for gaps (traceability, plan.md vs plan.json, out of scope, dependency order). It never edits, commits, pushes, comments or merges: people change the plan, one commit per change. Use when someone wants to review, understand, question, discuss or check a plan, open a plan PR to talk to it, or runs /plan-review. Not for writing a plan (plan-create), changing an intent (intent-create, intent-sync), or building the plan's tasks.
+user-invocable: false
 license: MIT
 ---
 

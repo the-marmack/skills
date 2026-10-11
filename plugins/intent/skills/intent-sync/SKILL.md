@@ -1,6 +1,7 @@
 ---
 name: intent-sync
 description: Publish a PM's edits to one intent at a time — convert its ~/Documents/intents/<issue>-<short-name>/intent.docx Word file to markdown using only built-in OS tools and commit it as intents/<issue>-<short-name>/intent.md straight to main in their intent-<user> GitHub repo through the GitHub API (gh only, no git or clone), warning first if intent.md changed on GitHub since the last sync. With no intent named, lists the unlocked intents and asks which one. Refuses to touch a locked intent, one whose lock.yaml is in the-marmack/intents (engineering has started planning it). Use when a PM wants to sync, save, publish, upload or push their intent changes, or runs /intent-sync. Not for creating a new intent (intent-create), promoting one (intent-promote), or general git pushes in code repositories.
+user-invocable: false
 license: MIT
 ---
 

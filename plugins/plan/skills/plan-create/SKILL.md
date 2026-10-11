@@ -1,6 +1,7 @@
 ---
 name: plan-create
 description: Turn a promoted (Ready) PM intent into a technical plan for AI agents — check the issue and its board card, run the ready gate, lock it by writing lock.yaml (pinned to the intent's commit) to the-marmack/intents and move the card to Plan, read the intent at that commit, find the existing repo in the the-marmack GitHub org where the work belongs (or ask which new repo to create), survey that repo, and break the intent into small ordered tasks with acceptance criteria traced to the intent's success criteria, published as plan.md and plan.json in the intent's folder next to lock.yaml in the-marmack/intents, as a draft pull request (revisions add plan_rev1.md and so on). Use when someone wants to plan, break down, scope, or hand off an intent to AI, or runs /plan-create. Not for writing or editing the intent itself (intent-create, intent-interview, intent-sync), promoting it (intent-promote), or doing the implementation work.
+user-invocable: false
 license: MIT
 ---
 
