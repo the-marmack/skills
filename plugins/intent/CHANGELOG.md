@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/the-marmack/skills/compare/intent--v0.5.0...intent--v0.6.0) (2026-10-11)
+
+
+### Features
+
+* move the plan skills to the-marmack/intents ([68a2010](https://github.com/the-marmack/skills/commit/68a201018bae59f5280d10f0674703257bafb50b))
+
 ## [0.5.0](https://github.com/the-marmack/skills/compare/intent--v0.4.0...intent--v0.5.0) (2026-10-11)
 
 
