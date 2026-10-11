@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/the-marmack/skills/compare/intent--v0.7.0...intent--v0.7.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* **intent:** PM repo guides explain locked intents ([9ebfc1b](https://github.com/the-marmack/skills/commit/9ebfc1b09486f41dfbc5b21ebf32a81cb5d14642))
+
 ## [0.7.0](https://github.com/the-marmack/skills/compare/intent--v0.6.0...intent--v0.7.0) (2026-10-11)
 
 
