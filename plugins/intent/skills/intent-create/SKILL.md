@@ -52,7 +52,7 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
    `## Request` followed by `request`, plus `Supersedes <old issue URL>` when superseding. If the `intent` label is
    missing, create it with `gh label create` first.
 2. Don't touch the board. The PM repo's `add-to-project` workflow adds every issue labelled `intent` to the project,
-   and the board's "Item added to project" workflow puts the card in `statuses.create`. Record `itemId: null`; the
+   and the board's "Item added to project" workflow puts the card in `Create`. Record `itemId: null`; the
    other skills find the card when they need it ("Board → Find the item" in the `intent-bundle` skill).
 3. **Superseding:** comment on the old issue: `Superseded by <new issue URL>. This intent stays locked; the new one
    replaces it once it's planned.`

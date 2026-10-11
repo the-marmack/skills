@@ -20,7 +20,7 @@ The PM's GitHub login. The repo is `the-marmack/intent-<login>`. Stop if the log
 ## Step 1 — Preflight
 
 1. Run `gh auth status`. The admin needs to be an owner of `the-marmack` (creating repos, setting secrets and access).
-2. Read the board settings from `~/Documents/intents/.config.json` if it exists, otherwise use project #2.
+2. The board is project #2 in `the-marmack` ("Board" in the `intent-bundle` skill).
 
 ## Step 2 — Repository
 

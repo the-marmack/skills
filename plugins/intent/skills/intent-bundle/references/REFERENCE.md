@@ -7,7 +7,7 @@ All intent-plugin skills use the same layout under `~/Documents/intents/` (on Wi
 
 ```text
 ~/Documents/intents/
-  .config.json            # plugin settings, written on first run
+  .config.json            # the PM's repo, written on first run
   <issue>-<short-name>/
     intent.docx           # the PM's Word copy of intent.md on main; a door, not the truth
     intent.<YYYYMMDD-HHMM>.docx  # backups kept by "Refresh the Word file"
@@ -19,30 +19,38 @@ repo, at `intents/<issue>-<short-name>/intent.md` on `main`, and **that is the t
 interview is another, and someone may edit it on GitHub by hand. `syncedSha` is the commit of `intent.md` that this
 machine last wrote or refreshed from; "Changed on GitHub" compares it with `main`.
 
-`.config.json`:
+`.config.json` holds one setting, the PM's repo:
 
 ```json
-{
-    "owner": "the-marmack",
-    "pmRepo": "intent-<github-login>",
-    "project": { "owner": "the-marmack", "number": 2, "title": "Intents (test)" },
-    "statuses": { "create": "Create", "ready": "Ready", "plan": "Plan" }
-}
+{ "pmRepo": "intent-<github-login>" }
 ```
 
-The first run creates this file:
+Everything else is fixed, so it is never asked for or stored:
 
-- `owner` defaults to `the-marmack`.
-- `pmRepo` defaults to `intent-$(gh api user -q .login)`. Check the repo exists with `gh repo view`. If it doesn't, stop
-  and ask an admin to create it. Never create the repo yourself.
-- For `project`, list the projects with `gh project list --owner <owner> --format json`. If exactly one title starts
-  with `Intents`, use it without asking. Otherwise ask the PM which one to use.
+| Setting     | Value                                                        |
+| ----------- | ------------------------------------------------------------ |
+| `owner`     | `the-marmack`                                                |
+| PM repos    | every repo in `the-marmack` whose name starts with `intent-` |
+| Board       | project #2, owned by `the-marmack`                           |
+| Status list | `Create`, `Ready`, `Plan`, `In progress`, `Test`, `Done`     |
+
+The first run creates the file. List the PM repos the PM can see:
+
+```sh
+gh repo list the-marmack --limit 1000 --json name -q '.[].name|select(startswith("intent-"))'
+```
+
+- **Exactly one:** use it without asking.
+- **Several:** ask which one is theirs (use the interactive question UI).
+- **None:** stop and ask the PM to have an admin set up their repo (`intent-repo-setup`). Never create the repo
+  yourself.
+
+Ignore any other keys in an older `.config.json`.
 
 ## GitHub recipes
 
 Every intent skill talks to GitHub through `gh` alone: no clone, no git, no shell script. A PM machine needs only the
-`gh` CLI, logged in (`gh auth login`). If an old `.config.json` still has `repoDir`, ignore it and leave that folder
-alone. `O` is `owner`, `R` is `pmRepo`, and `P` is the intent's `repoPath`.
+`gh` CLI, logged in (`gh auth login`). `O` is `owner`, `R` is `pmRepo`, and `P` is the intent's `repoPath`.
 
 **Working files:** write drafts (`intent.md`, the commit request) to the OS temp folder (`$TMPDIR` on macOS, `$env:TEMP`
 on Windows), never into `~/Documents/intents/<issue>-<short>/`, which holds only the Word file, its backups and
@@ -177,22 +185,20 @@ judgement: run the script first, then rate the sections against "Required sectio
 
 ## Board
 
-The board is `project` in `.config.json`. Its Status options are `statuses.create`, `statuses.ready` and
-`statuses.plan`, followed by `In progress`, `Test` and `Done`. **Locked statuses** are `statuses.plan` and every status
-after it: planning has started. The lock itself is "Lock check", not the column. If `.config.json` has no
-`statuses.plan`, use `Plan`. Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by
-default.
+The board is project #2 in `the-marmack`. Its Status options are `Create`, `Ready`, `Plan`, `In progress`, `Test` and
+`Done`. **Locked statuses** are `Plan` and every status after it: planning has started. The lock itself is "Lock check",
+not the column. Use `gh`'s built-in `-q` for JSON queries rather than `jq`, which isn't installed by default.
 
 ### Resolve IDs
 
 ```sh
-P=<project.number>; O=<project.owner>
+P=2; O=the-marmack
 PID=$(gh project view "$P" --owner "$O" --format json -q .id)
 Q='.fields[]|select(.name=="Status")'
 FID=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.id")
-CREATE=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.create>\").id")
-READY=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.ready>\").id")
-PLAN=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"<statuses.plan>\").id")
+CREATE=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"Create\").id")
+READY=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"Ready\").id")
+PLAN=$(gh project field-list "$P" --owner "$O" --format json -q "$Q.options[]|select(.name==\"Plan\").id")
 ```
 
 ### Add the issue

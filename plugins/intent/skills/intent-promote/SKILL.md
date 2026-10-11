@@ -36,14 +36,14 @@ others.
 ## Step 2 — Resolve board item
 
 - **In:** `url` and `itemId` from `.intent.json`.
-- **Out:** `PID`, `ITEM`, `FID`, the item's current `STATUS`, and the option ID for `statuses.ready`.
+- **Out:** `PID`, `ITEM`, `FID`, the item's current `STATUS`, and the option ID for `Ready`.
 
 Follow "Board → Resolve IDs" and "Board → Find the item" in the `intent-bundle` skill. If the issue isn't on the
 board, add it and save the new `itemId` to `.intent.json`.
 
 ## Step 3 — Guard
 
-If `STATUS` is already `statuses.ready` or a locked status, or "Lock check" in the `intent-bundle` skill says locked,
+If `STATUS` is already `Ready` or a locked status, or "Lock check" in the `intent-bundle` skill says locked,
 tell the PM the intent is already promoted and stop. If it's locked, add that a change now needs a new intent that
 supersedes it. If the lock check is unknown, stop and say the lock couldn't be confirmed.
 
@@ -54,7 +54,7 @@ If the sync fails, stop.
 
 ## Step 5 — Move to Ready
 
-Set the item's Status to `statuses.ready` using "Board → Set status" in the `intent-bundle` skill.
+Set the item's Status to `Ready` using "Board → Set status" in the `intent-bundle` skill.
 
 ## Step 6 — Record
 
