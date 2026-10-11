@@ -42,8 +42,8 @@ gh repo list the-marmack --limit 1000 --json name -q '.[].name|select(startswith
 
 - **Exactly one:** use it without asking.
 - **Several:** ask which one is theirs (use the interactive question UI).
-- **None:** stop and ask the PM to have an admin set up their repo (`intent-repo-setup`). Never create the repo
-  yourself.
+- **None:** stop and ask the PM to have an admin set up their repo (`/intent-repo-setup` in `the-marmack/intents`).
+  Never create the repo yourself.
 
 Ignore any other keys in an older `.config.json`.
 

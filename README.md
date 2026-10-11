@@ -66,10 +66,10 @@ GitHub, never in a clone.
 | `intent-bundle`     | The contract every intent skill shares: the local and repo layout, the frontmatter, the required sections, the ready gate (with the `scripts/check.py` gate script), the board and the lock, and Word conversion. Checks an intent without changing it.                                                                                                                  |
 | `intent-sync`       | Converts one intent's `intent.docx` to markdown and pushes it straight to `main`, after warning if `intent.md` changed on GitHub since the last sync (`intent.md` on `main` is the truth; Word is a door). `/intent-refresh` rebuilds the Word file from GitHub. With no name, lists the unlocked intents to pick from. Refuses locked intents.                          |
 | `intent-promote`    | Publishes the last Word edits and moves the issue to **Ready**: the PM's approval. Once planning locks an intent it stays locked; a change is a new intent that supersedes it.                                                                                                                                                                                           |
-| `intent-repo-setup` | **Admins:** creates or updates a PM's `intent-<login>` repo with `gh`: the private repo, its standard files (README, plugin settings, the `add-to-project` workflow), labels, the board App's secrets, App access, and the PM's access (write on their repo, read on `the-marmack/intents`). Safe to re-run.                                                             |
 
-The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-refresh`, `/intent-promote`
-and, for admins, `/intent-repo-setup` as thin entry points to these skills.
+The plugin also ships the Claude Code commands `/intent-create`, `/intent-sync`, `/intent-refresh` and
+`/intent-promote` as thin entry points to these skills. Admins set up each PM's repo with `/intent-repo-setup`, which
+lives in `the-marmack/intents` with the planning skills, so PMs never see it.
 
 ### workflow
 
