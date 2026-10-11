@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/the-marmack/skills/compare/intent--v0.7.1...intent--v0.8.0) (2026-10-11)
+
+
+### Features
+
+* **intent:** leave technology to planning ([f5835dd](https://github.com/the-marmack/skills/commit/f5835dda4d1a625c125fdbcb10d51d21be190c77))
+
 ## [0.7.1](https://github.com/the-marmack/skills/compare/intent--v0.7.0...intent--v0.7.1) (2026-10-11)
 
 
