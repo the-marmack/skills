@@ -73,5 +73,7 @@ as often as you like until planning starts.
 ## 5. Approve it
 
 When it's ready, move its card to **Ready** on the Intents board. That's your approval. Once planning starts the intent
-is locked for good. To change it after that, write a new intent the same way and add `supersedes: <the old issue's URL>`
-to its frontmatter; to drop it, close its issue as not planned.
+is locked for good: the planner is assigned to the issue next to you, and an edit to `intent.md` after that isn't
+planned (the **Intent Check** marks the commit red and comments on the issue). To change it after that, write a new
+intent the same way and add `supersedes: <the old issue's URL>` to its frontmatter; to drop it, close its issue as not
+planned.

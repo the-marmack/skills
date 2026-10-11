@@ -20,9 +20,11 @@ browser.
 ## Approving and the lock
 
 Moving an intent's card to **Ready** on the board (or running `/intent-promote`) is your approval. When engineering
-starts planning it, the intent is locked in [the-marmack/intents](https://github.com/the-marmack/intents) for good. To
-change it after that, start a new intent that replaces it: `/intent-create … supersedes <the old issue's URL>`. To drop
-an intent, close its issue as not planned.
+starts planning it, the intent is locked in [the-marmack/intents](https://github.com/the-marmack/intents) for good, and
+the planner is assigned to its issue next to you. The commands then refuse to change it and tell you who is planning it.
+An edit on GitHub still lands, but it isn't planned: the **Intent Check** marks the commit red and comments on the
+issue. To change it after that, start a new intent that replaces it:
+`/intent-create … supersedes <the old issue's URL>`. To drop an intent, close its issue as not planned.
 
 New to this? Start with the
 [getting-started guides](https://github.com/the-marmack/intents/tree/main/docs/getting-started).

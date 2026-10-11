@@ -4,9 +4,9 @@ You can write an intent with nothing but GitHub in your browser. No git, no Word
 
 ## 1. Open the issue
 
-On this repo's **Issues** tab, click **New issue**. Title it `Intent: <a few words>`, add the label **intent**, and put
-your idea in a sentence or two in the description. Create it and note its number, for example **#12**. The card appears
-on the Intents board in **Create** by itself.
+On this repo's **Issues** tab, click **New issue**. Title it `Intent: <a few words>`, add the label **intent**, assign
+it to yourself, and put your idea in a sentence or two in the description. Create it and note its number, for example
+**#12**. The card appears on the Intents board in **Create** by itself.
 
 ## 2. Create the file
 
@@ -73,5 +73,7 @@ as often as you like until planning starts.
 ## 5. Approve it
 
 When it's ready, move its card to **Ready** on the Intents board. That's your approval. Once planning starts the intent
-is locked for good. To change it after that, write a new intent the same way and add `supersedes: <the old issue's URL>`
-to its frontmatter; to drop it, close its issue as not planned.
+is locked for good: the planner is assigned to the issue next to you, and an edit to `intent.md` after that isn't
+planned (the **Intent Check** marks the commit red and comments on the issue). To change it after that, write a new
+intent the same way and add `supersedes: <the old issue's URL>` to its frontmatter; to drop it, close its issue as not
+planned.
