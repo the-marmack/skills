@@ -48,7 +48,7 @@ others. If a step fails, stop and tell the PM, in one sentence, what went wrong 
 - **In:** `title` and `request`.
 - **Out:** `issue` (the number) and `url`.
 
-1. Run `gh issue create -R <owner>/<pmRepo> --title "Intent: <title>" --label intent` with a body of
+1. Run `gh issue create -R <owner>/<pmRepo> --title "Intent: <title>" --label intent --assignee @me` with a body of
    `## Request` followed by `request`, plus `Supersedes <old issue URL>` when superseding. If the `intent` label is
    missing, create it with `gh label create` first.
 2. Don't touch the board. The PM repo's `add-to-project` workflow adds every issue labelled `intent` to the project,

@@ -64,7 +64,7 @@ on Windows), never into `~/Documents/intents/<issue>-<short>/`, which holds only
 | Last commit of a file | `gh api "repos/$O/$R/commits?path=$P/intent.md&sha=main&per_page=1" -q '.[0].sha'`            | `list_commits` (with `path`)                               |
 | Head of `main`        | `gh api "repos/$O/$R/git/ref/heads/main" -q .object.sha`                                      | `list_branches`                                            |
 | Commit files          | "Commit to main" below                                                                        | `push_files` (several) or `create_or_update_file` (one)    |
-| Create the issue      | `gh issue create -R $O/$R --title … --label intent --body-file <file>`                        | `create_issue`                                             |
+| Create the issue      | `gh issue create -R $O/$R --title … --label intent --assignee @me --body-file <file>`         | `create_issue` (with `assignees`)                          |
 | Comment               | `gh issue comment <n> -R $O/$R --body-file <file>`                                            | `add_issue_comment`                                        |
 | Add or remove a label | `gh issue edit <n> -R $O/$R --add-label <l>` / `--remove-label <l>`                           | `update_issue`                                             |
 | Board (Projects)      | "Board" below                                                                                 | none: use `gh`                                             |
@@ -257,7 +257,7 @@ fi
 To list every locked intent at once (for example to offer only unlocked ones), keep the `$C` list and match each intent
 against it.
 
-- **locked:** a lock exists. Block: don't change, sync or interview the intent.
+- **locked:** a lock exists. Block: don't change, sync or interview the intent, and tell the PM with "Locked message".
 - **unlocked:** the tree was read and has no lock for it.
 - **unknown:** GitHub couldn't be read. Block as well, and tell the PM the lock couldn't be confirmed and to try again
   once `gh auth status` works. Never treat an error as unlocked. A PM needs read access to `the-marmack/intents`;
@@ -265,8 +265,33 @@ against it.
 
 On Windows, run the same `gh api` call in PowerShell. A non-zero exit means unknown.
 
-The lock only means anything to the intent skills, which refuse to change a locked intent. Nothing stops a plain
-`git push` to the PM repo. Stronger enforcement is tracked in the-marmack/intents#1.
+### Locked message
+
+When an intent is locked, tell the PM it's already being processed and who has it. `plan-create` assigns the planner to
+the intent's issue next to the PM, so the issue's assignees say who that is. Read them, and the lock for its date:
+
+```sh
+LOCK=$(printf '%s\n' "$C" | grep -E "^intents/$L-$I-[^/]+/lock\.yaml$")
+gh api "repos/$O/intents/contents/$LOCK" -H "Accept: application/vnd.github.raw"   # locked_by, locked_at
+gh issue view "$I" -R "$O/$R" --json assignees -q '[.assignees[].login]|join(" ")'
+```
+
+The **planner** is the assignee who isn't the person running the skill ("Who am I"). With none, it's `locked_by` from
+the lock. Show their name and login (`gh api users/<login> -q .name`). Then say, in one message:
+
+> _(intent title)_ is already being processed: planning started on _(locked_at, as a date)_, so it's locked and can't be
+> updated. _(Name, @login)_ is planning it; ask them about it. To change it, start a new intent that supersedes it:
+> `/intent-create … supersedes <issue URL>`.
+
+If the planner is the person running the skill, say "You started planning it yourself" instead of naming them. If the
+issue or lock can't be read, say the intent is locked without a name.
+
+### Edits outside the skills
+
+The skills refuse to change a locked intent, but GitHub can't stop an edit in the browser or a plain `git push`:
+rulesets aren't enforced on private repos on the free plan. Planning uses the intent at the locked commit, so such an
+edit is never planned. The PM repo's `intent-check` workflow flags it: it comments on the issue and fails, so the commit
+shows a red check.
 
 ## Supersedes
 

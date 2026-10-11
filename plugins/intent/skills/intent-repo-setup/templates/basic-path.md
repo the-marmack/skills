@@ -4,9 +4,9 @@ You can write an intent with nothing but GitHub in your browser. No git, no Word
 
 ## 1. Open the issue
 
-On this repo's **Issues** tab, click **New issue**. Title it `Intent: <a few words>`, add the label **intent**, and put
-your idea in a sentence or two in the description. Create it and note its number, for example **#12**. The card appears
-on the Intents board in **Create** by itself.
+On this repo's **Issues** tab, click **New issue**. Title it `Intent: <a few words>`, add the label **intent**, assign
+it to yourself, and put your idea in a sentence or two in the description. Create it and note its number, for example
+**#12**. The card appears on the Intents board in **Create** by itself.
 
 ## 2. Create the file
 

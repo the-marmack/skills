@@ -28,9 +28,8 @@ and the step map are in [references/REFERENCE.md](references/REFERENCE.md).
 1. Read `.config.json` (the `intent-bundle` skill). Resolve the intent: from a local `.intent.json` when there is one,
    otherwise find the `intents/<issue>-*` folder on `main` ("List a folder" in "GitHub recipes"). An issue URL also
    gives the repo.
-2. Run "Lock check". If it's locked, stop and tell the PM: "*(intent title)* is being planned and is locked. To change
-   it, start a new intent that supersedes it: `/intent-create … supersedes <issue URL>`." If it's unknown, stop and say
-   the lock couldn't be confirmed.
+2. Run "Lock check". If it's locked, stop and tell the PM with "Locked message" (who is planning it, and how to
+   supersede it). If it's unknown, stop and say the lock couldn't be confirmed.
 3. Read `<repoPath>/intent.md` and the head of `main` from GitHub ("Read a file", "Head of `main`"). Never start from the
    Word file: the interview works on what's on `main`.
 

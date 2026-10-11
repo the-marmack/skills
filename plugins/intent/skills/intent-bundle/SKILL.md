@@ -41,7 +41,7 @@ or publishes an intent. The recipes are in [references/REFERENCE.md](references/
 | Required sections               | intent-create, intent-interview, intent-sync  |
 | Ready gate                      | the check below, plan-create                  |
 | Board                           | intent-promote                                |
-| Lock check                      | intent-sync, intent-interview, intent-promote |
+| Lock check, Locked message      | intent-sync, intent-interview, intent-promote |
 | Supersedes                      | intent-create, plan-create                    |
 | Word conversion                 | intent-create, intent-interview, intent-sync  |
 | Changed on GitHub, Refresh      | intent-sync, intent-interview                 |

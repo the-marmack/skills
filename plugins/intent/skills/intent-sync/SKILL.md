@@ -53,8 +53,8 @@ A folder with an `intent.docx` but no `.intent.json` was never created through `
 
 Run "Lock check" in the `intent-bundle` skill for this intent, right before converting. It reads `main` on GitHub.
 
-- **locked:** stop and tell the PM: "*(intent title)* is being planned and is locked. To change it, start a new intent
-  that supersedes it: `/intent-create … supersedes <issue URL>`."
+- **locked:** stop and tell the PM with "Locked message" in the `intent-bundle` skill: it's already being processed,
+  who is planning it, and how to supersede it.
 - **unknown:** stop and tell the PM the lock couldn't be confirmed on GitHub, so nothing was synced.
 
 Never edit, delete or bypass a lock here.

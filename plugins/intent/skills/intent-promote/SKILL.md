@@ -43,9 +43,10 @@ board, add it and save the new `itemId` to `.intent.json`.
 
 ## Step 3 — Guard
 
-If `STATUS` is already `Ready` or a locked status, or "Lock check" in the `intent-bundle` skill says locked,
-tell the PM the intent is already promoted and stop. If it's locked, add that a change now needs a new intent that
-supersedes it. If the lock check is unknown, stop and say the lock couldn't be confirmed.
+If "Lock check" in the `intent-bundle` skill says locked, or `STATUS` is a locked status, stop and tell the PM with
+"Locked message": it's already being processed, who is planning it, and how to supersede it. If `STATUS` is already
+`Ready`, tell the PM the intent is already promoted and stop. If the lock check is unknown, stop and say the lock
+couldn't be confirmed.
 
 ## Step 4 — Final sync
 
