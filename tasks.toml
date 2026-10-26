@@ -59,6 +59,20 @@ hide = true
 dir = "{{config_root}}"
 run = "sh -n install.sh"
 
+# Claude's skill upload rejects angle brackets in a description, and evolve does not check for them.
+[skill-frontmatter]
+hide = true
+dir = "{{config_root}}"
+run = """
+set -eu
+bad=0
+for f in plugins/*/skills/*/SKILL.md; do
+  d=$(awk 'NR == 1 && $0 != "---" { exit } NR > 1 && $0 == "---" { exit } /^description:/ { print }' "$f")
+  case "$d" in *"<"* | *">"*) echo "$f: description has an angle bracket"; bad=1 ;; esac
+done
+exit "$bad"
+"""
+
 [fmt]
 description = "format prose, inject license headers"
 run = [{ task = "fmt-prose" }, { task = "license" }]
@@ -73,6 +87,7 @@ run = [
   { task = "evolve-checks" },
   { task = "plugin-validate" },
   { task = "fixture-json" },
+  { task = "skill-frontmatter" },
   { task = "installer-syntax" },
   { task = "py-lint" }
 ]
