@@ -49,10 +49,14 @@ done
 [py-lint]
 hide = true
 dir = "{{config_root}}"
-run = [
-  "uvx ruff@0.17.0 check plugins/*/skills/*/scripts plugins/*/tests",
-  "uvx ruff@0.17.0 format --check plugins/*/skills/*/scripts plugins/*/tests"
-]
+# Each step skips when no plugin has scripts or tests.
+run = """
+set -eu
+set -- $(ls -d plugins/*/skills/*/scripts plugins/*/tests 2>/dev/null || true)
+[ "$#" -gt 0 ] || { echo "py-lint: no Python scripts or tests"; exit 0; }
+uvx ruff@0.17.0 check "$@"
+uvx ruff@0.17.0 format --check "$@"
+"""
 
 [installer-syntax]
 hide = true
@@ -96,7 +100,12 @@ run = [
 description = "script tests, then validate the plugins and that eval results meet the minimum thresholds"
 dir = "{{config_root}}"
 run = [
-  "uvx --from pytest==9.1.1 pytest -q plugins/*/tests",
+  """
+  set -eu
+  set -- $(ls -d plugins/*/tests 2>/dev/null || true)
+  [ "$#" -gt 0 ] || { echo "pytest: no plugin tests"; exit 0; }
+  uvx --from pytest==9.1.1 pytest -q "$@"
+  """,
   "evolve run checks",
   "evolve report --check --junit=coverage/junit.xml --cobertura=coverage/cobertura-coverage.xml"
 ]
